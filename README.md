@@ -4,21 +4,19 @@
 
 像放屁一样简单又自然的Node.js接口开发框架。
 
-## 仓库地址
-
-点个星星，老铁。
+### 仓库地址
 
 [github - https://github.com/chenbimo/funpi](https://github.com/chenbimo/funpi)
 
-## 作者介绍
+### 作者介绍
 
 [前端之虎陈随易 https://chensuiyi.me](https://chensuiyi.me)
 
-## 文档教程
+### 文档教程
 
 请到 [前端之虎陈随易 https://chensuiyi.me](https://chensuiyi.me) 网站查看。
 
-## 功能特点
+### 功能特点
 
 -   ✅ 只需 `简单配置`，即可快速上手开发。
 -   ✅ 默认支持 `微信扫码` 登录注册功能，解决垃圾账号和短信费用问题。
@@ -39,7 +37,7 @@
 -   ✅ 全面的 `接口参数验证` 功能，极大减少安全隐患。
 -   ✅ 提供 `数据库表字段设计` 和 `表结构同步` 功能。
 
-## 功能限制
+### 功能限制
 
 本框架做了很多约束，减少自由度，增加确定度，稳定度。
 
@@ -54,40 +52,40 @@
 -   ❎ 不支持 `分布式部署`。
 -   ❎ 不支持 `Restful` 规范，不认同 `Restful` 规范，不使用 `Restful` 规范。
 
-## 注意事项
+### 注意事项
 
 -   与本项目逻辑、BUG、建议相关的问题，请联系作者无偿 `免费处理`。
 -   与本项目无关的业务、功能、需求、部署相关的问题，请联系作者 `有偿咨询`。
 
-## 实际效果
+### 实际效果
 
 使用 `funpi` + `yiadmin` 驱动的，免费且开源的后台管理系统。
 
-### 📄 登录页面
+#### 📄 登录页面
 
 ![picture 0](https://static.yicode.tech/images/202311/20231126000719.png)
 
-### 📄 菜单页面
+#### 📄 菜单页面
 
 ![picture 2](https://static.yicode.tech/images/202311/20231126000809.png)
 
-### 📄 接口页面
+#### 📄 接口页面
 
 ![picture 3](https://static.yicode.tech/images/202311/20231126000833.png)
 
-### 📄 角色页面
+#### 📄 角色页面
 
 ![picture 4](https://static.yicode.tech/images/202311/20231126000913.png)
 
-### 📄 登录日志
+#### 📄 登录日志
 
 ![picture 5](https://static.yicode.tech/images/202311/20231126000935.png)
 
-### 📄 邮件日志
+#### 📄 邮件日志
 
 ![picture 6](https://static.yicode.tech/images/202311/20231126001012.png)
 
-## 版权说明
+### 版权说明
 
 `funpi(易接口)` 使用 `Apache 2.0` 协议开源
 
