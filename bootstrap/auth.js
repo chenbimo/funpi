@@ -35,8 +35,8 @@ async function plugin(fastify) {
             let isAuthFail = false;
             try {
                 await req.jwtVerify();
+                // eslint-disable-next-line no-unused-vars
             } catch (err) {
-                fastify.log.error(err);
                 isAuthFail = true;
             }
 
@@ -115,7 +115,7 @@ async function plugin(fastify) {
                 return;
             }
         } catch (err) {
-            fastify.log.error(err);
+            // fastify.log.error(err);
             res.send({
                 ...appConfig.http.FAIL,
                 msg: err.msg || '认证异常',

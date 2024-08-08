@@ -6,7 +6,8 @@ import fp from 'fastify-plugin';
 
 // 工具函数
 import { fnImport } from '../utils/fnImport.js';
-import { yd_is_object, yd_object_omit, yd_array_keyBy, yd_number_incrTimeID } from 'yidash';
+import { yd_is_object, yd_object_omit, yd_array_keyBy } from 'yidash';
+import { yd_number_incrTimeID } from 'yidash/node';
 // 工具函数
 // 配置文件
 import { system } from '../system.js';
@@ -14,7 +15,7 @@ import { appConfig } from '../config/app.js';
 
 // 获取所有接口文件
 async function fnAllApiFiles(type) {
-    const coreApiFiles = readdirSync(resolve(system.yiapiDir, 'apis'), { recursive: true });
+    const coreApiFiles = readdirSync(resolve(system.yeeDir, 'apis'), { recursive: true });
     const appApiFiles = readdirSync(resolve(system.appDir, 'apis'), { recursive: true });
 
     const allApiFiles = [
@@ -22,7 +23,7 @@ async function fnAllApiFiles(type) {
         ...coreApiFiles.map((file) => {
             return {
                 where: 'core',
-                filePath: resolve(system.yiapiDir, 'apis', file).replace(/\\+/gi, '/')
+                filePath: resolve(system.yeeDir, 'apis', file).replace(/\\+/gi, '/')
             };
         }),
         ...appApiFiles.map((file) => {

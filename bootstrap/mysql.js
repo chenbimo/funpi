@@ -1,6 +1,7 @@
 import fp from 'fastify-plugin';
 import Knex from 'knex';
-import { yd_is_array, yd_number_incrTimeID } from 'yidash';
+import { yd_is_array } from 'yidash';
+import { yd_number_incrTimeID } from 'yidash/node';
 
 // 工具集
 // 配置集
@@ -110,7 +111,26 @@ async function plugin(fastify) {
             debug: false,
             pool: {
                 min: 30,
-                max: 1000
+                max: 1000,
+                afterCreate: function (db, done) {
+                    // in this example we use pg driver's connection API
+                    db.query('SET timezone="UTC";', function (err) {
+                        if (err) {
+                            // first query failed,
+                            // return error and don't try to make next query
+                            done(err, db);
+                        } else {
+                            // do the second query...
+                            db.query('SELECT set_limit(0.01);', function (err) {
+                                // if err is not falsy,
+                                //  connection is discarded from pool
+                                // if connection aquire was triggered by a
+                                // query the error is passed to query promise
+                                done(err, db);
+                            });
+                        }
+                    });
+                }
             }
         });
 

@@ -92,14 +92,14 @@ export const syncMysql = async () => {
         // 所有的表数据
         const allDbTable = [];
         // 所有表文件
-        const sysDbFiles = readdirSync(resolve(system.yiapiDir, 'tables'));
+        const sysDbFiles = readdirSync(resolve(system.yeeDir, 'tables'));
         const appDbFiles = readdirSync(resolve(system.appDir, 'tables'));
         const allDbFiles = [
             //
             ...sysDbFiles.map((file) => {
                 return {
                     prefix: 'sys_',
-                    file: resolve(system.yiapiDir, 'tables', file)
+                    file: resolve(system.yeeDir, 'tables', file)
                 };
             }),
             ...appDbFiles.map((file) => {

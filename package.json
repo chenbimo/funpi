@@ -1,7 +1,7 @@
 {
-    "name": "yiapi",
+    "name": "yee",
     "version": "6.0.0",
-    "description": "yiapi(易接口)，简单易用的Node.js接口开发框架",
+    "description": "yee(易接口)，简单易用的Node.js接口开发框架",
     "type": "module",
     "private": false,
     "publishConfig": {
@@ -9,7 +9,7 @@
         "registry": "https://registry.npmjs.org"
     },
     "exports": {
-        ".": "./yiapi.js"
+        ".": "./yee.js"
     },
     "scripts": {
         "lint": "eslint .",
@@ -28,7 +28,7 @@
     "author": "chensuiyi <bimostyle@qq.com>",
     "repository": {
         "type": "git",
-        "url": "https://github.com/chenbimo/yiapi"
+        "url": "https://github.com/chenbimo/yee"
     },
     "homepage": "https://chensuiyi.me",
     "dependencies": {

@@ -3,5 +3,5 @@ import { cwd } from 'node:process';
 
 export const system = {
     appDir: cwd(),
-    yiapiDir: dirname(import.meta.filename)
+    yeeDir: dirname(import.meta.filename)
 };

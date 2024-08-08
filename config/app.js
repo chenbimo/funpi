@@ -11,13 +11,13 @@ const targetObject = {
     // 应用名称
     appName: '易接口',
     // 加密盐
-    md5Salt: 'yiapi123456',
+    md5Salt: 'yee123456',
     // 监听端口
     port: 3000,
     // 监听主机
     host: '127.0.0.1',
     // 超级管理员密码
-    devPassword: 'yiapi123456',
+    devPassword: 'yee123456',
     // 是否进行参数验证
     paramsCheck: false,
     // 是否显示接口文档
@@ -35,7 +35,7 @@ const targetObject = {
     rate: {},
     // jwt 配置
     jwt: {
-        secret: 'yiapi123456', // 密钥
+        secret: 'yee123456', // 密钥
         expiresIn: '7d' // 过期时间
     },
     // 邮件配置
@@ -133,18 +133,6 @@ const replaceObj = {
     },
     // 菜单配置
     menu: {
-        '/home': {
-            name: '首页数据',
-            sort: 1,
-            is_system: 1,
-            children: {
-                '/internal/home': {
-                    name: '首页',
-                    is_system: 1,
-                    sort: 1
-                }
-            }
-        },
         '/admin': {
             name: '管理数据',
             sort: 1001,
@@ -153,7 +141,7 @@ const replaceObj = {
                 '/internal/admin': {
                     name: '管理员',
                     is_system: 1,
-                    sort: 2
+                    sort: 1
                 }
             }
         },

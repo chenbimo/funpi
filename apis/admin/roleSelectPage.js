@@ -26,7 +26,12 @@ export default async (fastify) => {
             try {
                 const roleModel = fastify.mysql //
                     .table('sys_role')
-                    .where('code', '<>', 'dev');
+                    .where('code', '<>', 'dev')
+                    .modify((db) => {
+                        if (req.body.keyword) {
+                            db.whereLike('name', `${req.body.keyword}`);
+                        }
+                    });
 
                 const { totalCount } = await roleModel.clone().selectCount();
                 const rows = await roleModel

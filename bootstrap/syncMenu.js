@@ -1,6 +1,7 @@
 // 外部插件
 import fp from 'fastify-plugin';
-import { yd_object_omit, yd_array_unique, yd_array_keyBy, yd_number_incrTimeID } from 'yidash';
+import { yd_object_omit, yd_array_unique, yd_array_keyBy } from 'yidash';
+import { yd_number_incrTimeID } from 'yidash/node';
 // 工具函数
 // 配置文件
 import { appConfig } from '../config/app.js';

@@ -44,7 +44,7 @@ import { appConfig } from './config/app.js';
 import { system } from './system.js';
 
 const appDir = system.appDir;
-const yiapiDir = system.yiapiDir;
+const yeeDir = system.yeeDir;
 
 // 初始化项目实例
 const fastify = Fastify({
@@ -140,7 +140,7 @@ fastify.register(autoLoad, {
 
 // 加载系统接口
 fastify.register(autoLoad, {
-    dir: join(system.yiapiDir, 'apis'),
+    dir: join(system.yeeDir, 'apis'),
     matchFilter: (_path) => {
         return _path.endsWith('.js') === true;
     },
@@ -199,7 +199,7 @@ export {
     initServer,
     // 环境目录
     appDir,
-    yiapiDir,
+    yeeDir,
     // 工具函数
     fnRoute,
     fnSchema,

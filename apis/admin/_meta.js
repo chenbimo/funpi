@@ -8,7 +8,7 @@ export const metaConfig = {
         adminLogin: '管理员登录',
         adminInsert: '添加管理员',
         adminDelete: '删除管理员',
-        adminSelect: '查询管理员-分页',
+        adminSelectPage: '查询管理员-分页',
         adminUpdate: '更新管理员',
         apiSelectAll: '查询接口-全部',
         apiSelectPage: '查询接口-分页',

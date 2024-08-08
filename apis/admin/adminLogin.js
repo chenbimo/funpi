@@ -27,7 +27,7 @@ export default async (fastify) => {
         apiHandler: async (req) => {
             try {
                 const adminModel = fastify.mysql.table('sys_admin');
-                const loginLogModel = fastify.mysql.table('sys_login_log');
+                // const loginLogModel = fastify.mysql.table('sys_login_log');
 
                 // 查询管理员是否存在
                 // TODO: 增加邮箱注册和邮箱登录
@@ -52,13 +52,13 @@ export default async (fastify) => {
                     };
                 }
                 // 记录登录日志
-                await loginLogModel.clone().insertData({
-                    username: adminData.username,
-                    nickname: adminData.nickname,
-                    role: adminData.role,
-                    ip: req.ip || '',
-                    ua: req.headers['user-agent'] || ''
-                });
+                // await loginLogModel.clone().insertData({
+                //     username: adminData.username,
+                //     nickname: adminData.nickname,
+                //     role: adminData.role,
+                //     ip: req.ip || '',
+                //     ua: req.headers['user-agent'] || ''
+                // });
 
                 // 成功返回
                 return {
