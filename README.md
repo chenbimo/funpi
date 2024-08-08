@@ -1,14 +1,14 @@
-# yee 是什么？
+# funpi 是什么？
 
-中文名称 `易接口`。
+中文名称 `放屁` 接口框架。
 
-一个注重效率和速度的 `Node.js` 接口开发框架，不做大而全，只做小部分开发者的小而美。
+像放屁一样简单又自然的Node.js接口开发框架。
 
 ## 仓库地址
 
 点个星星，老铁。
 
-[github - https://github.com/chenbimo/yee](https://github.com/chenbimo/yee)
+[github - https://github.com/chenbimo/funpi](https://github.com/chenbimo/funpi)
 
 ## 作者介绍
 
@@ -61,7 +61,7 @@
 
 ## 实际效果
 
-使用 `yee` + `yiadmin` 驱动的，免费且开源的后台管理系统。
+使用 `funpi` + `yiadmin` 驱动的，免费且开源的后台管理系统。
 
 ### 📄 登录页面
 
@@ -89,7 +89,7 @@
 
 ## 版权说明
 
-`yee(易接口)` 使用 `Apache 2.0` 协议开源
+`funpi(易接口)` 使用 `Apache 2.0` 协议开源
 
 > 一句话总结：开源不等于放弃版权，不可侵犯原作者版权，改动处要做说明，可以闭源使用。
 

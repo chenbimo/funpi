@@ -3,5 +3,5 @@ import { cwd } from 'node:process';
 
 export const system = {
     appDir: cwd(),
-    yeeDir: dirname(import.meta.filename)
+    funpiDir: dirname(import.meta.filename)
 };

@@ -1,7 +1,7 @@
 {
-    "name": "yee",
-    "version": "6.0.0",
-    "description": "yee(易接口)，简单易用的Node.js接口开发框架",
+    "name": "funpi",
+    "version": "6.0.1",
+    "description": "funpi(放屁) - 像放屁一样简单又自然的Node.js接口开发框架",
     "type": "module",
     "private": false,
     "publishConfig": {
@@ -9,7 +9,7 @@
         "registry": "https://registry.npmjs.org"
     },
     "exports": {
-        ".": "./yee.js"
+        ".": "./funpi.js"
     },
     "scripts": {
         "lint": "eslint .",
@@ -22,13 +22,34 @@
         "nodejs",
         "api"
     ],
+    "files": [
+        "apis/",
+        "bootstrap/",
+        "config/",
+        "plugins/",
+        "schema/",
+        "scripts/",
+        "tables/",
+        "utils/",
+        ".gitignore",
+        ".npmrc",
+        ".prettierignore",
+        ".prettier",
+        "check.js",
+        "eslint.config.js",
+        "funpi.js",
+        "LICENSE",
+        "package.json",
+        "README.md",
+        "system.js"
+    ],
     "engines": {
         "node": ">=20.6.0"
     },
     "author": "chensuiyi <bimostyle@qq.com>",
     "repository": {
         "type": "git",
-        "url": "https://github.com/chenbimo/yee"
+        "url": "https://github.com/chenbimo/funpi"
     },
     "homepage": "https://chensuiyi.me",
     "dependencies": {

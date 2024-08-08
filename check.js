@@ -15,9 +15,9 @@ import { appConfig } from './config/app.js';
 // 工具函数
 import { fnImport } from './utils/fnImport.js';
 
-// 判断运行目录下是否有 yee.js 文件
-if (existsSync(resolve(system.appDir, 'yee.js')) === false) {
-    console.log(`${yd_misc_4StateSymbol('warn')} 请在 yee 项目根目录下运行`);
+// 判断运行目录下是否有 funpi.js 文件
+if (existsSync(resolve(system.appDir, 'funpi.js')) === false) {
+    console.log(`${yd_misc_4StateSymbol('warn')} 请在 funpi 项目根目录下运行`);
     process.exit();
 }
 
@@ -55,8 +55,8 @@ const ajv = new Ajv({
 
 // 验证配置文件 ==================================================
 // 路径
-const configPath = resolve(system.yeeDir, 'config', 'app.js');
-const schemaPath = resolve(system.yeeDir, 'schema', 'app.js');
+const configPath = resolve(system.funpiDir, 'config', 'app.js');
+const schemaPath = resolve(system.funpiDir, 'schema', 'app.js');
 // 配置
 const configFile = await fnImport(configPath, 'appConfig', {});
 const configData = configFile['appConfig'];
@@ -81,20 +81,20 @@ if (!validResult) {
 
 // ==================================================
 
-if (appConfig.devPassword === 'yee123456') {
+if (appConfig.devPassword === 'funpi123456') {
     // 启动前验证
     console.log(`${yd_misc_4StateSymbol('warn')} 请修改超级管理员密码！！！（位置：appConfig.devPassword）`);
     process.exit();
 }
 
 // 启动前验证
-if (appConfig.md5Salt === 'yee123456') {
+if (appConfig.md5Salt === 'funpi123456') {
     console.log(`${yd_misc_4StateSymbol('warn')} 请修改默认加密盐值！！！（位置：appConfig.md5Salt`);
     process.exit();
 }
 
 // jwt密钥验证
-if (appConfig.jwt.secret === 'yee123456') {
+if (appConfig.jwt.secret === 'funpi123456') {
     console.log(`${yd_misc_4StateSymbol('warn')} 请修改jwt默认密钥！！！（位置：appConfig.jwt.secret`);
     process.exit();
 }

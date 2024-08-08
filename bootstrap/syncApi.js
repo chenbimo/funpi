@@ -15,7 +15,7 @@ import { appConfig } from '../config/app.js';
 
 // 获取所有接口文件
 async function fnAllApiFiles(type) {
-    const coreApiFiles = readdirSync(resolve(system.yeeDir, 'apis'), { recursive: true });
+    const coreApiFiles = readdirSync(resolve(system.funpiDir, 'apis'), { recursive: true });
     const appApiFiles = readdirSync(resolve(system.appDir, 'apis'), { recursive: true });
 
     const allApiFiles = [
@@ -23,7 +23,7 @@ async function fnAllApiFiles(type) {
         ...coreApiFiles.map((file) => {
             return {
                 where: 'core',
-                filePath: resolve(system.yeeDir, 'apis', file).replace(/\\+/gi, '/')
+                filePath: resolve(system.funpiDir, 'apis', file).replace(/\\+/gi, '/')
             };
         }),
         ...appApiFiles.map((file) => {

@@ -11,13 +11,13 @@ const targetObject = {
     // 应用名称
     appName: '易接口',
     // 加密盐
-    md5Salt: 'yee123456',
+    md5Salt: 'funpi123456',
     // 监听端口
     port: 3000,
     // 监听主机
     host: '127.0.0.1',
     // 超级管理员密码
-    devPassword: 'yee123456',
+    devPassword: 'funpi123456',
     // 是否进行参数验证
     paramsCheck: false,
     // 是否显示接口文档
@@ -35,7 +35,7 @@ const targetObject = {
     rate: {},
     // jwt 配置
     jwt: {
-        secret: 'yee123456', // 密钥
+        secret: 'funpi123456', // 密钥
         expiresIn: '7d' // 过期时间
     },
     // 邮件配置
