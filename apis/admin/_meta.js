@@ -6,6 +6,7 @@ export const metaConfig = {
         getApis: '查询管理员接口权限',
         getMenus: '查询管理员菜单权限',
         adminLogin: '管理员登录',
+        adminLoginLogSelectPage: '管理员登录日志-分页',
         adminInsert: '添加管理员',
         adminDelete: '删除管理员',
         adminSelectPage: '查询管理员-分页',

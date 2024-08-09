@@ -142,6 +142,11 @@ const replaceObj = {
                     name: '管理员',
                     is_system: 1,
                     sort: 1
+                },
+                '/internal/admin-login-log': {
+                    name: '登录日志',
+                    is_system: 1,
+                    sort: 2
                 }
             }
         },

@@ -29,6 +29,7 @@ import syncDevPlugin from './bootstrap/syncDev.js';
 // 工具函数
 import { fnRoute } from './utils/fnRoute.js';
 import { fnSchema } from './utils/fnSchema.js';
+import { fnField } from './utils/fnField.js';
 
 // 数据库表
 import { tableData as adminTable } from './tables/admin.js';
@@ -203,6 +204,7 @@ export {
     // 工具函数
     fnRoute,
     fnSchema,
+    fnField,
     // 配置数据
     appConfig,
     // 脚本工具

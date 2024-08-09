@@ -7,7 +7,7 @@ import { readdirSync } from 'node:fs';
 import { randomInt } from 'node:crypto';
 // 外部模块
 import Knex from 'knex';
-import color from 'picocolors';
+import colors from 'picocolors';
 import Ajv from 'ajv';
 import localize from 'ajv-i18n';
 import {
@@ -285,13 +285,13 @@ export const syncMysql = async () => {
                     // 删除旧表，重命名新表
                     await trx.schema.renameTable(tableItem.tableFile, tableItem.tableFile + '_' + fnIncrDate());
                     await trx.schema.renameTable(tableItem.tableFileTemp, tableItem.tableFile);
-                    console.log(`${yd_misc_4StateSymbol('success')} ${color.magenta(tableItem.tableFile)}(${color.blue(tableItem.tableName)}) ${color.yellow('数据已同步')}`);
+                    console.log(`${yd_misc_4StateSymbol('success')} ${colors.magenta(tableItem.tableFile)}(${colors.blue(tableItem.tableName)}) ${colors.yellow('数据已同步')}`);
                 } else {
                     await trx.schema.dropTableIfExists(tableItem.tableFileTemp);
-                    console.log(`${yd_misc_4StateSymbol('success')} ${color.magenta(tableItem.tableFile)}(${color.blue(tableItem.tableName)}) ${color.black('字段无改动')}`);
+                    console.log(`${yd_misc_4StateSymbol('success')} ${colors.magenta(tableItem.tableFile)}(${colors.blue(tableItem.tableName)}) ${colors.black('字段无改动')}`);
                 }
             } else {
-                console.log(`${yd_misc_4StateSymbol('success')} ${color.magenta(tableItem.tableFile)}(${color.blue(tableItem.tableName)}) ${color.green('空表已创建')}`);
+                console.log(`${yd_misc_4StateSymbol('success')} ${colors.magenta(tableItem.tableFile)}(${colors.blue(tableItem.tableName)}) ${colors.green('空表已创建')}`);
             }
         }
         await trx.commit();

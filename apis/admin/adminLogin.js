@@ -12,7 +12,6 @@ import { metaConfig } from './_meta.js';
 
 // 处理函数
 export default async (fastify) => {
-    // 当前文件的路径，fastify 实例
     fnRoute(import.meta.url, fastify, metaConfig, {
         // 请求参数约束
         schemaRequest: {
@@ -27,7 +26,7 @@ export default async (fastify) => {
         apiHandler: async (req) => {
             try {
                 const adminModel = fastify.mysql.table('sys_admin');
-                // const loginLogModel = fastify.mysql.table('sys_login_log');
+                const adminLoginLogModel = fastify.mysql.table('sys_admin_login_log');
 
                 // 查询管理员是否存在
                 // TODO: 增加邮箱注册和邮箱登录
@@ -52,13 +51,14 @@ export default async (fastify) => {
                     };
                 }
                 // 记录登录日志
-                // await loginLogModel.clone().insertData({
-                //     username: adminData.username,
-                //     nickname: adminData.nickname,
-                //     role: adminData.role,
-                //     ip: req.ip || '',
-                //     ua: req.headers['user-agent'] || ''
-                // });
+                await adminLoginLogModel.clone().insertData({
+                    user_id: adminData.id,
+                    username: adminData.username,
+                    nickname: adminData.nickname,
+                    role: adminData.role,
+                    ip: req.ip || '',
+                    ua: req.headers['user-agent'] || ''
+                });
 
                 // 成功返回
                 return {

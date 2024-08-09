@@ -5,7 +5,7 @@ import { fnField } from '../../utils/fnField.js';
 // 配置文件
 import { appConfig } from '../../config/app.js';
 // 数据表格
-import { tableData } from '../../tables/admin.js';
+import { tableData } from '../../tables/adminLoginLog.js';
 // 接口元数据
 import { metaConfig } from './_meta.js';
 
@@ -23,16 +23,15 @@ export default async (fastify) => {
         // 执行函数
         apiHandler: async (req) => {
             try {
-                const adminModel = fastify.mysql //
-                    .table('sys_admin')
-                    .where('username', '<>', 'dev');
+                const adminLoginLogModel = fastify.mysql //
+                    .table('sys_admin_login_log');
 
-                const { totalCount } = await adminModel.clone().selectCount();
-                const rows = await adminModel
+                const { totalCount } = await adminLoginLogModel.clone().selectCount();
+                const rows = await adminLoginLogModel
                     //
                     .clone()
                     .orderBy('created_at', 'desc')
-                    .selectData(req.body.page, req.body.limit, fnField(tableData, ['password']));
+                    .selectData(req.body.page, req.body.limit, fnField(tableData));
 
                 return {
                     ...appConfig.http.SELECT_SUCCESS,
