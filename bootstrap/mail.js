@@ -5,7 +5,7 @@ import { appConfig } from '../config/app.js';
 async function plugin(fastify) {
     const mailTransport = await nodemailer.createTransport({
         host: appConfig.mail.host,
-        port: appConfig.mail.post,
+        port: appConfig.mail.port,
         pool: appConfig.mail.pool,
         secure: appConfig.mail.secure,
         auth: {
