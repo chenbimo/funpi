@@ -1,5 +1,5 @@
 // 工具函数
-import { fnRoute } from '../../utils/fnRoute.js';
+import { fnRoute } from '../../util.js';
 // 配置文件
 import { appConfig } from '../../config/app.js';
 // 数据表格

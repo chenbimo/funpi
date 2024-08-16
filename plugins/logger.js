@@ -4,7 +4,7 @@ import { resolve } from 'node:path';
 import winston from 'winston';
 import 'winston-daily-rotate-file';
 
-import { system } from '../system.js';
+import { system } from '../util.js';
 
 const fileConfig = {
     dirname: resolve(system.appDir, 'logs'),

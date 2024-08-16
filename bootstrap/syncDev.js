@@ -147,4 +147,4 @@ async function plugin(fastify) {
         process.exit();
     }
 }
-export default fp(plugin, { name: 'syncDev', dependencies: ['redis', 'mysql', 'tool', 'syncApi', 'syncMenu'] });
+export default fp(plugin, { name: 'funpiSyncDev', dependencies: ['funpiRedis', 'funpiMysql', 'funpiTool', 'funpiSyncApi', 'funpiSyncMenu'] });

@@ -30,7 +30,6 @@
         "schema/",
         "scripts/",
         "tables/",
-        "utils/",
         ".gitignore",
         ".npmrc",
         ".prettierignore",
@@ -41,7 +40,7 @@
         "LICENSE",
         "package.json",
         "README.md",
-        "system.js"
+        "util.js"
     ],
     "engines": {
         "node": ">=20.6.0"

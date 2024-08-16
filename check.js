@@ -7,13 +7,12 @@ import localize from 'ajv-i18n';
 import { yd_misc_4StateSymbol } from 'yidash';
 
 // 内部模块
-import { system } from './system.js';
 
 // 配置文件
 import { appConfig } from './config/app.js';
 // 协议配置
 // 工具函数
-import { fnImport } from './utils/fnImport.js';
+import { fnImport, system } from './util.js';
 
 // 判断运行目录下是否有 funpi.js 文件
 if (existsSync(resolve(system.appDir, 'funpi.js')) === false) {

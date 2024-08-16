@@ -1,7 +1,5 @@
 // 工具函数
-import { fnRoute } from '../../utils/fnRoute.js';
-import { fnSchema } from '../../utils/fnSchema.js';
-import { fnField } from '../../utils/fnField.js';
+import { fnRoute, fnSchema, fnField } from '../../util.js';
 // 配置文件
 import { appConfig } from '../../config/app.js';
 // 数据表格

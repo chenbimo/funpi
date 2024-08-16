@@ -1,8 +1,7 @@
 // 外部模块
 import { yd_object_omit, yd_crypto_md5 } from 'yidash';
 // 工具函数
-import { fnRoute } from '../../utils/fnRoute.js';
-import { fnSchema } from '../../utils/fnSchema.js';
+import { fnRoute, fnSchema } from '../../util.js';
 // 配置文件
 import { appConfig } from '../../config/app.js';
 // 数据表格

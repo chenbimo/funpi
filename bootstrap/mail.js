@@ -32,6 +32,6 @@ async function plugin(fastify) {
         });
     }
 
-    fastify.decorate('sendEmail', sendMail);
+    fastify.decorate('sendMail', sendMail);
 }
-export default fp(plugin, { name: 'email' });
+export default fp(plugin, { name: 'funpiMail' });

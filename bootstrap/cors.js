@@ -21,4 +21,4 @@ async function plugin(fastify) {
         };
     });
 }
-export default fp(plugin, { name: 'cors' });
+export default fp(plugin, { name: 'funpiCors' });

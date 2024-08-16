@@ -35,4 +35,4 @@ async function plugin(fastify) {
     }
 }
 
-export default fp(plugin, { name: 'rate', dependencies: ['redis'] });
+export default fp(plugin, { name: 'funpiRate', dependencies: ['funpiRedis'] });

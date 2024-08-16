@@ -5,12 +5,11 @@ import { readdirSync } from 'node:fs';
 import fp from 'fastify-plugin';
 
 // 工具函数
-import { fnImport } from '../utils/fnImport.js';
+import { system, fnImport } from '../util.js';
 import { yd_is_object, yd_object_omit, yd_array_keyBy } from 'yidash';
 import { yd_number_incrTimeID } from 'yidash/node';
 // 工具函数
 // 配置文件
-import { system } from '../system.js';
 import { appConfig } from '../config/app.js';
 
 // 获取所有接口文件
@@ -306,4 +305,4 @@ async function plugin(fastify) {
         fastify.log.error(err);
     }
 }
-export default fp(plugin, { name: 'syncApi', dependencies: ['redis', 'mysql', 'tool'] });
+export default fp(plugin, { name: 'funpiSyncApi', dependencies: ['funpiRedis', 'funpiMysql', 'funpiTool'] });

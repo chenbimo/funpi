@@ -147,4 +147,4 @@ async function plugin(fastify) {
     }
 }
 
-export default fp(plugin, { name: 'mysql' });
+export default fp(plugin, { name: 'funpiMysql' });

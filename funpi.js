@@ -27,9 +27,7 @@ import syncMenuPlugin from './bootstrap/syncMenu.js';
 import syncDevPlugin from './bootstrap/syncDev.js';
 
 // 工具函数
-import { fnRoute } from './utils/fnRoute.js';
-import { fnSchema } from './utils/fnSchema.js';
-import { fnField } from './utils/fnField.js';
+import { system, fnRoute, fnSchema, fnField } from './util.js';
 
 // 数据库表
 import { tableData as adminTable } from './tables/admin.js';
@@ -42,10 +40,8 @@ import { syncMysql } from './scripts/syncMysql.js';
 
 // 配置信息
 import { appConfig } from './config/app.js';
-import { system } from './system.js';
 
-const appDir = system.appDir;
-const funpiDir = system.funpiDir;
+const { appDir, funpiDir } = system;
 
 // 初始化项目实例
 const fastify = Fastify({
@@ -109,7 +105,8 @@ fastify.setNotFoundHandler(function (req, res) {
 // 静态资源托管
 fastify.register(fastifyStatic, {
     root: resolve(system.appDir, 'public'),
-    prefix: '/'
+    prefix: '/public/',
+    list: true
 });
 
 // 加载启动插件

@@ -1,7 +1,6 @@
 // 工具函数
 import { yd_crypto_md5 } from 'yidash';
-import { fnRoute } from '../../utils/fnRoute.js';
-import { fnSchema } from '../../utils/fnSchema.js';
+import { fnRoute, fnSchema } from '../../util.js';
 // 配置文件
 import { appConfig } from '../../config/app.js';
 // 数据表格

@@ -1,15 +1,14 @@
 // 内部模块
 import { existsSync } from 'node:fs';
-import { resolve } from 'node:path';
+import { resolve, join } from 'node:path';
 // 外部模块
 import fp from 'fastify-plugin';
 import picomatch from 'picomatch';
 import { yd_object_omit, yd_array_unique, yd_array_findObj } from 'yidash';
 // 配置文件
-import { system } from '../system.js';
 import { appConfig } from '../config/app.js';
 // 工具函数
-import { fnApiCheck } from '../utils/fnApiCheck.js';
+import { system, fnApiCheck } from '../util.js';
 
 async function plugin(fastify) {
     fastify.addHook('preHandler', async (req, res) => {
@@ -22,13 +21,25 @@ async function plugin(fastify) {
                 res.send({ code: 0, msg: `${appConfig.appName} 接口程序已启动` });
                 return;
             }
-            if (routePath.startsWith('/swagger')) return;
+            if (routePath.startsWith('/swagger/')) return;
 
             /* --------------------------------- 接口禁用检测 --------------------------------- */
             const isMatchBlackApi = picomatch.isMatch(routePath, appConfig.blackApis);
             if (isMatchBlackApi === true) {
                 res.send(appConfig.http.API_DISABLED);
                 return;
+            }
+
+            /* --------------------------------- 请求资源判断 --------------------------------- */
+            if (routePath.startsWith('/public')) {
+                const filePath = join(system.appDir, routePath);
+                if (existsSync(filePath) === true) {
+                    return;
+                } else {
+                    // 文件不存在
+                    res.send(appConfig.http.NO_FILE);
+                    return;
+                }
             }
 
             /* --------------------------------- 解析用户登录参数 --------------------------------- */
@@ -44,17 +55,6 @@ async function plugin(fastify) {
             const isMatchFreeApi = picomatch.isMatch(routePath, appConfig.freeApis);
             // 如果是自由通行的接口，则直接返回
             if (isMatchFreeApi === true) return;
-
-            /* --------------------------------- 请求资源判断 --------------------------------- */
-            if (routePath.indexOf('.') !== -1) {
-                if (existsSync(resolve(system.appDir, 'public', routePath)) === true) {
-                    return;
-                } else {
-                    // 文件不存在
-                    res.send(appConfig.http.NO_FILE);
-                    return;
-                }
-            }
 
             /* --------------------------------- 接口存在性判断 -------------------------------- */
             const allApiNames = await fastify.redisGet(appConfig.cache.apiNames);
@@ -115,7 +115,7 @@ async function plugin(fastify) {
                 return;
             }
         } catch (err) {
-            // fastify.log.error(err);
+            fastify.log.error(err);
             res.send({
                 ...appConfig.http.FAIL,
                 msg: err.msg || '认证异常',
@@ -125,4 +125,4 @@ async function plugin(fastify) {
         }
     });
 }
-export default fp(plugin, { name: 'auth', dependencies: ['cors', 'mysql', 'tool'] });
+export default fp(plugin, { name: 'funpiAuth', dependencies: ['funpiCors', 'funpiMysql', 'funpiTool'] });

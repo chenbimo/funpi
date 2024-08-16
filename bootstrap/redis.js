@@ -69,4 +69,4 @@ function plugin(fastify, opts, next) {
         client.ping();
     }
 }
-export default fp(plugin, { name: 'redis' });
+export default fp(plugin, { name: 'funpiRedis' });

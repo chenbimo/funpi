@@ -22,6 +22,7 @@ export const metaConfig = {
         roleInsert: '添加角色',
         roleSelectAll: '查询角色-全部',
         roleSelectPage: '查询角色-分页',
-        roleUpdate: '更新角色'
+        roleUpdate: '更新角色',
+        mailSelectPage: '查询邮件日志-分页'
     }
 };

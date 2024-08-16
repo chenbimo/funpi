@@ -52,5 +52,5 @@ async function plugin(fastify) {
 }
 
 export default fp(plugin, {
-    name: 'xmlParse'
+    name: 'funpiXmlParse'
 });

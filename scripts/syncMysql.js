@@ -21,12 +21,10 @@ import {
     yd_datetime_format
 } from 'yidash';
 // 配置文件
-import { system } from '../system.js';
 import { appConfig } from '../config/app.js';
 import { tableSchema } from '../schema/table.js';
-
 // 工具函数
-import { fnImport } from '../utils/fnImport.js';
+import { system, fnImport } from '../util.js';
 
 // 创建顺序自增唯一 ID
 function fnIncrDate() {

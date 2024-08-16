@@ -25,4 +25,4 @@ function plugin(fastify, opts, next) {
     });
     next();
 }
-export default fp(plugin, { name: 'cron', dependencies: ['tool'] });
+export default fp(plugin, { name: 'funpiCron', dependencies: ['funpiTool'] });

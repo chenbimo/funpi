@@ -1,7 +1,6 @@
 import { yd_number_random } from 'yidash';
 // 工具函数
-import { fnRoute } from '../../utils/fnRoute.js';
-import { fnSchema } from '../../utils/fnSchema.js';
+import { fnRoute, fnSchema } from '../../util.js';
 // 配置文件
 import { appConfig } from '../../config/app.js';
 // 接口元数据
@@ -41,7 +40,7 @@ export default async (fastify) => {
                 const mailLogModel = fastify.mysql.table('sys_mail_log');
                 // 普通发送
                 if (req.body.content) {
-                    await fastify.sendEmail({
+                    await fastify.sendMail({
                         to: req.body.to_email,
                         subject: req.body.subject,
                         text: req.body.content
@@ -76,7 +75,7 @@ export default async (fastify) => {
                     // 如果没有发送过
                     const cacheVerifyCode = yd_number_random(100000, 999999);
                     await fastify.redisSet(`${req.body.verify_name}:${req.body.to_email}`, cacheVerifyCode, 60 * 5);
-                    await fastify.sendEmail({
+                    await fastify.sendMail({
                         to: req.body.to_email,
                         subject: req.body.subject,
                         text: req.body.subject + '：' + cacheVerifyCode

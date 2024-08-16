@@ -1,7 +1,6 @@
 import { resolve } from 'node:path';
 import { yd_object_merge } from 'yidash';
-import { fnImport } from '../utils/fnImport.js';
-import { system } from '../system.js';
+import { system, fnImport } from '../util.js';
 
 const absolutePath = resolve(system.appDir, 'config', 'app.js');
 const { appConfig: importConfig } = await fnImport(absolutePath, 'appConfig', {});
@@ -147,6 +146,11 @@ const replaceObj = {
                     name: '登录日志',
                     is_system: 1,
                     sort: 2
+                },
+                '/internal/mail-log': {
+                    name: '邮件日志',
+                    is_system: 1,
+                    sort: 3
                 }
             }
         },

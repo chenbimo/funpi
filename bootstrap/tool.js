@@ -136,4 +136,4 @@ async function plugin(fastify) {
     // 设置角色数据
     fastify.decorate('cacheRoleData', cacheRoleData);
 }
-export default fp(plugin, { name: 'tool', dependencies: ['redis', 'mysql'] });
+export default fp(plugin, { name: 'funpiTool', dependencies: ['funpiRedis', 'funpiMysql'] });
