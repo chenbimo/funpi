@@ -103,7 +103,10 @@ export function fnApiInfo(metaUrl) {
 // 获取数据库字段
 export const fnField = (tableData, exclude = []) => {
     const defaultFields = ['id', 'created_at', 'updated_at', 'deleted_at'];
-    const selectFields = Object.keys(tableData).filter((field) => !exclude[field]);
+    const selectFields = Object.keys(tableData).filter((field) => {
+        const isPass = !exclude.includes(field);
+        return isPass;
+    });
     return [...defaultFields, ...selectFields];
 };
 
