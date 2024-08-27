@@ -75,15 +75,15 @@ const replaceObj = {
     // 缓存 key映射
     cache: {
         // 角色缓存
-        role: 'cacheData:role',
+        role: 'cacheData_role',
         // 菜单缓存
-        menu: 'cacheData:menu',
+        menu: 'cacheData_menu',
         // 接口缓存
-        api: 'cacheData:api',
+        api: 'cacheData_api',
         // 接口名称缓存
-        apiNames: 'cacheData:apiNames',
+        apiNames: 'cacheData_apiNames',
         // 接口白名单列表
-        apiWhiteLists: 'cacheData:apiWhiteLists'
+        apiWhiteLists: 'cacheData_apiWhiteLists'
     },
     // Http 状态码
     http: {
@@ -105,7 +105,8 @@ const replaceObj = {
         NO_FILE: { symbol: 'NO_FILE', code: 17, msg: '文件不存在' },
         NO_API: { symbol: 'NO_API', code: 18, msg: '接口不存在' },
         NO_USER: { symbol: 'NO_USER', code: 19, msg: '用户不存在' },
-        NO_DATA: { symbol: 'NO_DATA', code: 20, msg: '数据不存在' }
+        NO_DATA: { symbol: 'NO_DATA', code: 20, msg: '数据不存在' },
+        NO_PERMISSION: { symbol: 'NO_PERMISSION', code: 21, msg: '无操作权限' }
     },
     // 角色配置
     role: {

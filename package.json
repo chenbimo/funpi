@@ -1,6 +1,6 @@
 {
     "name": "funpi",
-    "version": "6.0.2",
+    "version": "6.0.4",
     "description": "funpi(放屁) - 像放屁一样简单又自然的Node.js接口开发框架",
     "type": "module",
     "private": false,
@@ -59,7 +59,7 @@
         "@fastify/rate-limit": "^9.1.0",
         "@fastify/static": "^7.0.4",
         "@fastify/swagger": "^8.15.0",
-        "@fastify/swagger-ui": "^4.0.1",
+        "@fastify/swagger-ui": "^4.1.0",
         "ajv": "^8.17.1",
         "ajv-i18n": "^4.2.0",
         "bull": "^4.16.0",
@@ -74,20 +74,20 @@
         "nodemailer": "^6.9.14",
         "picocolors": "^1.0.1",
         "picomatch": "^4.0.2",
-        "winston": "^3.13.1",
+        "winston": "^3.14.2",
         "winston-daily-rotate-file": "^5.0.0",
-        "yidash": "link:..\\yidash"
+        "yidash": "^1.6.0"
     },
     "devDependencies": {
-        "@eslint/config-inspector": "^0.5.2",
-        "@eslint/js": "^9.8.0",
-        "eslint": "^9.8.0",
+        "@eslint/config-inspector": "^0.5.4",
+        "@eslint/js": "^9.9.1",
+        "eslint": "^9.9.1",
         "eslint-config-prettier": "^9.1.0",
         "eslint-plugin-prettier": "^5.2.1",
         "globals": "^15.9.0",
-        "lint-staged": "^15.2.8",
+        "lint-staged": "^15.2.9",
         "prettier": "^3.3.3",
-        "rollup": "^4.20.0",
+        "rollup": "^4.21.1",
         "simple-git-hooks": "^2.11.1"
     },
     "simple-git-hooks": {
