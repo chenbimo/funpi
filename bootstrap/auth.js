@@ -1,10 +1,11 @@
 // 内部模块
 import { existsSync } from 'node:fs';
-import { resolve, join } from 'node:path';
+import { join } from 'node:path';
 // 外部模块
 import fp from 'fastify-plugin';
 import picomatch from 'picomatch';
-import { yd_object_omit, yd_array_unique, yd_array_findObj } from 'yidash';
+import { omit as es_omit, uniq as es_uniq } from 'es-toolkit';
+import { find as es_find } from 'es-toolkit/compat';
 // 配置文件
 import { appConfig } from '../config/app.js';
 // 工具函数
@@ -81,7 +82,7 @@ async function plugin(fastify) {
              */
             fastify.log.warn({
                 apiPath: req?.url,
-                body: yd_object_omit(req?.body || {}, appConfig.reqParamsFilter),
+                body: es_omit(req?.body || {}, appConfig.reqParamsFilter),
                 session: req?.session,
                 reqId: req?.id
             });
@@ -95,7 +96,7 @@ async function plugin(fastify) {
             // 从缓存获取白名单接口
             const dataApiWhiteLists = await fastify.redisGet(appConfig.cache.apiWhiteLists);
             const whiteApis = dataApiWhiteLists?.map((item) => item.value);
-            const allWhiteApis = yd_array_unique([...appConfig.whiteApis, ...(whiteApis || [])]);
+            const allWhiteApis = es_uniq([...appConfig.whiteApis, ...(whiteApis || [])]);
 
             // 是否匹配白名单
             const isMatchWhiteApi = picomatch.isMatch(routePath, allWhiteApis);
@@ -105,7 +106,7 @@ async function plugin(fastify) {
             /* ---------------------------------- 角色接口权限判断 --------------------------------- */
             // 如果接口不在白名单中，则判断用户是否有接口访问权限
             const userApis = await fastify.getUserApis(req.session);
-            const hasApi = yd_array_findObj(userApis, 'value', routePath.replace('/api/', '/'));
+            const hasApi = es_find(userApis, ['value', routePath.replace('/api/', '/')]);
 
             if (!hasApi) {
                 res.send({

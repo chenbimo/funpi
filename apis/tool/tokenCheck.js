@@ -1,8 +1,5 @@
-// 工具函数
 import { fnRoute } from '../../util.js';
-// 配置文件
 import { appConfig } from '../../config/app.js';
-// 接口元数据
 import { metaConfig } from './_meta.js';
 
 // 处理函数

@@ -1,5 +1,5 @@
 import { resolve } from 'node:path';
-import { yd_object_merge } from 'yidash';
+import { merge as es_merge } from 'es-toolkit';
 import { system, fnImport } from '../util.js';
 
 const absolutePath = resolve(system.appDir, 'config', 'app.js');
@@ -178,6 +178,6 @@ const replaceObj = {
         }
     }
 };
-const appConfig = yd_object_merge(targetObject, yd_object_merge(importConfig, replaceObj));
+const appConfig = es_merge(targetObject, es_merge(importConfig, replaceObj));
 
 export { appConfig };

@@ -10,25 +10,18 @@ import Knex from 'knex';
 import colors from 'picocolors';
 import Ajv from 'ajv';
 import localize from 'ajv-i18n';
-import {
-    //
-    yd_is_arrayContain,
-    yd_is_object,
-    yd_is_plainObject,
-    yd_string_snakeCase,
-    yd_array_diffBoth,
-    yd_misc_4StateSymbol,
-    yd_datetime_format
-} from 'yidash';
+import { isPlainObject as es_isPlainObject, snakeCase as es_snakeCase } from 'es-toolkit';
+import { isObject as es_isObject } from 'es-toolkit/compat';
+import { yd_is_arrayContain, yd_array_diffBoth, yd_misc_4StateSymbol } from 'yidash';
 // 配置文件
 import { appConfig } from '../config/app.js';
 import { tableSchema } from '../schema/table.js';
 // 工具函数
-import { system, fnImport } from '../util.js';
+import { system, fnImport, fnFormatNow } from '../util.js';
 
 // 创建顺序自增唯一 ID
 function fnIncrDate() {
-    const dateFormat = yd_datetime_format(new Date(), 'yyyyMMddHHmmss');
+    const dateFormat = fnFormatNow();
     const random = randomInt(100000, 999999);
     return `${dateFormat}_${random}`;
 }
@@ -116,7 +109,7 @@ export const syncMysql = async () => {
                 console.log(`${yd_misc_4StateSymbol('warn')} ${item.file} 文件名只能为 大小写字母+数字+下划线`);
                 process.exit();
             }
-            const tableFile = item.prefix + yd_string_snakeCase(pureFileName.trim());
+            const tableFile = item.prefix + es_snakeCase(pureFileName.trim());
             if (!item.prefix && tableFile.startsWith('sys_') === true) {
                 console.log(`${yd_misc_4StateSymbol('warn')} ${item.file} 非系统表不能以 sys_ 开头`);
                 process.exit();
@@ -134,12 +127,12 @@ export const syncMysql = async () => {
                 process.exit();
             }
 
-            if (yd_is_object(tableData) === false) {
+            if (es_isObject(tableData) === false) {
                 console.log(`${yd_misc_4StateSymbol('warn')} ${item.file} 文件的 tableData 必须为对象结构`);
                 process.exit();
             }
 
-            if (yd_is_plainObject(tableData || {}) === true) {
+            if (es_isPlainObject(tableData || {}) === true) {
                 console.log(`${yd_misc_4StateSymbol('warn')} ${item.file} 文件的 tableData 必须为非空对象`);
                 process.exit();
             }

@@ -1,7 +1,7 @@
 // 外部模块
 import fp from 'fastify-plugin';
-import { yd_object_omit, yd_crypto_md5 } from 'yidash';
-import { yd_number_incrTimeID } from 'yidash/node';
+import { omit as es_omit } from 'es-toolkit';
+import { yd_number_incrTimeID, yd_crypto_md5, yd_crypto_hmacMd5 } from 'yidash/node';
 // 工具函数
 // 配置文件
 import { appConfig } from '../config/app.js';
@@ -77,7 +77,7 @@ async function plugin(fastify) {
                     return roleModel
                         .clone()
                         .where('code', item.code)
-                        .updateData(yd_object_omit(item, ['code']));
+                        .updateData(es_omit(item, ['code']));
                 });
                 await Promise.all(updateBatchData);
             }
@@ -121,7 +121,7 @@ async function plugin(fastify) {
                 username: 'dev',
                 nickname: '开发管理员',
                 role: 'dev',
-                password: yd_crypto_md5(yd_crypto_md5(appConfig.devPassword), appConfig.md5Salt)
+                password: yd_crypto_hmacMd5(yd_crypto_md5(appConfig.devPassword), appConfig.md5Salt)
             };
             if (appConfig.tablePrimaryKey === 'time') {
                 insertData.id = yd_number_incrTimeID();
@@ -134,7 +134,7 @@ async function plugin(fastify) {
             const updateData = {
                 nickname: '开发管理员',
                 role: 'dev',
-                password: yd_crypto_md5(yd_crypto_md5(appConfig.devPassword), appConfig.md5Salt)
+                password: yd_crypto_hmacMd5(yd_crypto_md5(appConfig.devPassword), appConfig.md5Salt)
             };
             // 只有主进程才操作一次
             if (!process.env.NODE_APP_INSTANCE || process.env.NODE_APP_INSTANCE === '0') {

@@ -1,5 +1,5 @@
 // 工具函数
-import { yd_crypto_md5 } from 'yidash';
+import { yd_crypto_md5, yd_crypto_hmacMd5 } from 'yidash/node';
 import { fnRoute, fnSchema } from '../../util.js';
 // 配置文件
 import { appConfig } from '../../config/app.js';
@@ -42,7 +42,7 @@ export default async (fastify) => {
 
                 const result = await adminModel.clone().insertData({
                     username: req.body.username,
-                    password: yd_crypto_md5(yd_crypto_md5(req.body.password), appConfig.md5Salt),
+                    password: yd_crypto_hmacMd5(yd_crypto_md5(req.body.password), appConfig.md5Salt),
                     nickname: req.body.nickname,
                     role: req.body.role
                 });

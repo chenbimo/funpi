@@ -2,16 +2,10 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import { dirname, basename } from 'node:path';
 import { cwd } from 'node:process';
 import colors from 'picocolors';
-import {
-    //
-    yd_crypto_md5,
-    yd_object_omit,
-    yd_is_empty,
-    yd_is_string,
-    yd_is_object,
-    yd_is_function,
-    yd_misc_4StateSymbol
-} from 'yidash';
+import { isString as es_isString, isFunction as es_isFunction, omit as es_omit } from 'es-toolkit';
+import { isObject as es_isObject } from 'es-toolkit/compat';
+import { yd_misc_4StateSymbol } from 'yidash';
+import { yd_crypto_md5 } from 'yidash/node';
 
 // 字段协议映射
 const tableFieldSchemaMap = {
@@ -38,14 +32,27 @@ export const system = {
     funpiDir: dirname(import.meta.filename)
 };
 
+export const fnFormatNow = () => {
+    const now = new Date();
+
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+
+    return `${year}${month}${day}${hours}${minutes}${seconds}`;
+};
+
 //  检查传参有效性
 export function fnApiCheck(req) {
     return new Promise((resolve, reject) => {
         const fields = req.body;
 
-        const fieldsParams = yd_object_omit(fields, ['sign']);
+        const fieldsParams = es_omit(fields, ['sign']);
 
-        if (yd_is_empty(fieldsParams)) {
+        if (Object.keys(fieldsParams).length === 0) {
             return resolve({ code: 0, msg: '接口未带参数' });
         }
 
@@ -125,12 +132,12 @@ export const fnImport = async (absolutePath, name, defaultValue = {}) => {
 
 // 设置路由函数
 export const fnRoute = (metaUrl, fastify, metaConfig, options) => {
-    if (yd_is_string(metaUrl) === false) {
+    if (es_isString(metaUrl) === false) {
         console.log(`${yd_misc_4StateSymbol('error')} ${colors.blue(metaUrl)} 接口的 fnRoute 函数第一个参数必须为 import.meta.url，请检查`);
         process.exit();
     }
 
-    if (yd_is_object(fastify) === false) {
+    if (es_isObject(fastify) === false) {
         console.log(`${yd_misc_4StateSymbol('error')} ${colors.blue(metaUrl)} 接口的 fnRoute 函数第二个参数必须为 fastify 实例，请检查`);
         process.exit();
     }
@@ -140,16 +147,16 @@ export const fnRoute = (metaUrl, fastify, metaConfig, options) => {
         process.exit();
     }
 
-    if (yd_is_object(options) === false) {
+    if (es_isObject(options) === false) {
         console.log(`${yd_misc_4StateSymbol('error')} ${colors.blue(metaUrl)} 接口的 fnRoute 函数第四个参数必须为 Object 对象，请检查`);
         process.exit();
     }
 
-    if (yd_is_object(options.schemaRequest) === false) {
+    if (es_isObject(options.schemaRequest) === false) {
         console.log(`${yd_misc_4StateSymbol('error')} ${colors.blue(metaUrl)} 接口的 schemaRequest 必须为一个对象，请检查`);
         process.exit();
     }
-    if (yd_is_function(options.apiHandler) === false) {
+    if (es_isFunction(options.apiHandler) === false) {
         console.log(`${yd_misc_4StateSymbol('error')} ${colors.blue(metaUrl)} 接口的 apiHandler 必须为一个函数，请检查`);
         process.exit();
     }

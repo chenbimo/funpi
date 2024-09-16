@@ -1,6 +1,6 @@
 import fp from 'fastify-plugin';
 import Knex from 'knex';
-import { yd_is_array } from 'yidash';
+import { isArray as es_isArray } from 'es-toolkit';
 import { yd_number_incrTimeID } from 'yidash/node';
 
 // 工具集
@@ -47,7 +47,7 @@ async function plugin(fastify) {
     try {
         // 添加数据
         Knex.QueryBuilder.extend('insertData', function (data) {
-            if (yd_is_array(data)) {
+            if (es_isArray(data)) {
                 const data2 = data.map((item) => {
                     return dbInsert(item);
                 });
@@ -66,7 +66,7 @@ async function plugin(fastify) {
         });
         // 查询数据
         Knex.QueryBuilder.extend('selectData', function (page, limit, args) {
-            if (yd_is_array(args) === true) {
+            if (es_isArray(args) === true) {
                 return this.offset((page - 1) * limit)
                     .limit(limit)
                     .select(...args);
@@ -78,7 +78,7 @@ async function plugin(fastify) {
         });
         // 查询一条
         Knex.QueryBuilder.extend('selectOne', function (args) {
-            if (yd_is_array(args) === true) {
+            if (es_isArray(args) === true) {
                 return this.first(...args);
             } else {
                 return this.first();
@@ -86,7 +86,7 @@ async function plugin(fastify) {
         });
         // 查询所有
         Knex.QueryBuilder.extend('selectAll', function (args) {
-            if (yd_is_array(args) === true) {
+            if (es_isArray(args) === true) {
                 return this.select(...args);
             } else {
                 return this.select();

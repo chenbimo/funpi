@@ -1,5 +1,6 @@
 // 外部模块
-import { yd_object_omit, yd_crypto_md5 } from 'yidash';
+import { yd_crypto_hmacMd5 } from 'yidash/node';
+import { omit as es_omit } from 'es-toolkit';
 // 工具函数
 import { fnRoute, fnSchema } from '../../util.js';
 // 配置文件
@@ -43,7 +44,7 @@ export default async (fastify) => {
                 }
 
                 // 判断密码
-                if (yd_crypto_md5(req.body.password, appConfig.md5Salt) !== adminData.password) {
+                if (yd_crypto_hmacMd5(req.body.password, appConfig.md5Salt) !== adminData.password) {
                     return {
                         ...appConfig.http.FAIL,
                         msg: '密码错误'
@@ -63,7 +64,7 @@ export default async (fastify) => {
                 return {
                     ...appConfig.http.SUCCESS,
                     msg: '登录成功',
-                    data: yd_object_omit(adminData, ['password']),
+                    data: es_omit(adminData, ['password']),
                     token: await fastify.jwt.sign({
                         id: adminData.id,
                         username: adminData.username,

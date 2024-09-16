@@ -1,9 +1,6 @@
-import { yd_number_random } from 'yidash';
-// 工具函数
+import { randomInt } from 'es-toolkit';
 import { fnRoute, fnSchema } from '../../util.js';
-// 配置文件
 import { appConfig } from '../../config/app.js';
-// 接口元数据
 import { metaConfig } from './_meta.js';
 
 // 处理函数
@@ -73,7 +70,7 @@ export default async (fastify) => {
                     }
 
                     // 如果没有发送过
-                    const cacheVerifyCode = yd_number_random(100000, 999999);
+                    const cacheVerifyCode = randomInt(100000, 999999);
                     await fastify.redisSet(`${req.body.verify_name}:${req.body.to_email}`, cacheVerifyCode, 60 * 5);
                     await fastify.sendMail({
                         to: req.body.to_email,

@@ -1,6 +1,7 @@
 import { Cron } from 'croner';
 import fp from 'fastify-plugin';
-import { yd_is_function, yd_misc_4StateSymbol } from 'yidash';
+import { isFunction as es_isFunction } from 'es-toolkit';
+import { yd_misc_4StateSymbol } from 'yidash';
 
 // 工具函数
 
@@ -9,7 +10,7 @@ import { appConfig } from '../config/app.js';
 
 function plugin(fastify, opts, next) {
     appConfig.cron.forEach((item) => {
-        if (yd_is_function(item.handler) === false) {
+        if (es_isFunction(item.handler) === false) {
             console.log(yd_misc_4StateSymbol('error'), `${item.name} 定时器 handler 必须为一个函数`);
             process.exit();
         }
