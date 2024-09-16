@@ -1,6 +1,6 @@
 import fp from 'fastify-plugin';
 import Knex from 'knex';
-import { isArray as es_isArray } from 'es-toolkit';
+import { isArray as es_isArray } from 'es-toolkit/compat';
 import { yd_number_incrTimeID } from 'yidash/node';
 
 // 工具集
