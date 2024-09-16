@@ -4,12 +4,19 @@ import { join } from 'node:path';
 // 外部模块
 import fp from 'fastify-plugin';
 import picomatch from 'picomatch';
-import { omit as es_omit, uniq as es_uniq } from 'es-toolkit';
+import { uniq as es_uniq, isPlainObject as es_isPlainObject } from 'es-toolkit';
 import { find as es_find } from 'es-toolkit/compat';
+import { configure } from 'safe-stable-stringify';
 // 配置文件
 import { appConfig } from '../config/app.js';
 // 工具函数
 import { system, fnApiCheck } from '../util.js';
+
+const safeStableStringify = configure({
+    bigint: true,
+    deterministic: false,
+    maximumDepth: 3
+});
 
 async function plugin(fastify) {
     fastify.addHook('preHandler', async (req, res) => {
@@ -52,6 +59,33 @@ async function plugin(fastify) {
                 isAuthFail = true;
             }
 
+            /* ---------------------------------- 日志记录 ---------------------------------- */
+            /**
+             * 如果请求的接口不是文档地址
+             * 才进行日志记录
+             * 减少无意义的日志
+             */
+
+            if (es_isPlainObject(req?.body)) {
+                const body = {};
+                for (let key in req.body) {
+                    if (Object.hasOwnProperty.call(req.body, key)) {
+                        const strValue = safeStableStringify(req.body[key]);
+                        if (strValue?.length > 200) {
+                            body[key] = strValue?.substring(0, 200);
+                        } else {
+                            body[key] = req.body[key];
+                        }
+                    }
+                }
+                fastify.log.warn({
+                    apiPath: req?.url,
+                    body: body,
+                    session: req?.session,
+                    reqId: req?.id
+                });
+            }
+
             /* --------------------------------- 自由接口判断 --------------------------------- */
             const isMatchFreeApi = picomatch.isMatch(routePath, appConfig.freeApis);
             // 如果是自由通行的接口，则直接返回
@@ -73,19 +107,6 @@ async function plugin(fastify) {
                 });
                 return;
             }
-
-            /* ---------------------------------- 日志记录 ---------------------------------- */
-            /**
-             * 如果请求的接口不是文档地址
-             * 才进行日志记录
-             * 减少无意义的日志
-             */
-            fastify.log.warn({
-                apiPath: req?.url,
-                body: es_omit(req?.body || {}, appConfig.reqParamsFilter),
-                session: req?.session,
-                reqId: req?.id
-            });
 
             /* --------------------------------- 上传参数检测 --------------------------------- */
             if (appConfig.paramsCheck !== false) {

@@ -46,7 +46,7 @@ export const fnFormatNow = () => {
 };
 
 //  检查传参有效性
-export function fnApiCheck(req) {
+export const fnApiCheck = (req) => {
     return new Promise((resolve, reject) => {
         const fields = req.body;
 
@@ -85,10 +85,10 @@ export function fnApiCheck(req) {
 
         return resolve({ code: 0, msg: '接口参数正常' });
     });
-}
+};
 
 // 获取接口信息
-export function fnApiInfo(metaUrl) {
+export const fnApiInfo = (metaUrl) => {
     const _filename = fileURLToPath(metaUrl);
     const _dirname = dirname(_filename);
 
@@ -105,7 +105,7 @@ export function fnApiInfo(metaUrl) {
     };
 
     return apiData;
-}
+};
 
 // 获取数据库字段
 export const fnField = (tableData, exclude = []) => {
