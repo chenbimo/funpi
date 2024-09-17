@@ -89,7 +89,6 @@
         "globals": "^15.9.0",
         "lint-staged": "^15.2.10",
         "prettier": "^3.3.3",
-        "rollup": "^4.21.3",
         "simple-git-hooks": "^2.11.1"
     },
     "simple-git-hooks": {
