@@ -45,7 +45,7 @@ const { appDir, funpiDir } = system;
 
 // 初始化项目实例
 const fastify = Fastify({
-    logger: loggerPlugin,
+    loggerInstance: loggerPlugin,
     pluginTimeout: 0,
     bodyLimit: 10485760, // 10M
     ajv: {
