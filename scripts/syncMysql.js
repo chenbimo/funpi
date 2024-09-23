@@ -127,13 +127,8 @@ export const syncMysql = async () => {
                 process.exit();
             }
 
-            if (es_isObject(tableData) === false) {
-                console.log(`${yd_misc_4StateSymbol('warn')} ${item.file} 文件的 tableData 必须为对象结构`);
-                process.exit();
-            }
-
-            if (es_isPlainObject(tableData || {}) === true) {
-                console.log(`${yd_misc_4StateSymbol('warn')} ${item.file} 文件的 tableData 必须为非空对象`);
+            if (es_isPlainObject(tableData) === false) {
+                console.log(`${yd_misc_4StateSymbol('warn')} ${item.file} 文件的 tableData 必须为普通对象`);
                 process.exit();
             }
 
