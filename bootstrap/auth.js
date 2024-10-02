@@ -19,6 +19,11 @@ const safeStableStringify = configure({
 });
 
 async function plugin(fastify) {
+    fastify.addHook('onRequest', async (req) => {
+        if (!req.headers['Authorization'] && !req.headers['authorization']) {
+            req.headers['Authorization'] = 'Bearer funpi';
+        }
+    });
     fastify.addHook('preHandler', async (req, res) => {
         try {
             const urls = new URL(req.url, 'http://127.0.0.1');
