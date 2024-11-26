@@ -1,6 +1,6 @@
 {
     "name": "@funpi/api",
-    "version": "7.0.6",
+    "version": "7.0.4",
     "description": "放屁吧模板",
     "main": "funpi.js",
     "type": "module",
@@ -47,7 +47,7 @@
         "url": "https://github.com/chenbimo/yicode.git"
     },
     "dependencies": {
-        "funpi": "^7.0.6",
+        "funpi": "^7.0.4",
         "yidash": "^1.10.1"
     },
     "devDependencies": {
@@ -64,5 +64,5 @@
             "prettier --write --cache --ignore-unknown"
         ]
     },
-    "gitHead": "9bb3c7d12cb8c28e929270155e43355b19143a03"
+    "gitHead": "8db13ce3ca3108002ccca23e2930f808c78fadc4"
 }

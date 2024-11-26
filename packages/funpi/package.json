@@ -1,6 +1,6 @@
 {
     "name": "funpi",
-    "version": "7.0.6",
+    "version": "7.0.4",
     "description": "funpi(放屁) - 像放屁一样简单又自然的Node.js接口开发框架",
     "type": "module",
     "private": false,
@@ -73,5 +73,5 @@
         "winston-daily-rotate-file": "^5.0.0",
         "yidash": "^1.10.1"
     },
-    "gitHead": "9bb3c7d12cb8c28e929270155e43355b19143a03"
+    "gitHead": "8db13ce3ca3108002ccca23e2930f808c78fadc4"
 }

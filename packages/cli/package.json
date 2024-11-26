@@ -1,0 +1,35 @@
+{
+    "name": "@funpi/cli",
+    "version": "7.0.4",
+    "description": "funpi(放屁) - 占位",
+    "type": "module",
+    "private": false,
+    "publishConfig": {
+        "access": "public",
+        "registry": "https://registry.npmjs.org"
+    },
+    "exports": {
+        ".": "./funpi.js"
+    },
+    "scripts": {},
+    "keywords": [
+        "fastify",
+        "nodejs",
+        "api"
+    ],
+    "files": [
+        "LICENSE",
+        "package.json",
+        "README.md"
+    ],
+    "engines": {
+        "node": ">=20.6.0"
+    },
+    "author": "chensuiyi <bimostyle@qq.com>",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/chenbimo/funpi"
+    },
+    "homepage": "https://chensuiyi.me",
+    "gitHead": "8db13ce3ca3108002ccca23e2930f808c78fadc4"
+}

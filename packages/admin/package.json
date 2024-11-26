@@ -1,6 +1,6 @@
 {
     "name": "@funpi/admin",
-    "version": "7.0.6",
+    "version": "7.0.4",
     "description": "fnMap(待办)基于 vue3 + yite-cli + arco-design-vue 的后台管理模板222",
     "sideEffects": true,
     "type": "module",
@@ -75,5 +75,5 @@
             "prettier --write --cache --ignore-unknown"
         ]
     },
-    "gitHead": "9bb3c7d12cb8c28e929270155e43355b19143a03"
+    "gitHead": "8db13ce3ca3108002ccca23e2930f808c78fadc4"
 }
