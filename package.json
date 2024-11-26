@@ -17,7 +17,8 @@
     "author": "chensuiyi <bimostyle@qq.com>",
     "homepage": "https://chensuiyi.me",
     "devDependencies": {
-        "lerna": "^8.1.9",
+        "@lerna-lite/cli": "^3.10.0",
+        "@lerna-lite/publish": "^3.10.0",
         "lint-staged": "^15.2.10",
         "nodemon": "^3.1.7",
         "prettier": "^3.3.3",

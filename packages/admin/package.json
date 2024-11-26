@@ -1,6 +1,6 @@
 {
     "name": "@funpi/admin",
-    "version": "7.0.5",
+    "version": "7.1.3",
     "description": "FunPi(放屁) - 后台管理",
     "sideEffects": true,
     "type": "module",
@@ -71,5 +71,5 @@
             "prettier --write --cache --ignore-unknown"
         ]
     },
-    "gitHead": "8db13ce3ca3108002ccca23e2930f808c78fadc4"
+    "gitHead": "d8b5b2b3fc2f5ef798c6623008ebba13cbe5db26"
 }

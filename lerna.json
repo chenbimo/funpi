@@ -1,6 +1,5 @@
 {
-    "$schema": "node_modules/lerna/schemas/lerna-schema.json",
-    "version": "7.0.8",
+    "version": "independent",
     "packages": ["packages/*"],
     "npmClient": "pnpm",
     "command": {
@@ -14,6 +13,7 @@
         },
         "publish": {
             "ignorePrepublish": true,
+            "ignoreScripts": true,
             "yes": true
         }
     }
