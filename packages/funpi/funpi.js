@@ -8,7 +8,6 @@ import autoLoad from '@fastify/autoload';
 import fp from 'fastify-plugin';
 import localize from 'ajv-i18n';
 import fastifyStatic from '@fastify/static';
-import gracefulShutdown from 'http-graceful-shutdown';
 // 启动插件
 import swaggerPlugin from './plugins/swagger.js';
 import loggerPlugin from './plugins/logger.js';
@@ -40,14 +39,13 @@ import { syncMysql } from './scripts/syncMysql.js';
 
 // 配置信息
 import { appConfig } from './config/app.js';
-
 const { appDir, funpiDir } = system;
 
 // 初始化项目实例
 const fastify = Fastify({
     loggerInstance: loggerPlugin,
     pluginTimeout: 0,
-    bodyLimit: 10485760, // 10M
+    bodyLimit: appConfig.bodyLimit,
     ajv: {
         customOptions: {
             allErrors: true,
@@ -178,13 +176,6 @@ function initServer() {
                 throw err;
             } else {
                 return resolve(fastify);
-            }
-        });
-
-        // 监听服务停止
-        gracefulShutdown(fastify.server, {
-            finally: function () {
-                fastify.log.warn('服务已停止');
             }
         });
     });

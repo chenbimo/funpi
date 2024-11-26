@@ -1,0 +1,77 @@
+{
+    "name": "funpi",
+    "version": "7.0.6",
+    "description": "funpi(放屁) - 像放屁一样简单又自然的Node.js接口开发框架",
+    "type": "module",
+    "private": false,
+    "publishConfig": {
+        "access": "public",
+        "registry": "https://registry.npmjs.org"
+    },
+    "exports": {
+        ".": "./funpi.js"
+    },
+    "scripts": {},
+    "keywords": [
+        "fastify",
+        "nodejs",
+        "api"
+    ],
+    "files": [
+        "apis/",
+        "bootstrap/",
+        "config/",
+        "plugins/",
+        "schema/",
+        "scripts/",
+        "tables/",
+        ".gitignore",
+        ".npmrc",
+        ".prettierignore",
+        ".prettier",
+        "check.js",
+        "funpi.js",
+        "LICENSE",
+        "package.json",
+        "README.md",
+        "util.js"
+    ],
+    "engines": {
+        "node": ">=20.6.0"
+    },
+    "author": "chensuiyi <bimostyle@qq.com>",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/chenbimo/funpi"
+    },
+    "homepage": "https://chensuiyi.me",
+    "dependencies": {
+        "@fastify/autoload": "^6.0.2",
+        "@fastify/cors": "^10.0.1",
+        "@fastify/jwt": "^9.0.1",
+        "@fastify/multipart": "^9.0.1",
+        "@fastify/rate-limit": "^10.2.1",
+        "@fastify/static": "^8.0.3",
+        "@fastify/swagger": "^9.4.0",
+        "@fastify/swagger-ui": "^5.1.0",
+        "ajv": "^8.17.1",
+        "ajv-i18n": "^4.2.0",
+        "bull": "^4.16.4",
+        "croner": "^9.0.0",
+        "es-toolkit": "^1.27.0",
+        "fast-xml-parser": "^4.5.0",
+        "fastify": "^5.1.0",
+        "fastify-plugin": "^5.0.1",
+        "ioredis": "^5.4.1",
+        "knex": "^3.1.0",
+        "mysql2": "^3.11.4",
+        "nodemailer": "^6.9.16",
+        "picocolors": "^1.1.1",
+        "picomatch": "^4.0.2",
+        "safe-stable-stringify": "^2.5.0",
+        "winston": "^3.17.0",
+        "winston-daily-rotate-file": "^5.0.0",
+        "yidash": "^1.10.1"
+    },
+    "gitHead": "9bb3c7d12cb8c28e929270155e43355b19143a03"
+}

@@ -20,9 +20,6 @@ out
 CHANGELOG.md
 note.md
 .changeset
-addons2
-lock.*
-pnpm-lock.yaml
 
 # Editor directories and files
 .vscode/*
@@ -36,6 +33,8 @@ pnpm-lock.yaml
 *.njsproj
 *.sln
 *.sw?
+*.lock
+*lock.*
 
 # Runtime data
 pids

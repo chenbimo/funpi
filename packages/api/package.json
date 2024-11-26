@@ -1,0 +1,68 @@
+{
+    "name": "@funpi/api",
+    "version": "7.0.6",
+    "description": "放屁吧模板",
+    "main": "funpi.js",
+    "type": "module",
+    "private": false,
+    "publishConfig": {
+        "access": "public",
+        "registry": "https://registry.npmjs.org"
+    },
+    "scripts": {
+        "dev": "nodemon --config=nodemon.json",
+        "server": "pm2 start pm2.config.cjs",
+        "syncMysql:dev": "node --env-file=env/.development.env ./scripts/syncMysql.js",
+        "syncMysql:prod": "node --env-file=env/.production.env ./scripts/syncMysql.js",
+        "flamegraph": "pnpm dlx rimraf .cache/0x & pnpm dlx 0x --output-dir=.cache/0x --output-html={outputDir}/index.html -- node --env-file=env/.development.env funpi.js"
+    },
+    "keywords": [
+        "api",
+        "nodejs",
+        "fastify"
+    ],
+    "files": [
+        "apis/",
+        "config/",
+        "plugins/",
+        "public/",
+        "scripts/",
+        "tables/",
+        ".development.env",
+        ".gitignore",
+        ".npmrc",
+        ".prettier",
+        ".production.env",
+        "funpi.js",
+        "LICENSE",
+        "nodemon.json",
+        "package.json",
+        "pm2.config.js",
+        "README.md"
+    ],
+    "author": "chensuiyi <bimostyle@qq.com>",
+    "homepage": "https://chensuiyi.me",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/chenbimo/yicode.git"
+    },
+    "dependencies": {
+        "funpi": "^7.0.6",
+        "yidash": "^1.10.1"
+    },
+    "devDependencies": {
+        "lint-staged": "^15.2.10",
+        "nodemon": "^3.1.7",
+        "prettier": "^3.3.3",
+        "simple-git-hooks": "^2.11.1"
+    },
+    "simple-git-hooks": {
+        "pre-commit": "pnpm exec lint-staged"
+    },
+    "lint-staged": {
+        "*": [
+            "prettier --write --cache --ignore-unknown"
+        ]
+    },
+    "gitHead": "9bb3c7d12cb8c28e929270155e43355b19143a03"
+}

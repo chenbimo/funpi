@@ -1,0 +1,18 @@
+{
+    "$schema": "node_modules/lerna/schemas/lerna-schema.json",
+    "version": "independent",
+    "packages": ["packages/*"],
+    "npmClient": "pnpm",
+    "command": {
+        "version": {
+            "allowBranch": ["main", "master"],
+            "changelog": false,
+            "gitTagVersion": false,
+            "yes": true
+        },
+        "publish": {
+            "ignorePrepublish": true,
+            "yes": true
+        }
+    }
+}
