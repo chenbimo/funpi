@@ -1,7 +1,7 @@
 // 外部模块
 import fp from 'fastify-plugin';
 import { omit as es_omit } from 'es-toolkit';
-import { yd_number_incrTimeID, yd_crypto_md5, yd_crypto_hmacMd5 } from 'yidash/node';
+import { yd_number_incrTimeID, yd_crypto_md5, yd_crypto_hmacMd5 } from 'yidash';
 // 工具函数
 // 配置文件
 import { appConfig } from '../config/app.js';

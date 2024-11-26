@@ -1,5 +1,5 @@
 // 外部模块
-import { yd_crypto_hmacMd5 } from 'yidash/node';
+import { yd_crypto_hmacMd5 } from 'yidash';
 import { omit as es_omit } from 'es-toolkit';
 // 工具函数
 import { fnRoute, fnSchema } from '../../util.js';

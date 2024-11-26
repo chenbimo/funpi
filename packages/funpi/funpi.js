@@ -45,7 +45,7 @@ const { appDir, funpiDir } = system;
 const fastify = Fastify({
     loggerInstance: loggerPlugin,
     pluginTimeout: 0,
-    bodyLimit: appConfig.bodyLimit,
+    bodyLimit: appConfig.bodyLimit * 1048576,
     ajv: {
         customOptions: {
             allErrors: true,

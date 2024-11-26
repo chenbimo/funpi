@@ -4,11 +4,13 @@ export const appConfig = {
     // 加密盐
     md5Salt: 'funpi123456',
     // 监听端口
-    port: 3001,
+    port: 3000,
     // 监听主机
     host: '127.0.0.1',
     // 超级管理员密码
     devPassword: 'funpi123456',
+    // 请求体大小 10M
+    bodyLimit: 10,
     // 是否进行参数验证
     paramsCheck: false,
     // 是否显示接口文档
@@ -31,15 +33,15 @@ export const appConfig = {
     },
     // 邮件配置
     mail: {
-        host: 'demo.com222',
+        host: 'demo.com',
         port: 465,
         pool: true,
         secure: true,
         // qq 邮箱
-        user: 'demo@qq.com2222',
+        user: 'demo@qq.com',
         pass: '',
         from_name: '易接口',
-        from_email: 'demo@qq.com222'
+        from_email: 'demo@qq.com'
     },
     // mysql 数据库配置
     mysql: {
@@ -61,7 +63,7 @@ export const appConfig = {
     // 缓存
     cache: {
         // 接口白名单列表
-        apiWhiteLists: 'cacheData:apiWhiteLists222222222'
+        apiWhiteLists: 'cacheData_apiWhiteLists'
     },
     http: {
         NO_FILE: { symbol: 'NO_FILE', code: 17, msg: '文件不存在2' },

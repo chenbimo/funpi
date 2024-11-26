@@ -35,7 +35,7 @@
 // 外部集
 import valid from 'semver/functions/valid';
 // 外部集
-import { merge as _merge } from 'lodash-es';
+import { merge as _merge } from 'es-toolkit';
 
 // 内部集
 

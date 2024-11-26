@@ -1,5 +1,5 @@
 // 工具函数
-import { yd_crypto_hmacMd5 } from 'yidash/node';
+import { yd_crypto_hmacMd5 } from 'yidash';
 import { fnRoute, fnSchema } from '../../util.js';
 // 配置文件
 import { appConfig } from '../../config/app.js';

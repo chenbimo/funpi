@@ -27,7 +27,7 @@
 </template>
 <script setup>
 // 外部集
-import { merge as _merge } from 'lodash-es';
+import { merge as _merge } from 'es-toolkit';
 
 // 内部集
 

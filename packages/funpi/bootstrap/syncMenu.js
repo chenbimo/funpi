@@ -1,6 +1,6 @@
 // 外部插件
 import fp from 'fastify-plugin';
-import { yd_number_incrTimeID } from 'yidash/node';
+import { yd_number_incrTimeID } from 'yidash';
 import { omit as es_omit, uniq as es_uniq, keyBy as es_keyBy } from 'es-toolkit';
 // 工具函数
 // 配置文件

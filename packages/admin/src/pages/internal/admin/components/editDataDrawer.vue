@@ -26,7 +26,7 @@
 </template>
 <script setup>
 // 外部集
-import { merge as _merge, omit as _omit } from 'lodash-es';
+import { merge as _merge, omit as _omit } from 'es-toolkit';
 
 // 内部集
 

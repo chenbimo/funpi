@@ -42,7 +42,8 @@ export const yiteConfig = {
         optimizeDeps: {
             include: [
                 //
-                'lodash-es',
+                'es-toolkit/compat',
+                'es-toolkit',
                 'vue-i18n',
                 'js-md5',
                 'axios',

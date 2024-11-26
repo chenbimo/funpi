@@ -31,6 +31,10 @@ export const appSchema = {
             minLength: 6,
             maxLength: 20
         },
+        bodyLimit: {
+            title: '请求体大小限制',
+            type: 'integer'
+        },
         paramsCheck: {
             title: '接口参数验证',
             type: 'boolean',

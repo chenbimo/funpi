@@ -9,7 +9,7 @@ import { system, fnImport } from '../util.js';
 import { omit as es_omit, keyBy as es_keyBy } from 'es-toolkit';
 import { isObject as es_isObject } from 'es-toolkit/compat';
 
-import { yd_number_incrTimeID } from 'yidash/node';
+import { yd_number_incrTimeID } from 'yidash';
 // 工具函数
 // 配置文件
 import { appConfig } from '../config/app.js';

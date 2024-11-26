@@ -61,7 +61,7 @@
 </template>
 <script setup>
 // 外部集
-import { merge as _merge, forOwn as _forOwn, cloneDeep as _cloneDeep } from 'lodash-es';
+import { merge as _merge, cloneDeep as _cloneDeep } from 'es-toolkit';
 
 // 内部集
 
@@ -195,21 +195,24 @@ const $Method = {
         $Data.isShow.editDataDrawer = $Prop.modelValue;
         const formData = _merge($Data.formData, $Prop.rowData);
         const fields = [];
-        _forOwn(formData.fields, (item, key) => {
-            if (item.options.includes('index')) {
-                item.index = 1;
+        for (let key in formData.fields) {
+            if (Object.prototype.hasOwnProperty.call(formData.fields, key)) {
+                const item = formData.fields[key];
+                if (item.options.includes('index')) {
+                    item.index = 1;
+                }
+                if (item.options.includes('unique')) {
+                    item.unique = 1;
+                }
+                if (item.options.includes('unsigned')) {
+                    item.unsigned = 1;
+                }
+                fields.push({
+                    ...item,
+                    code: key
+                });
             }
-            if (item.options.includes('unique')) {
-                item.unique = 1;
-            }
-            if (item.options.includes('unsigned')) {
-                item.unsigned = 1;
-            }
-            fields.push({
-                ...item,
-                code: key
-            });
-        });
+        }
         formData.fields = fields;
         $Data.formData = formData;
     },

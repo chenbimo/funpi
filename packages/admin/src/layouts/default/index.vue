@@ -49,7 +49,7 @@
 <script setup>
 // 外部集
 import { yd_tree_array2Tree } from 'yidash';
-import { keyBy as _keyBy, cloneDeep as _cloneDeep, sortBy as _sortBy } from 'lodash-es';
+import { keyBy as _keyBy, cloneDeep as _cloneDeep, sortBy as _sortBy } from 'es-toolkit';
 
 // 内部集
 import sideMenu from './components/sideMenu.vue';
@@ -120,7 +120,9 @@ const $Method = {
                 url: '/admin/getMenus',
                 data: {}
             });
-            $Data.menuObject = _keyBy(_cloneDeep(res.data.rows), 'id');
+            console.log('🔥[ res ]-120', res);
+
+            $Data.menuObject = _keyBy(_cloneDeep(res.data.rows), (item) => item.id);
             $Data.menuTree = yd_tree_array2Tree(_sortBy(res.data.rows, 'sort'));
             $Data.menuTree.forEach((menu, index) => {
                 menu.children?.forEach((item, index2) => {
@@ -133,7 +135,7 @@ const $Method = {
             });
             $Data.isShow.sideMenu = true;
             if ($Data.selectedItem.value) {
-                $Router.push($Data.selectedItem.value);
+                $Router.push($Data.selectedItem?.value);
             }
         } catch (err) {
             console.log('🚀 ~ file: default.vue ~ line 129 ~ apiGetMenus ~ err', err);

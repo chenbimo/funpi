@@ -4,8 +4,7 @@ import { cwd } from 'node:process';
 import colors from 'picocolors';
 import { isString as es_isString, isFunction as es_isFunction, omit as es_omit } from 'es-toolkit';
 import { isObject as es_isObject } from 'es-toolkit/compat';
-import { yd_misc_4StateSymbol } from 'yidash';
-import { yd_crypto_md5 } from 'yidash/node';
+import { yd_misc_4StateSymbol, yd_crypto_md5 } from 'yidash';
 
 // 字段协议映射
 const tableFieldSchemaMap = {

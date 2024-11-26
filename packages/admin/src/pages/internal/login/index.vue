@@ -38,15 +38,6 @@
                     </div>
                 </div>
             </div>
-            <div class="login-tips">
-                本项目由
-                <!--  -->
-                <a class="link" href="https://chensuiyi.me" target="_blank">陈随易</a>研发的
-                <!--  -->
-                <a class="link" href="https://github.com/chenbimo/yiapi" target="_blank">易接口</a>和
-                <!--  -->
-                <a class="link" href="https://github.com/chenbimo/yiadmin" target="_blank">易管理</a>驱动
-            </div>
         </div>
     </div>
 </template>

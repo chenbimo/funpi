@@ -18,7 +18,7 @@ const targetObject = {
     // 超级管理员密码
     devPassword: 'funpi123456',
     // 请求体大小 10M
-    bodyLimit: 10485760,
+    bodyLimit: 10,
     // 是否进行参数验证
     paramsCheck: false,
     // 是否显示接口文档

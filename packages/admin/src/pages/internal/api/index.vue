@@ -33,7 +33,7 @@
 <script setup>
 // 外部集
 import { yd_tree_array2Tree, yd_datetime_relativeTime } from 'yidash';
-import { sortBy as _sortBy } from 'lodash-es';
+import { sortBy as _sortBy } from 'es-toolkit';
 
 // 选项集
 defineOptions({

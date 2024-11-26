@@ -38,7 +38,8 @@
 <script setup>
 // 外部集
 import { yd_tree_array2Tree } from 'yidash';
-import { cloneDeep as _cloneDeep, keyBy as _keyBy, concat as _concat } from 'lodash-es';
+import { cloneDeep as _cloneDeep, keyBy as _keyBy } from 'es-toolkit';
+import { concat as _concat } from 'es-toolkit/compat';
 
 // 内部集
 
@@ -141,7 +142,7 @@ const $Method = {
             });
             $Data.allMenuTableData = data;
             $Data.allMenuTreeData = yd_tree_array2Tree(_cloneDeep(data));
-            $Data.allMenuDataObject = _keyBy(data, 'id');
+            $Data.allMenuDataObject = _keyBy(data, (item) => item.id);
         } catch (err) {
             console.log('🚀 ~ file: index.vue:201 ~ apiSelectAllMenuData ~ err', err);
             Message.error(err.msg || err);
@@ -164,7 +165,7 @@ const $Method = {
             });
             $Data.allApiTableData = data;
             $Data.allApiTreeData = yd_tree_array2Tree(_cloneDeep(data));
-            $Data.allApiDataObject = _keyBy(data, 'id');
+            $Data.allApiDataObject = _keyBy(data, (item) => item.id);
         } catch (err) {
             console.log('🚀 ~ file: index.vue:227 ~ apiSelectAllApiData ~ err', err);
             Message.error(err.msg || err);
