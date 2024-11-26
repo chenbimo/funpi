@@ -1,7 +1,7 @@
 {
     "name": "@funpi/api",
     "version": "7.0.5",
-    "description": "放屁吧模板",
+    "description": "funpi(放屁) - 接口端",
     "main": "funpi.js",
     "type": "module",
     "private": false,

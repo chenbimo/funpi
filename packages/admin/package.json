@@ -1,7 +1,7 @@
 {
     "name": "@funpi/admin",
     "version": "7.0.5",
-    "description": "fnMap(待办)基于 vue3 + yite-cli + arco-design-vue 的后台管理模板222",
+    "description": "funpi(放屁) - 后台管理",
     "sideEffects": true,
     "type": "module",
     "private": false,
