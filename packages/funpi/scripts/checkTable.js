@@ -141,13 +141,15 @@ export const checkTable = async (trx) => {
                         hasFieldTypeError = true;
                     }
 
-                    const validateTable = validate[field.type];
-                    const validResult = validateTable(field);
-                    if (!validResult) {
-                        hasFieldTypeError = true;
-                        ajvZh(validateTable.errors);
-                        const ajvError = log4state('error') + ' ' + ajv.errorsText(validateTable.errors, { separator: '\n' });
-                        fieldErrors.push(ajvError);
+                    if (hasFieldTypeError === false) {
+                        const validateTable = validate[field.type];
+                        const validResult = validateTable(field);
+                        if (!validResult) {
+                            hasFieldTypeError = true;
+                            ajvZh(validateTable.errors);
+                            const ajvError = log4state('error') + ' ' + ajv.errorsText(validateTable.errors, { separator: '\n', dataVar: key });
+                            fieldErrors.push(ajvError);
+                        }
                     }
                 }
             }
