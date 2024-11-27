@@ -48,12 +48,12 @@
         "url": "https://github.com/chenbimo/yicode.git"
     },
     "dependencies": {
-        "funpi": "7.2.0"
+        "funpi": "workspace:*"
     },
     "devDependencies": {
         "lint-staged": "^15.2.10",
         "nodemon": "^3.1.7",
-        "prettier": "^3.3.3",
+        "prettier": "^3.4.1",
         "simple-git-hooks": "^2.11.1"
     },
     "simple-git-hooks": {

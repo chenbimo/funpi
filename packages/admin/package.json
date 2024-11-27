@@ -46,21 +46,21 @@
         "@arco-plugins/vite-vue": "^1.4.5",
         "@iconify/json": "^2.2.276",
         "axios": "^1.7.8",
-        "date-fns": "^3.6.0",
+        "date-fns": "^4.1.0",
         "es-toolkit": "^1.27.0",
         "js-md5": "^0.8.3",
-        "pinia": "^2.2.6",
+        "pinia": "^2.2.7",
         "sass": "^1.81.0",
         "store2": "^2.14.3",
         "vue": "^3.5.13",
-        "vue-i18n": "^9.14.1",
+        "vue-i18n": "^10.0.4",
         "vue-router": "^4.5.0",
         "yidash": "^1.10.1",
         "yite-cli": "^3.7.0"
     },
     "devDependencies": {
         "lint-staged": "^15.2.10",
-        "prettier": "^3.3.3",
+        "prettier": "^3.4.1",
         "simple-git-hooks": "^2.11.1"
     },
     "simple-git-hooks": {
