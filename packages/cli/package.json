@@ -8,9 +8,7 @@
         "access": "public",
         "registry": "https://registry.npmjs.org"
     },
-    "exports": {
-        ".": "./funpi.js"
-    },
+    "exports": {},
     "keywords": [
         "fastify",
         "nodejs",
@@ -30,5 +28,5 @@
         "url": "https://github.com/chenbimo/funpi"
     },
     "homepage": "https://chensuiyi.me",
-    "gitHead": "23fb2eccbad4678565629ec45340316a8bfed465"
+    "gitHead": "eefef8bce1b4ff457feb369c55506d8766cda947"
 }
