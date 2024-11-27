@@ -8,9 +8,7 @@
             "allowBranch": ["main", "master"],
             "changelog": false,
             "gitTagVersion": true,
-            "yes": true,
-            "forcePublish": true,
-            "exact": true
+            "yes": true
         },
         "publish": {
             "cleanupTempFiles": true,
