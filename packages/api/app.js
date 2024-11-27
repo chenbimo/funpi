@@ -2,13 +2,13 @@ export const appConfig = {
     // 应用名称
     appName: '易接口',
     // 加密盐
-    md5Salt: 'funpi123456',
+    md5Salt: 'funpi1234560',
     // 监听端口
     port: 3000,
     // 监听主机
     host: '127.0.0.1',
     // 超级管理员密码
-    devPassword: 'funpi123456',
+    devPassword: 'funpi1234560',
     // 请求体大小 10M
     bodyLimit: 10,
     // 是否进行参数验证
@@ -28,7 +28,7 @@ export const appConfig = {
     rate: {},
     // jwt 配置
     jwt: {
-        secret: 'funpi123456', // 密钥
+        secret: 'funpi1234560', // 密钥
         expiresIn: '7d' // 过期时间
     },
     // 邮件配置

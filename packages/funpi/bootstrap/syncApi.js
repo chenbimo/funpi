@@ -5,32 +5,31 @@ import { readdirSync } from 'node:fs';
 import fp from 'fastify-plugin';
 
 // 工具函数
-import { system, fnImport } from '../util.js';
 import { omit as es_omit, keyBy as es_keyBy } from 'es-toolkit';
 import { isObject as es_isObject } from 'es-toolkit/compat';
-
 import { yd_number_incrTimeID } from 'yidash';
 // 工具函数
+import { fnImport } from '../utils/index.js';
 // 配置文件
-import { appConfig } from '../config/app.js';
+import { appConfig } from '../app.js';
 
 // 获取所有接口文件
 async function fnAllApiFiles(type) {
-    const coreApiFiles = readdirSync(resolve(system.funpiDir, 'apis'), { recursive: true });
-    const appApiFiles = readdirSync(resolve(system.appDir, 'apis'), { recursive: true });
+    const coreApiFiles = readdirSync(resolve(appConfig.funpiDir, 'apis'), { recursive: true });
+    const appApiFiles = readdirSync(resolve(appConfig.appDir, 'apis'), { recursive: true });
 
     const allApiFiles = [
         //
         ...coreApiFiles.map((file) => {
             return {
                 where: 'core',
-                filePath: resolve(system.funpiDir, 'apis', file).replace(/\\+/gi, '/')
+                filePath: resolve(appConfig.funpiDir, 'apis', file).replace(/\\+/gi, '/')
             };
         }),
         ...appApiFiles.map((file) => {
             return {
                 where: 'app',
-                filePath: resolve(system.appDir, 'apis', file).replace(/\\+/gi, '/')
+                filePath: resolve(appConfig.appDir, 'apis', file).replace(/\\+/gi, '/')
             };
         })
     ];

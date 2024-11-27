@@ -8,9 +8,9 @@ import { uniq as es_uniq, isPlainObject as es_isPlainObject } from 'es-toolkit';
 import { find as es_find } from 'es-toolkit/compat';
 import { configure } from 'safe-stable-stringify';
 // 配置文件
-import { appConfig } from '../config/app.js';
+import { appConfig } from '../app.js';
 // 工具函数
-import { system, fnApiCheck } from '../util.js';
+import { fnApiCheck } from '../utils/index.js';
 
 const safeStableStringify = configure({
     bigint: true,
@@ -45,7 +45,7 @@ async function plugin(fastify) {
 
             /* --------------------------------- 请求资源判断 --------------------------------- */
             if (routePath.startsWith('/public')) {
-                const filePath = join(system.appDir, routePath);
+                const filePath = join(appConfig.appDir, routePath);
                 if (existsSync(filePath) === true) {
                     return;
                 } else {

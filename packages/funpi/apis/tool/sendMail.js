@@ -1,6 +1,6 @@
 import { randomInt } from 'es-toolkit';
-import { fnRoute, fnSchema } from '../../util.js';
-import { appConfig } from '../../config/app.js';
+import { fnRoute, fnSchema } from '../../utils/index.js';
+import { appConfig } from '../../app.js';
 import { metaConfig } from './_meta.js';
 
 // 处理函数

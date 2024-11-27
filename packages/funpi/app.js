@@ -1,8 +1,8 @@
-import { resolve } from 'node:path';
+import { resolve, dirname } from 'node:path';
 import { merge as es_merge } from 'es-toolkit';
-import { system, fnImport } from '../util.js';
+import { fnImport } from './utils/index.js';
 
-const absolutePath = resolve(system.appDir, 'config', 'app.js');
+const absolutePath = resolve(process.cwd(), 'app.js');
 const { appConfig: importConfig } = await fnImport(absolutePath, 'appConfig', {});
 
 // 合并对象
@@ -72,8 +72,11 @@ const targetObject = {
     cron: []
 };
 
-// 覆盖对象
+// 不变对象
 const replaceObj = {
+    // 路径
+    appDir: process.cwd(),
+    funpiDir: dirname(import.meta.filename),
     // 缓存 key映射
     cache: {
         // 角色缓存

@@ -4,7 +4,7 @@ import { yd_number_incrTimeID } from 'yidash';
 import { omit as es_omit, uniq as es_uniq, keyBy as es_keyBy } from 'es-toolkit';
 // 工具函数
 // 配置文件
-import { appConfig } from '../config/app.js';
+import { appConfig } from '../app.js';
 
 // 同步菜单目录
 async function syncMenuDir(fastify) {

@@ -1,7 +1,7 @@
 // 外部模块
 import fp from 'fastify-plugin';
 // 配置文件
-import { appConfig } from '../config/app.js';
+import { appConfig } from '../app.js';
 
 async function plugin(fastify) {
     // 设置 redis

@@ -2,14 +2,13 @@ export const tableName = '新闻示例表';
 export const tableData = {
     title: {
         name: '新闻标题',
-        type: 'string',
-        default: '',
+        type: 'mediumText',
         min: 1,
         max: 50
     },
     content: {
         name: '新闻内容',
-        type: 'string',
+        type: 'mediumText',
         min: 0
     }
 };

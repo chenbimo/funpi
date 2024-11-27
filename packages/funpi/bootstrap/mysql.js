@@ -5,7 +5,7 @@ import { yd_number_incrTimeID } from 'yidash';
 
 // 工具集
 // 配置集
-import { appConfig } from '../config/app.js';
+import { appConfig } from '../app.js';
 // 函数集
 // 添加函数
 const dbInsert = (obj) => {

@@ -22,13 +22,11 @@ export const tableData = {
     menu_ids: {
         name: '角色菜单',
         type: 'mediumText',
-        default: '',
         max: 50000
     },
     api_ids: {
         name: '角色接口',
         type: 'mediumText',
-        default: '',
         max: 50000
     },
     sort: {

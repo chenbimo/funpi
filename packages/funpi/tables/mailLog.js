@@ -1,20 +1,20 @@
 export const tableName = '邮件日志表';
 export const tableData = {
     login_email: {
-        name: '登录邮箱',
         type: 'string',
+        name: '登录邮箱',
         default: '',
         max: 100
     },
     from_name: {
-        name: '发送者昵称',
         type: 'string',
+        name: '发送者昵称',
         default: '',
         max: 100
     },
     from_email: {
-        name: '发送者邮箱',
         type: 'string',
+        name: '发送者邮箱',
         default: '',
         max: 100
     },

@@ -2,7 +2,7 @@ import fp from 'fastify-plugin';
 import fastifySwagger from '@fastify/swagger';
 import fastifySwaggerUi from '@fastify/swagger-ui';
 
-import { appConfig } from '../config/app.js';
+import { appConfig } from '../app.js';
 
 async function plugin(fastify) {
     await fastify.register(fastifySwagger, {

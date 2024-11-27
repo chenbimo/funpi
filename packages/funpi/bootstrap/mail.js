@@ -1,6 +1,6 @@
 import fp from 'fastify-plugin';
 import nodemailer from 'nodemailer';
-import { appConfig } from '../config/app.js';
+import { appConfig } from '../app.js';
 
 async function plugin(fastify) {
     const mailTransport = await nodemailer.createTransport({

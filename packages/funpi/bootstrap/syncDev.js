@@ -4,7 +4,7 @@ import { omit as es_omit } from 'es-toolkit';
 import { yd_number_incrTimeID, yd_crypto_md5, yd_crypto_hmacMd5 } from 'yidash';
 // 工具函数
 // 配置文件
-import { appConfig } from '../config/app.js';
+import { appConfig } from '../app.js';
 
 // 系统角色码
 const systemRoleCodes = ['visitor', 'user', 'admin', 'super', 'dev'];

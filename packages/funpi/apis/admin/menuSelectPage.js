@@ -1,7 +1,7 @@
 // 工具函数
-import { fnRoute, fnSchema } from '../../util.js';
+import { fnRoute, fnSchema } from '../../utils/index.js';
 // 配置文件
-import { appConfig } from '../../config/app.js';
+import { appConfig } from '../../app.js';
 // 数据表格
 // 接口元数据
 import { metaConfig } from './_meta.js';

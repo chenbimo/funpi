@@ -1,10 +1,11 @@
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { dirname, basename } from 'node:path';
-import { cwd } from 'node:process';
-import colors from 'picocolors';
+import { cwd, env, platform } from 'node:process';
+
 import { isString as es_isString, isFunction as es_isFunction, omit as es_omit } from 'es-toolkit';
 import { isObject as es_isObject } from 'es-toolkit/compat';
-import { yd_misc_4StateSymbol, yd_crypto_md5 } from 'yidash';
+import { yd_crypto_md5 } from 'yidash';
+import colors from './colors.js';
 
 // 字段协议映射
 const tableFieldSchemaMap = {
@@ -26,9 +27,39 @@ const tableFieldSchemaMap = {
     double: 'number'
 };
 
-export const system = {
-    appDir: cwd(),
-    funpiDir: dirname(import.meta.filename)
+export const isUnicodeSupported = () => {
+    const { TERM, TERM_PROGRAM } = env;
+
+    if (platform !== 'win32') {
+        return TERM !== 'linux'; // Linux console (kernel)
+    }
+
+    return (
+        Boolean(env.WT_SESSION) || // Windows Terminal
+        Boolean(env.TERMINUS_SUBLIME) || // Terminus (<0.2.27)
+        env.ConEmuTask === '{cmd::Cmder}' || // ConEmu and cmder
+        TERM_PROGRAM === 'Terminus-Sublime' ||
+        TERM_PROGRAM === 'vscode' ||
+        TERM === 'xterm-256color' ||
+        TERM === 'alacritty' ||
+        TERM === 'rxvt-unicode' ||
+        TERM === 'rxvt-unicode-256color' ||
+        env.TERMINAL_EMULATOR === 'JetBrains-JediTerm'
+    );
+};
+export const log4state = (state) => {
+    if (state === 'info') {
+        return colors.blue('i');
+    }
+    if (state === 'success') {
+        return colors.green('√');
+    }
+    if (state === 'warn') {
+        return colors.yellow('‼');
+    }
+    if (state === 'error') {
+        return colors.red('x');
+    }
 };
 
 export const fnFormatNow = () => {
@@ -132,31 +163,31 @@ export const fnImport = async (absolutePath, name, defaultValue = {}) => {
 // 设置路由函数
 export const fnRoute = (metaUrl, fastify, metaConfig, options) => {
     if (es_isString(metaUrl) === false) {
-        console.log(`${yd_misc_4StateSymbol('error')} ${colors.blue(metaUrl)} 接口的 fnRoute 函数第一个参数必须为 import.meta.url，请检查`);
+        console.log(`${log4state('error')} ${colors.blue(metaUrl)} 接口的 fnRoute 函数第一个参数必须为 import.meta.url，请检查`);
         process.exit();
     }
 
     if (es_isObject(fastify) === false) {
-        console.log(`${yd_misc_4StateSymbol('error')} ${colors.blue(metaUrl)} 接口的 fnRoute 函数第二个参数必须为 fastify 实例，请检查`);
+        console.log(`${log4state('error')} ${colors.blue(metaUrl)} 接口的 fnRoute 函数第二个参数必须为 fastify 实例，请检查`);
         process.exit();
     }
 
     if (!metaConfig?.dirName) {
-        console.log(`${yd_misc_4StateSymbol('error')} ${colors.blue(metaUrl)} 接口的 fnRoute 函数第三个参数必须为 _meta.js 文件元数据，请检查`);
+        console.log(`${log4state('error')} ${colors.blue(metaUrl)} 接口的 fnRoute 函数第三个参数必须为 _meta.js 文件元数据，请检查`);
         process.exit();
     }
 
     if (es_isObject(options) === false) {
-        console.log(`${yd_misc_4StateSymbol('error')} ${colors.blue(metaUrl)} 接口的 fnRoute 函数第四个参数必须为 Object 对象，请检查`);
+        console.log(`${log4state('error')} ${colors.blue(metaUrl)} 接口的 fnRoute 函数第四个参数必须为 Object 对象，请检查`);
         process.exit();
     }
 
     if (es_isObject(options.schemaRequest) === false) {
-        console.log(`${yd_misc_4StateSymbol('error')} ${colors.blue(metaUrl)} 接口的 schemaRequest 必须为一个对象，请检查`);
+        console.log(`${log4state('error')} ${colors.blue(metaUrl)} 接口的 schemaRequest 必须为一个对象，请检查`);
         process.exit();
     }
     if (es_isFunction(options.apiHandler) === false) {
-        console.log(`${yd_misc_4StateSymbol('error')} ${colors.blue(metaUrl)} 接口的 apiHandler 必须为一个函数，请检查`);
+        console.log(`${log4state('error')} ${colors.blue(metaUrl)} 接口的 apiHandler 必须为一个函数，请检查`);
         process.exit();
     }
 
@@ -164,7 +195,7 @@ export const fnRoute = (metaUrl, fastify, metaConfig, options) => {
     const method = (options.method || 'post').toLowerCase();
 
     if (['get', 'post'].includes(method) === false) {
-        console.log(`${yd_misc_4StateSymbol('error')} ${colors.blue(metaUrl)} 接口方法只能为 get 或 post 之一，请检查`);
+        console.log(`${log4state('error')} ${colors.blue(metaUrl)} 接口方法只能为 get 或 post 之一，请检查`);
         process.exit();
     }
 

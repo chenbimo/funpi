@@ -2,6 +2,16 @@ export const appSchema = {
     title: '应用基本配置',
     type: 'object',
     properties: {
+        appDir: {
+            title: '应用目录',
+            type: 'string',
+            minLength: 1
+        },
+        funpiDir: {
+            title: '内核目录',
+            type: 'string',
+            minLength: 1
+        },
         appName: {
             title: '应用名称',
             type: 'string',

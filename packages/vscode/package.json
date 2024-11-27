@@ -29,7 +29,8 @@
     "scripts": {
         "pack": "vsce package --no-yarn --no-dependencies --no-git-tag-version --allow-unused-files-pattern --allow-missing-repository --out release --baseImagesUrl ./",
         "dev": "yite --command=build --envfile=production --mode=development --workdir=./",
-        "build": "yite --command=build --envfile=production --mode=production --workdir=./"
+        "build": "yite --command=build --envfile=production --mode=production --workdir=./",
+        "dev2": "rollup --config rollup.config.js"
     },
     "files": [
         "dist/**/*",
@@ -38,7 +39,22 @@
         "LICENSE.txt"
     ],
     "contributes": {
-        "commands": [],
+        "commands": [
+            {
+                "command": "funPi.helloWorld",
+                "title": "Hello World"
+            }
+        ],
+        "configuration": {
+            "title": "FunPi",
+            "properties": {
+                "funPi.message": {
+                    "type": "string",
+                    "default": "Hello World",
+                    "description": "The message to show in the notification"
+                }
+            }
+        },
         "viewsContainers": {
             "activitybar": [
                 {
@@ -58,5 +74,8 @@
             ]
         }
     },
-    "gitHead": "d8b5b2b3fc2f5ef798c6623008ebba13cbe5db26"
+    "gitHead": "d8b5b2b3fc2f5ef798c6623008ebba13cbe5db26",
+    "dependencies": {
+        "rollup": "^4.27.4"
+    }
 }

@@ -3,7 +3,7 @@
 import fp from 'fastify-plugin';
 import fastifyJwt from '@fastify/jwt';
 // 配置文件
-import { appConfig } from '../config/app.js';
+import { appConfig } from '../app.js';
 
 async function plugin(fastify) {
     await fastify.register(fastifyJwt, {

@@ -1,7 +1,7 @@
 import fp from 'fastify-plugin';
 import rateLimit from '@fastify/rate-limit';
 
-import { appConfig } from '../config/app.js';
+import { appConfig } from '../app.js';
 
 async function plugin(fastify) {
     try {

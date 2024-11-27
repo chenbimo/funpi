@@ -1,7 +1,7 @@
 import fp from 'fastify-plugin';
 import Redis from 'ioredis';
 
-import { appConfig } from '../config/app.js';
+import { appConfig } from '../app.js';
 
 function close(fastify) {
     return fastify.redis.quit();

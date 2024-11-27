@@ -4,10 +4,10 @@ import { resolve } from 'node:path';
 import winston from 'winston';
 import 'winston-daily-rotate-file';
 
-import { system } from '../util.js';
+import { appConfig } from '../app.js';
 
 const fileConfig = {
-    dirname: resolve(system.appDir, 'logs'),
+    dirname: resolve(appConfig.appDir, 'logs'),
     filename: '%DATE%.log',
     datePattern: 'YYYY-MM-DD',
     zippedArchive: false,
