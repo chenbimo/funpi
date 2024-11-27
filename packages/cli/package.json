@@ -1,6 +1,6 @@
 {
     "name": "@funpi/cli",
-    "version": "7.1.4",
+    "version": "7.1.5",
     "description": "FunPi(放屁) - 命令行占位",
     "type": "module",
     "private": false,
@@ -11,7 +11,6 @@
     "exports": {
         ".": "./funpi.js"
     },
-    "scripts": {},
     "keywords": [
         "fastify",
         "nodejs",
@@ -31,5 +30,5 @@
         "url": "https://github.com/chenbimo/funpi"
     },
     "homepage": "https://chensuiyi.me",
-    "gitHead": "ae938d5d63f513f6fe84669280d1e02b94f2c9d2"
+    "gitHead": "27aae4c07f8c22f70ad57a038954abe29ca16145"
 }

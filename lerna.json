@@ -7,17 +7,15 @@
         "version": {
             "allowBranch": ["main", "master"],
             "changelog": false,
-            "gitTagVersion": false,
+            "gitTagVersion": true,
             "yes": true,
             "forcePublish": true,
-            "exact": false
+            "exact": true
         },
         "publish": {
             "cleanupTempFiles": true,
-            "ignorePrepublish": true,
             "ignoreScripts": false,
-            "yes": true,
-            "removePackageFields": ["devDependencies", "scripts"]
+            "yes": true
         }
     }
 }
