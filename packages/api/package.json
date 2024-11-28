@@ -1,6 +1,6 @@
 {
     "name": "@funpi/api",
-    "version": "7.1.11",
+    "version": "7.1.12",
     "description": "FunPi(放屁) - 接口端",
     "main": "funpi.js",
     "type": "module",
@@ -48,7 +48,7 @@
         "url": "https://github.com/chenbimo/yicode.git"
     },
     "dependencies": {
-        "funpi": "^7.2.7"
+        "funpi": "^7.2.8"
     },
     "devDependencies": {
         "lint-staged": "^15.2.10",

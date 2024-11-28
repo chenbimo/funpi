@@ -3,7 +3,7 @@
     "displayName": "FunPi - 放屁",
     "description": "FunPi(放屁) - VSCode扩展",
     "publisher": "chensuiyi",
-    "version": "7.1.11",
+    "version": "7.1.12",
     "private": false,
     "publishConfig": {
         "access": "public",
