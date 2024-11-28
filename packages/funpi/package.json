@@ -1,6 +1,6 @@
 {
     "name": "funpi",
-    "version": "7.2.6",
+    "version": "7.2.7",
     "description": "FunPi(放屁) - 像放屁一样简单又自然的Node.js接口开发框架",
     "type": "module",
     "private": false,
