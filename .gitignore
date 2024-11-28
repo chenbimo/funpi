@@ -21,7 +21,7 @@ CHANGELOG.md
 note.md
 .changeset
 addons2
-
+pnpm-lock.yaml
 
 # Editor directories and files
 .vscode/*
