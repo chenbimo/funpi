@@ -96,7 +96,7 @@ importers:
     packages/api:
         dependencies:
             funpi:
-                specifier: ^7.2.6
+                specifier: workspace:^
                 version: link:../funpi
         devDependencies:
             lint-staged:

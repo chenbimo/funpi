@@ -48,7 +48,7 @@
         "url": "https://github.com/chenbimo/yicode.git"
     },
     "dependencies": {
-        "funpi": "^7.2.6"
+        "funpi": "workspace:^"
     },
     "devDependencies": {
         "lint-staged": "^15.2.10",
