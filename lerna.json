@@ -6,7 +6,7 @@
         "version": {
             "allowBranch": ["main", "master"],
             "changelog": false,
-            "gitTagVersion": true,
+            "gitTagVersion": false,
             "yes": true
         },
         "publish": {
