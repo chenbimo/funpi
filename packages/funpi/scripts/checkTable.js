@@ -84,19 +84,22 @@ export const checkTable = async (trx) => {
             })
         ];
 
-        let isThisFileError = false;
+        let isAllFileError = false;
         let thisFile = '';
         for (let item of allDbFiles) {
             thisFile = item.file;
+            let isThisFileError = false;
             const fieldErrors = [];
             const pureFileName = basename(item.file, '.js');
             if (/^[a-z][a-zA-Z0-9_]*$/.test(pureFileName) === false) {
                 fieldErrors.push(`${log4state('error')} 文件名只能为 大小写字母+数字+下划线`);
+                isAllFileError = true;
                 isThisFileError = true;
             }
             const tableFile = item.prefix + es_snakeCase(pureFileName.trim());
             if (!item.prefix && tableFile.startsWith('sys_') === true) {
                 fieldErrors.push(`${log4state('error')} 非系统表不能以 sys_ 开头`);
+                isAllFileError = true;
                 isThisFileError = true;
             }
             const { tableName } = await fnImport(item.file, 'tableName', '');
@@ -104,25 +107,31 @@ export const checkTable = async (trx) => {
 
             if (!tableName) {
                 fieldErrors.push(`${log4state('error')} tableName 必须有表名称`);
+                isAllFileError = true;
                 isThisFileError = true;
             }
 
             if (tableName.endsWith('_temp')) {
                 fieldErrors.push(`${log4state('error')} 文件名不能以 _temp 结尾`);
+                isAllFileError = true;
                 isThisFileError = true;
             }
 
             if (es_isPlainObject(tableData) === false) {
                 fieldErrors.push(`${log4state('error')} tableData 必须为普通对象`);
+                isAllFileError = true;
+                isThisFileError = true;
             }
 
             if (yd_is_arrayContain(Object.keys(tableData), denyFields) === true) {
                 fieldErrors.push(`${log4state('error')} tableData 不能包含 ${denyFields} 字段`);
+                isAllFileError = true;
                 isThisFileError = true;
             }
 
             if (tableFile === 'sys_user' && !tableData.test_field) {
                 fieldErrors.push(`${log4state('error')} tableData 必须有一个test_field 测试字段`);
+                isAllFileError = true;
                 isThisFileError = true;
             }
 
@@ -132,12 +141,14 @@ export const checkTable = async (trx) => {
 
                     // 检查属性名是否符合规范
                     if (/^[a-z][a-z0-9_]*$/.test(key) === false) {
+                        isAllFileError = true;
                         isThisFileError = true;
                     }
 
                     // 检查类型是否正确
                     if (fieldTypes.includes(field.type) === false) {
                         fieldErrors.push(`${log4state('error')} tableData.${key}.type=${field.type} 字段类型错误`);
+                        isAllFileError = true;
                         isThisFileError = true;
                     }
 
@@ -145,6 +156,7 @@ export const checkTable = async (trx) => {
                         const validateTable = validate[field.type];
                         const validResult = validateTable(field);
                         if (!validResult) {
+                            isAllFileError = true;
                             isThisFileError = true;
                             ajvZh(validateTable.errors);
                             ajv.errorsText(validateTable.errors, { dataVar: key })
@@ -159,8 +171,7 @@ export const checkTable = async (trx) => {
 
             if (isThisFileError) {
                 console.log(`${log4state('warn')} ${thisFile} 文件`);
-                console.log(fieldErrors.map((v) => !!v?.trim()).join('\r\n'));
-                console.log('-----------------------------------------');
+                console.log(fieldErrors.filter((v) => !!v?.trim()).join('\r\n'));
             }
 
             allDbTable.push({
@@ -169,7 +180,7 @@ export const checkTable = async (trx) => {
                 tableData: tableData
             });
         }
-        if (isThisFileError) {
+        if (isAllFileError) {
             process.exit();
         } else {
             console.log(`${log4state('success')} 所有表定义正常`);
