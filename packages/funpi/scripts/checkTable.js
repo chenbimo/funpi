@@ -92,7 +92,7 @@ export const checkTable = async (trx) => {
             const fieldErrors = [];
             const pureFileName = basename(item.file, '.js');
             if (/^[a-z][a-zA-Z0-9_]*$/.test(pureFileName) === false) {
-                fieldErrors.push(`${log4state('error')} 文件名只能为 大小写字母+数字+下划线`);
+                fieldErrors.push(`${log4state('error')} 文件名只能为 小写字母+[大小写字母+数字+下划线]`);
                 isAllFileError = true;
                 isThisFileError = true;
             }
