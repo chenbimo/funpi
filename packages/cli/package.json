@@ -1,6 +1,6 @@
 {
     "name": "@funpi/cli",
-    "version": "7.1.13",
+    "version": "7.1.14",
     "description": "FunPi(放屁) - 命令行占位",
     "type": "module",
     "private": false,
