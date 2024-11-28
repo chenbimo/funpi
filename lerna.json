@@ -10,7 +10,6 @@
             "yes": true
         },
         "publish": {
-            "cleanupTempFiles": true,
             "ignoreScripts": false,
             "yes": true
         }

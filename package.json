@@ -12,17 +12,16 @@
         "url": "https://github.com/chenbimo/funpi.git"
     },
     "scripts": {
-        "r": "lerna publish"
+        "r": "lerna publish from-git"
     },
     "author": "chensuiyi <bimostyle@qq.com>",
     "homepage": "https://chensuiyi.me",
     "devDependencies": {
-        "@lerna-lite/cli": "^3.10.0",
-        "@lerna-lite/publish": "^3.10.0",
         "@rollup/plugin-commonjs": "^28.0.1",
         "@rollup/plugin-image": "^3.0.3",
         "@rollup/plugin-json": "^6.1.0",
         "@rollup/plugin-node-resolve": "^15.3.0",
+        "lerna": "^8.1.9",
         "lint-staged": "^15.2.10",
         "nodemon": "^3.1.7",
         "prettier": "^3.4.1",
