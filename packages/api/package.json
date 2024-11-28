@@ -48,7 +48,7 @@
         "url": "https://github.com/chenbimo/yicode.git"
     },
     "dependencies": {
-        "funpi": "workspace:^"
+        "funpi": "^7.2.7"
     },
     "devDependencies": {
         "lint-staged": "^15.2.10",
@@ -64,5 +64,5 @@
             "prettier --write --cache --ignore-unknown"
         ]
     },
-    "gitHead": "d0cfeb35766820919b1baa7a5aea54549b6dee72"
+    "gitHead": "75f65dced1e67a630bf28c0b987338e5ec285112"
 }
