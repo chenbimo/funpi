@@ -3,12 +3,10 @@ import { fnRoute } from '../../utils/index.js';
 // 配置文件
 import { appConfig } from '../../app.js';
 // 数据表格
-// 接口元数据
-import { metaConfig } from './_meta.js';
 
 // 处理函数
 export default async (fastify) => {
-    fnRoute(import.meta.url, fastify, metaConfig, {
+    fnRoute(import.meta.url, fastify, {
         // 请求参数约束
         schemaRequest: {
             type: 'object',

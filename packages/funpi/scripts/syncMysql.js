@@ -1,6 +1,5 @@
 #!/usr/bin/env node
-// 先进行全面检测
-import '../initCheck.js';
+
 // 内部模块
 import { randomInt } from 'node:crypto';
 // 外部模块
@@ -10,8 +9,9 @@ import { yd_array_diffBoth } from 'yidash';
 import { appConfig } from '../app.js';
 import { tableSchema } from '../schema/table.js';
 // 工具函数
+import { initCheck } from '../utils/check.js';
 import { fnFormatNow, log4state } from '../utils/index.js';
-import colors from '../utils/colors.js';
+import { colors } from '../utils/colors.js';
 import { checkTable } from './checkTable.js';
 
 // 创建顺序自增唯一 ID
@@ -32,6 +32,7 @@ const denyFields = [
 
 // 同步数据库
 export const syncMysql = async () => {
+    await initCheck();
     // let isPortOpen = await fnIsPortOpen(3000);
     // console.log('🚀 ~ file: syncCoreDatabase.js:220 ~ syncCoreDatabase ~ isPortOpen:', isPortOpen);
     // if (!isPortOpen) {

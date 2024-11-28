@@ -7,11 +7,11 @@ import Ajv from 'ajv';
 // 内部模块
 
 // 配置文件
-import { appConfig } from './app.js';
+import { appConfig } from '../app.js';
 // 协议配置
 // 工具函数
-import { fnImport, log4state } from './utils/index.js';
-import { ajvZh } from './utils/ajvZh.js';
+import { fnImport, log4state } from './index.js';
+import { ajvZh } from './ajvZh.js';
 
 export const initCheck = async () => {
     // 判断运行目录下是否有 funpi.js 文件
@@ -49,7 +49,7 @@ export const initCheck = async () => {
     const ajv = new Ajv({
         strict: false,
         allErrors: true,
-        verbose: true
+        verbose: false
     });
 
     // 验证配置文件 ==================================================

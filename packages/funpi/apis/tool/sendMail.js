@@ -1,11 +1,10 @@
 import { randomInt } from 'es-toolkit';
 import { fnRoute, fnSchema } from '../../utils/index.js';
 import { appConfig } from '../../app.js';
-import { metaConfig } from './_meta.js';
 
 // 处理函数
 export default async (fastify) => {
-    fnRoute(import.meta.url, fastify, metaConfig, {
+    fnRoute(import.meta.url, fastify, {
         // 请求参数约束
         schemaRequest: {
             oneOf: [

@@ -78,4 +78,6 @@ let createColors = (enabled = isColorSupported) => {
     };
 };
 
-export default createColors();
+const colors = createColors();
+
+export { colors };

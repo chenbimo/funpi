@@ -33,7 +33,7 @@ import { tableData as menuTable } from './tables/menu.js';
 import { tableData as roleTable } from './tables/role.js';
 
 // 脚本列表
-import { initCheck } from './initCheck.js';
+import { initCheck } from './utils/check.js';
 import { syncMysql } from './scripts/syncMysql.js';
 import { checkTable } from './scripts/checkTable.js';
 

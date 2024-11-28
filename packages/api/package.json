@@ -13,9 +13,9 @@
         "dev": "nodemon --config=nodemon.json",
         "server": "pm2 start pm2.config.cjs",
         "ct": "node ./scripts/checkTable.js",
-        "syncDb:dev": "node --env-file=env/.development.env ./scripts/syncMysql.js",
-        "syncDb:prod": "node --env-file=env/.production.env ./scripts/syncMysql.js",
-        "flamegraph": "pnpm dlx rimraf .cache/0x & pnpm dlx 0x --output-dir=.cache/0x --output-html={outputDir}/index.html -- node --env-file=env/.development.env funpi.js"
+        "syncDb:dev": "pnpm dlx cross-env NODE_ENV=development node ./scripts/syncMysql.js",
+        "syncDb:prod": "pnpm dlx cross-env NODE_ENV=production node ./scripts/syncMysql.js",
+        "flamegraph": "pnpm dlx cross-env NODE_ENV=development & pnpm dlx rimraf .cache/0x & pnpm dlx 0x --output-dir=.cache/0x --output-html={outputDir}/index.html -- node funpi.js"
     },
     "keywords": [
         "api",
@@ -29,11 +29,10 @@
         "public/",
         "scripts/",
         "tables/",
-        ".development.env",
         ".gitignore",
         ".npmrc",
         ".prettier",
-        ".production.env",
+        "env.js",
         "funpi.js",
         "LICENSE",
         "nodemon.json",

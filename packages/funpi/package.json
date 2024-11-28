@@ -29,7 +29,6 @@
         ".prettierignore",
         ".prettier",
         "app.js",
-        "initCheck.js",
         "funpi.js",
         "LICENSE",
         "package.json",

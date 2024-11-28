@@ -5,7 +5,7 @@ import { cwd, env, platform } from 'node:process';
 import { isString as es_isString, isFunction as es_isFunction, omit as es_omit } from 'es-toolkit';
 import { isObject as es_isObject } from 'es-toolkit/compat';
 import { yd_crypto_md5 } from 'yidash';
-import colors from './colors.js';
+import { colors } from './colors.js';
 
 // 字段协议映射
 const tableFieldSchemaMap = {
@@ -148,9 +148,9 @@ export const fnField = (tableData, exclude = []) => {
 };
 
 // 导入数据
-export const fnImport = async (absolutePath, name, defaultValue = {}) => {
+export const fnImport = async (filePath, name, defaultValue = {}) => {
     try {
-        const data = await import(pathToFileURL(absolutePath));
+        const data = await import(filePath.startsWith('file://') ? filePath : pathToFileURL(filePath));
         return data;
     } catch (err) {
         console.log('🚀 ~ fnImport ~ err:', err);
@@ -161,7 +161,7 @@ export const fnImport = async (absolutePath, name, defaultValue = {}) => {
 };
 
 // 设置路由函数
-export const fnRoute = (metaUrl, fastify, metaConfig, options) => {
+export const fnRoute = async (metaUrl, fastify, options) => {
     if (es_isString(metaUrl) === false) {
         console.log(`${log4state('error')} ${colors.blue(metaUrl)} 接口的 fnRoute 函数第一个参数必须为 import.meta.url，请检查`);
         process.exit();
@@ -171,6 +171,8 @@ export const fnRoute = (metaUrl, fastify, metaConfig, options) => {
         console.log(`${log4state('error')} ${colors.blue(metaUrl)} 接口的 fnRoute 函数第二个参数必须为 fastify 实例，请检查`);
         process.exit();
     }
+
+    const { metaConfig } = await fnImport(dirname(metaUrl) + '/_meta.js', 'metaConfig', {});
 
     if (!metaConfig?.dirName) {
         console.log(`${log4state('error')} ${colors.blue(metaUrl)} 接口的 fnRoute 函数第三个参数必须为 _meta.js 文件元数据，请检查`);

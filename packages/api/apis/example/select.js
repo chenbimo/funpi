@@ -1,10 +1,8 @@
 import { fnRoute, fnSchema, fnField, appConfig } from 'funpi';
 import { tableData } from '../../tables/example.js';
-// 接口元数据
-import { metaConfig } from './_meta.js';
 
 export default async (fastify) => {
-    fnRoute(import.meta.url, fastify, metaConfig, {
+    fnRoute(import.meta.url, fastify, {
         // 请求参数约束
         schemaRequest: {
             type: 'object',

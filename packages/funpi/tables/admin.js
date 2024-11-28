@@ -8,22 +8,6 @@ export const tableData = {
         max: 50,
         pattern: '^[a-z][a-z0-9_-]*$'
     },
-    role2: {
-        name: '角色代号',
-        type: 'string',
-        default: '',
-        min: 1,
-        max: 50,
-        pattern: '^[a-z][a-z0-9_-]*$'
-    },
-    role3: {
-        name: '角色代号',
-        type: 'string',
-        default: '',
-        min: 1,
-        max: 50,
-        pattern: '^[a-z][a-z0-9_-]*$'
-    },
     username: {
         name: '用户名',
         type: 'string',

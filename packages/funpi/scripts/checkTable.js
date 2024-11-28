@@ -15,7 +15,7 @@ import { appConfig } from '../app.js';
 import { tableSchema } from '../schema/table.js';
 import { ajvZh } from '../utils/ajvZh.js';
 import { fnImport, log4state } from '../utils/index.js';
-import colors from '../utils/colors.js';
+import { colors } from '../utils/colors.js';
 
 const ajv = new Ajv({
     strict: false,
