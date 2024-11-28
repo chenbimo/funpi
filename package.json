@@ -12,7 +12,7 @@
         "url": "https://github.com/chenbimo/funpi.git"
     },
     "scripts": {
-        "r": "lerna publish from-git"
+        "r": "lerna publish"
     },
     "author": "chensuiyi <bimostyle@qq.com>",
     "homepage": "https://chensuiyi.me",

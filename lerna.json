@@ -1,5 +1,5 @@
 {
-    "version": "independent",
+    "version": "7.3.0",
     "packages": ["packages/*"],
     "npmClient": "pnpm",
     "command": {
