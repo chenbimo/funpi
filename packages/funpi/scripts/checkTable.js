@@ -19,7 +19,7 @@ import colors from '../utils/colors.js';
 
 const ajv = new Ajv({
     strict: false,
-    allErrors: false,
+    allErrors: true,
     verbose: false
 });
 
@@ -84,47 +84,47 @@ export const checkTable = async (trx) => {
             })
         ];
 
-        let hasFieldTypeError = false;
-
+        let isThisFileError = false;
+        let thisFile = '';
         for (let item of allDbFiles) {
+            thisFile = item.file;
+            const fieldErrors = [];
             const pureFileName = basename(item.file, '.js');
             if (/^[a-z][a-zA-Z0-9_]*$/.test(pureFileName) === false) {
-                console.log(`${log4state('warn')} ${item.file} 文件名只能为 大小写字母+数字+下划线`);
-                process.exit();
+                fieldErrors.push(`${log4state('error')} 文件名只能为 大小写字母+数字+下划线`);
+                isThisFileError = true;
             }
             const tableFile = item.prefix + es_snakeCase(pureFileName.trim());
             if (!item.prefix && tableFile.startsWith('sys_') === true) {
-                console.log(`${log4state('warn')} ${item.file} 非系统表不能以 sys_ 开头`);
-                process.exit();
+                fieldErrors.push(`${log4state('error')} 非系统表不能以 sys_ 开头`);
+                isThisFileError = true;
             }
             const { tableName } = await fnImport(item.file, 'tableName', '');
             const { tableData } = await fnImport(item.file, 'tableData', {});
 
             if (!tableName) {
-                console.log(`${log4state('warn')} ${item.file} 文件的 tableName 必须有表名称`);
-                process.exit();
+                fieldErrors.push(`${log4state('error')} tableName 必须有表名称`);
+                isThisFileError = true;
             }
 
             if (tableName.endsWith('_temp')) {
-                console.log(`${log4state('warn')} ${item.file} 文件名不能以 _temp 结尾`);
-                process.exit();
+                fieldErrors.push(`${log4state('error')} 文件名不能以 _temp 结尾`);
+                isThisFileError = true;
             }
 
             if (es_isPlainObject(tableData) === false) {
-                console.log(`${log4state('warn')} ${item.file} 文件的 tableData 必须为普通对象`);
-                process.exit();
+                fieldErrors.push(`${log4state('error')} tableData 必须为普通对象`);
             }
 
             if (yd_is_arrayContain(Object.keys(tableData), denyFields) === true) {
-                console.log(`${log4state('warn')} ${item.file} 文件的 tableData 不能包含 ${denyFields} 字段`);
-                process.exit();
+                fieldErrors.push(`${log4state('error')} tableData 不能包含 ${denyFields} 字段`);
+                isThisFileError = true;
             }
 
             if (tableFile === 'sys_user' && !tableData.test_field) {
-                console.log(`${log4state('warn')} ${item.file} 文件的 tableData 必须有一个test_field 测试字段`);
-                process.exit();
+                fieldErrors.push(`${log4state('error')} tableData 必须有一个test_field 测试字段`);
+                isThisFileError = true;
             }
-            const fieldErrors = [];
 
             for (let key in tableData) {
                 if (Object.prototype.hasOwnProperty.call(tableData, key)) {
@@ -132,31 +132,35 @@ export const checkTable = async (trx) => {
 
                     // 检查属性名是否符合规范
                     if (/^[a-z][a-z0-9_]*$/.test(key) === false) {
-                        hasFieldTypeError = true;
+                        isThisFileError = true;
                     }
 
                     // 检查类型是否正确
                     if (fieldTypes.includes(field.type) === false) {
-                        fieldErrors.push(`tableData.${key}.type=${field.type} 错误`);
-                        hasFieldTypeError = true;
+                        fieldErrors.push(`${log4state('error')} tableData.${key}.type=${field.type} 字段类型错误`);
+                        isThisFileError = true;
                     }
 
-                    if (hasFieldTypeError === false) {
+                    if (isThisFileError === false) {
                         const validateTable = validate[field.type];
                         const validResult = validateTable(field);
                         if (!validResult) {
-                            hasFieldTypeError = true;
+                            isThisFileError = true;
                             ajvZh(validateTable.errors);
-                            const ajvError = log4state('error') + ' ' + ajv.errorsText(validateTable.errors, { separator: '\n', dataVar: key });
-                            fieldErrors.push(ajvError);
+                            ajv.errorsText(validateTable.errors, { dataVar: key })
+                                ?.split(',')
+                                ?.forEach((str) => {
+                                    fieldErrors.push(`${log4state('error')} ${str.trim()}`);
+                                });
                         }
                     }
                 }
             }
 
-            if (hasFieldTypeError) {
-                console.log(`${log4state('warn')} ${item.file} 文件`);
-                console.log(fieldErrors.join('\r\n'));
+            if (isThisFileError) {
+                console.log(`${log4state('warn')} ${thisFile} 文件`);
+                console.log(fieldErrors.map((v) => !!v?.trim()).join('\r\n'));
+                console.log('-----------------------------------------');
             }
 
             allDbTable.push({
@@ -165,7 +169,7 @@ export const checkTable = async (trx) => {
                 tableData: tableData
             });
         }
-        if (hasFieldTypeError) {
+        if (isThisFileError) {
             process.exit();
         } else {
             console.log(`${log4state('success')} 所有表定义正常`);

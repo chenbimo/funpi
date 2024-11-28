@@ -12,9 +12,9 @@
     "scripts": {
         "dev": "nodemon --config=nodemon.json",
         "server": "pm2 start pm2.config.cjs",
-        "checkTable": "node ./scripts/checkTable.js",
-        "syncMysql:dev": "node --env-file=env/.development.env ./scripts/syncMysql.js",
-        "syncMysql:prod": "node --env-file=env/.production.env ./scripts/syncMysql.js",
+        "ct": "node ./scripts/checkTable.js",
+        "syncDb:dev": "node --env-file=env/.development.env ./scripts/syncMysql.js",
+        "syncDb:prod": "node --env-file=env/.production.env ./scripts/syncMysql.js",
         "flamegraph": "pnpm dlx rimraf .cache/0x & pnpm dlx 0x --output-dir=.cache/0x --output-html={outputDir}/index.html -- node --env-file=env/.development.env funpi.js"
     },
     "keywords": [
