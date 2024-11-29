@@ -61,13 +61,13 @@
         "fastify-plugin": "^5.0.1",
         "ioredis": "^5.4.1",
         "knex": "^3.1.0",
-        "mysql2": "^3.11.4",
+        "mysql2": "^3.11.5",
         "nodemailer": "^6.9.16",
         "picomatch": "^4.0.2",
         "safe-stable-stringify": "^2.5.0",
         "winston": "^3.17.0",
         "winston-daily-rotate-file": "^5.0.0",
-        "yidash": "^1.10.1"
+        "yidash": "^1.11.0"
     },
     "gitHead": "1c28c0de7c0af8aa4582c45ab2d98e66c597c7a1"
 }
