@@ -1,5 +1,5 @@
 // 外部模块
-import { yd_crypto_hmacMd5 } from 'yidash';
+import { yd_crypto_hmacMd5_node } from 'yidash';
 import { omit as es_omit } from 'es-toolkit';
 // 工具函数
 import { fnRoute, fnSchema } from '../../utils/index.js';
@@ -42,7 +42,7 @@ export default async (fastify) => {
                 }
 
                 // 判断密码
-                if (yd_crypto_hmacMd5(req.body.password, appConfig.md5Salt) !== adminData.password) {
+                if (yd_crypto_hmacMd5_node(req.body.password, appConfig.md5Salt) !== adminData.password) {
                     return {
                         ...appConfig.http.FAIL,
                         msg: '密码错误'

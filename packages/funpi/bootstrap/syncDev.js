@@ -1,7 +1,7 @@
 // 外部模块
 import fp from 'fastify-plugin';
 import { omit as es_omit } from 'es-toolkit';
-import { yd_number_incrTimeID, yd_crypto_md5, yd_crypto_hmacMd5 } from 'yidash';
+import { yd_number_incrTimeID_node, yd_crypto_md5_node, yd_crypto_hmacMd5_node } from 'yidash';
 // 工具函数
 // 配置文件
 import { appConfig } from '../app.js';
@@ -51,7 +51,7 @@ async function plugin(fastify) {
                 };
                 // 角色不存在，则添加
                 if (appConfig.tablePrimaryKey === 'time') {
-                    params.id = yd_number_incrTimeID();
+                    params.id = yd_number_incrTimeID_node();
                 }
 
                 insertRoleData.push(params);
@@ -96,7 +96,7 @@ async function plugin(fastify) {
                 api_ids: apiIds.join(',')
             };
             if (appConfig.tablePrimaryKey === 'time') {
-                insertData.id = yd_number_incrTimeID();
+                insertData.id = yd_number_incrTimeID_node();
             }
             // 只有主进程才操作一次
             if (!process.env.NODE_APP_INSTANCE || process.env.NODE_APP_INSTANCE === '0') {
@@ -121,10 +121,10 @@ async function plugin(fastify) {
                 username: 'dev',
                 nickname: '开发管理员',
                 role: 'dev',
-                password: yd_crypto_hmacMd5(yd_crypto_md5(appConfig.devPassword), appConfig.md5Salt)
+                password: yd_crypto_hmacMd5_node(yd_crypto_md5_node(appConfig.devPassword), appConfig.md5Salt)
             };
             if (appConfig.tablePrimaryKey === 'time') {
-                insertData.id = yd_number_incrTimeID();
+                insertData.id = yd_number_incrTimeID_node();
             }
             // 只有主进程才操作一次
             if (!process.env.NODE_APP_INSTANCE || process.env.NODE_APP_INSTANCE === '0') {
@@ -134,7 +134,7 @@ async function plugin(fastify) {
             const updateData = {
                 nickname: '开发管理员',
                 role: 'dev',
-                password: yd_crypto_hmacMd5(yd_crypto_md5(appConfig.devPassword), appConfig.md5Salt)
+                password: yd_crypto_hmacMd5_node(yd_crypto_md5_node(appConfig.devPassword), appConfig.md5Salt)
             };
             // 只有主进程才操作一次
             if (!process.env.NODE_APP_INSTANCE || process.env.NODE_APP_INSTANCE === '0') {
