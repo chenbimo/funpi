@@ -4,7 +4,7 @@ import { cwd, env, platform } from 'node:process';
 
 import { isString as es_isString, isFunction as es_isFunction, omit as es_omit } from 'es-toolkit';
 import { isObject as es_isObject } from 'es-toolkit/compat';
-import { yd_crypto_md5_node } from 'yidash';
+import { yd_crypto_md5 } from 'yidash/node';
 import { colors } from './colors.js';
 
 // 字段协议映射
@@ -107,7 +107,7 @@ export const fnApiCheck = (req) => {
 
         const fieldsSort = fieldsArray.sort().join('&');
 
-        const fieldsMd5 = yd_crypto_md5_node(fieldsSort);
+        const fieldsMd5 = yd_crypto_md5(fieldsSort);
 
         if (fieldsMd5 !== fields.sign) {
             return reject({ code: 1, msg: '接口请求参数校验失败', detail: { sign: fieldsMd5, sort: fieldsSort } });

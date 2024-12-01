@@ -7,7 +7,7 @@ import fp from 'fastify-plugin';
 // 工具函数
 import { omit as es_omit, keyBy as es_keyBy } from 'es-toolkit';
 import { isObject as es_isObject } from 'es-toolkit/compat';
-import { yd_number_incrTimeID_node } from 'yidash';
+import { yd_number_incrTimeID } from 'yidash/node';
 // 工具函数
 import { fnImport } from '../utils/index.js';
 // 配置文件
@@ -123,7 +123,7 @@ async function syncApiDir(fastify) {
             } else {
                 // 如果数据库中没有此目录，则添加目录
                 if (appConfig.tablePrimaryKey === 'time') {
-                    apiMeta.id = yd_number_incrTimeID_node();
+                    apiMeta.id = yd_number_incrTimeID();
                 }
                 insertApiDirData.push(apiMeta);
             }
@@ -251,7 +251,7 @@ async function syncApiFile(fastify) {
                     is_bool: 1
                 };
                 if (appConfig.tablePrimaryKey === 'time') {
-                    apiParams.id = yd_number_incrTimeID_node();
+                    apiParams.id = yd_number_incrTimeID();
                 }
                 if (apiDirData?.id) {
                     apiParams.pid = apiDirData.id;

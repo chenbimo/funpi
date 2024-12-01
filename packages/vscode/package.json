@@ -76,6 +76,6 @@
     },
     "gitHead": "75f65dced1e67a630bf28c0b987338e5ec285112",
     "dependencies": {
-        "rollup": "^4.27.4"
+        "rollup": "^4.28.0"
     }
 }
