@@ -82,19 +82,16 @@ export const initCheck = async () => {
 
     if (appConfig.devPassword === 'funpi123456') {
         // 启动前验证
-        console.log(`${log4state('warn')} 请修改超级管理员密码！！！（位置：appConfig.devPassword）`);
-        process.exit();
+        console.log(`${log4state('warn')} 请修改超级管理员密码！位置：appConfig.devPassword`);
     }
 
     // 启动前验证
     if (appConfig.md5Salt === 'funpi123456') {
-        console.log(`${log4state('warn')} 请修改默认加密盐值！！！（位置：appConfig.md5Salt`);
-        process.exit();
+        console.log(`${log4state('warn')} 请修改默认加密盐值！位置：appConfig.md5Salt`);
     }
 
     // jwt密钥验证
     if (appConfig.jwt.secret === 'funpi123456') {
-        console.log(`${log4state('warn')} 请修改jwt默认密钥！！！（位置：appConfig.jwt.secret`);
-        process.exit();
+        console.log(`${log4state('warn')} 请修改jwt默认密钥！位置：appConfig.jwt.secret`);
     }
 };
