@@ -237,7 +237,7 @@ export const fnSchema = (field) => {
         field = {
             name: '第几页',
             type: 'bigInt',
-            default: 1,
+            default2: 1,
             min: 1
         };
     }
@@ -245,7 +245,7 @@ export const fnSchema = (field) => {
         field = {
             name: '每页数量',
             type: 'bigInt',
-            default: 20,
+            default2: 20,
             min: 1,
             max: 100
         };
@@ -254,7 +254,7 @@ export const fnSchema = (field) => {
         field = {
             name: '搜索关键字',
             type: 'string',
-            default: '',
+            default2: '',
             min: 0,
             max: 100
         };
@@ -284,7 +284,7 @@ export const fnSchema = (field) => {
         title: field.name,
         type: tableFieldSchemaMap[field.type]
     };
-    if (field.type === 'string') {
+    if (params.type === 'string') {
         if (field.default2 !== undefined) {
             params.default = field.default2;
         }
@@ -301,7 +301,7 @@ export const fnSchema = (field) => {
             params.pattern = field.pattern;
         }
     }
-    if (field.type === 'integer' || field.type === 'number') {
+    if (params.type === 'integer' || params.type === 'number') {
         if (field.default2 !== undefined) {
             params.default = field.default2;
         }
