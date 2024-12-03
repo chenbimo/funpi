@@ -38,7 +38,7 @@
         "LICENSE",
         "nodemon.json",
         "package.json",
-        "pm2.config.js",
+        "pm2.config.cjs",
         "README.md"
     ],
     "author": "chensuiyi <bimostyle@qq.com>",
