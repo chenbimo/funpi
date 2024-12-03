@@ -14,7 +14,7 @@ import { fnFormatNow, log4state } from '../utils/index.js';
 import { colors } from '../utils/colors.js';
 import { checkTable } from './checkTable.js';
 
-// 创建顺序自增唯一 ID
+// 创建时间自增唯一 ID
 function fnIncrDate() {
     const dateFormat = fnFormatNow();
     const random = randomInt(100000, 999999);

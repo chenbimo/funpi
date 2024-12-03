@@ -32,6 +32,7 @@
         ".gitignore",
         ".npmrc",
         ".prettier",
+        "app.js",
         "env.js",
         "funpi.js",
         "LICENSE",
