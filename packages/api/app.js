@@ -58,17 +58,8 @@ export const appConfig = {
         db: 0,
         keyPrefix: 'funpidemo:'
     },
-    // 缓存
-    cache: {
-        // 接口白名单列表
-        apiWhiteLists: 'cacheData_apiWhiteLists'
-    },
-    http: {
-        NO_FILE: { symbol: 'NO_FILE', code: 17, msg: '文件不存在2' },
-        NO_API: { symbol: 'NO_API', code: 18, msg: '接口不存在2' },
-        NO_USER: { symbol: 'NO_USER', code: 19, msg: '用户不存在2' },
-        NO_DATA: { symbol: 'NO_DATA', code: 20, msg: '数据不存在2' }
-    },
+    // 状态码
+    http: {},
     // 定时器
     cron: [],
     // 角色配置
