@@ -90,7 +90,7 @@ const replaceObj = {
         // 接口白名单列表
         apiWhiteLists: 'cacheData_apiWhiteLists'
     },
-    // Http 状态码
+    // Http 状态码，这里要做code值验证，自定义的值只能为3位数字
     http: {
         SUCCESS: { symbol: 'SUCCESS', code: 0, msg: '操作成功' },
         INSERT_SUCCESS: { symbol: 'INSERT_SUCCESS', code: 0, msg: '添加成功' },
