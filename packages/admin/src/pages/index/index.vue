@@ -1,14 +1,5 @@
 <template>
-    <div class="page-index">
-        <a-form :model="$Data.formData" layout="vertical">
-            <a-form-item field="thumbnail" label="图片上传">
-                <input type="file" @change="$Method.onUploadFile" />
-                <div class="image-lists">
-                    <a-image v-if="$Data.formData.thumbnail" width="200" :src="$Data.formData.thumbnail" />
-                </div>
-            </a-form-item>
-        </a-form>
-    </div>
+    <div class="page-index"></div>
 </template>
 
 <script setup>
@@ -34,23 +25,7 @@ const $Data = $ref({
 
 // 方法集
 const $Method = {
-    initData() {},
-    // 上传文件
-    async onUploadFile(event) {
-        try {
-            const fileObject = event.target.files[0];
-            const formData = new FormData();
-            formData.append('file', fileObject);
-            formData.append('dir', 'version');
-            const res = await $Http({
-                url: '/upload/local',
-                data: formData
-            });
-            $Data.formData.url = res.url;
-        } catch (err) {
-            console.log(err);
-        }
-    }
+    initData() {}
 };
 
 $Method.initData();
