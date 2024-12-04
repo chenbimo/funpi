@@ -1,3 +1,4 @@
+import { envConfig } from './env.js';
 export const appConfig = {
     // 应用名称
     appName: '易接口',
@@ -15,9 +16,6 @@ export const appConfig = {
     paramsCheck: false,
     // 是否显示接口文档
     isSwagger: false,
-    // TODO: 考虑增加 uuid 类型以及不同的 uuid 格式
-    // 数据库表主键方案 default（mysql 自带）time（时序 ID）
-    tablePrimaryKey: 'default',
     // 无限制API列表
     freeApis: ['/', '/favicon.*', '/public/**', '/api/admin/adminLogin'],
     // 白名单API列表,
@@ -45,20 +43,20 @@ export const appConfig = {
     },
     // mysql 数据库配置
     mysql: {
-        host: '127.0.0.1', // 主机地址
+        host: envConfig.MYSQL_HOST, // 主机地址
         port: 3306, // 端口
-        db: 'test', // 数据库名称
-        username: 'root', // 数据库用户名
-        password: 'root' // 数据库密码
+        db: envConfig.MYSQL_DB, // 数据库名称
+        username: envConfig.MYSQL_USERNAME, // 数据库用户名
+        password: envConfig.MYSQL_PASSWORD // 数据库密码
     },
     // redis 缓存配置
     redis: {
         host: '127.0.0.1',
         port: 6379,
         username: '',
-        password: '',
+        password: envConfig.REDIS_PASSWORD,
         db: 0,
-        keyPrefix: 'test:'
+        keyPrefix: 'funpidemo:'
     },
     // 缓存
     cache: {
