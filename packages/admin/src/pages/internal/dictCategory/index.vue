@@ -5,9 +5,9 @@
                 <a-button type="primary" @click="$Method.onDataAction('insertData', {})">添加</a-button>
             </div>
             <div class="right">
-                <a-input placeholder="请输入搜索关键字" allow-clear></a-input>
+                <a-input v-model="$Data.formData.keyword" placeholder="请输入搜索关键字" allow-clear @clear="$Method.apiSelectData"></a-input>
                 <div class="w-10px"></div>
-                <a-button type="primary">搜索</a-button>
+                <a-button type="primary" @click="$Method.apiSelectData">搜索</a-button>
             </div>
         </div>
         <div class="page-table">
@@ -66,12 +66,14 @@ const $Data = $ref({
     },
     // 显示和隐藏
     isShow: {
-        editDataDrawer: false,
-        deleteDataDialog: false
+        editDataDrawer: false
     },
     actionType: 'insertData',
     tableData: [],
     rowData: {},
+    formData: {
+        keyword: ''
+    },
     pagination: {
         page: 1,
         total: 0
@@ -96,8 +98,15 @@ const $Method = {
 
         // 删除数据
         if ($Data.actionType === 'deleteData') {
-            $Data.isShow.deleteDataDialog = true;
-            return;
+            Modal.confirm({
+                title: '提示',
+                content: '请确认是否删除？',
+                modalClass: 'delete-modal-class',
+                alignCenter: true,
+                onOk() {
+                    $Method.apiDeleteData();
+                }
+            });
         }
     },
     // 刷新数据
@@ -108,10 +117,11 @@ const $Method = {
     async apiSelectData() {
         try {
             const res = await $Http({
-                url: '/dictCategory/select',
+                url: '/dict/categorySelectPage',
                 data: {
                     page: $Data.pagination.page,
-                    limit: $GlobalData.pageLimit
+                    limit: $GlobalData.pageLimit,
+                    keyword: $Data.formData.keyword
                 }
             });
             $Data.tableData = res.data.rows;
@@ -119,6 +129,25 @@ const $Method = {
         } catch (err) {
             console.log('🚀 ~ file: index.vue:86 ~ apiSelectData ~ err:', err);
             Message.error(err.msg || err);
+        }
+    },
+    // 删除数据
+    async apiDeleteData() {
+        try {
+            const res = await $Http({
+                url: '/dict/categoryDelete',
+                data: {
+                    id: $Data.rowData.id
+                }
+            });
+            await $Method.apiSelectData();
+            Message.success({
+                content: res.msg
+            });
+        } catch (err) {
+            Message.error({
+                content: err.msg || err
+            });
         }
     }
 };
