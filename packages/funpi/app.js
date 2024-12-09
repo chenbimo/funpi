@@ -117,23 +117,19 @@ const replaceObj = {
     role: {
         visitor: {
             name: '游客',
-            describe: '具备有限的权限和有限的查看内容',
-            is_system: 1
+            describe: '具备有限的权限和有限的查看内容'
         },
         user: {
             name: '用户',
-            describe: '用户权限和对于的内容查看',
-            is_system: 1
+            describe: '用户权限和对于的内容查看'
         },
         admin: {
             name: '管理',
-            describe: '管理权限、除开发相关权限之外的权限等',
-            is_system: 1
+            describe: '管理权限、除开发相关权限之外的权限等'
         },
         super: {
             name: '超级管理',
-            describe: '超级管理权限、除开发相关权限之外的权限等',
-            is_system: 1
+            describe: '超级管理权限、除开发相关权限之外的权限等'
         }
     },
     // 菜单配置
@@ -147,22 +143,46 @@ const replaceObj = {
                     name: '管理员',
                     is_system: 1,
                     sort: 1
+                }
+            }
+        },
+        '/dict': {
+            name: '字典管理',
+            sort: 1002,
+            is_system: 1,
+            children: {
+                '/internal/dict-category': {
+                    name: '字典分类',
+                    is_system: 1,
+                    sort: 1
                 },
+                '/internal/dict': {
+                    name: '字典列表',
+                    is_system: 1,
+                    sort: 2
+                }
+            }
+        },
+        '/log': {
+            name: '日志数据',
+            sort: 1003,
+            is_system: 1,
+            children: {
                 '/internal/admin-login-log': {
                     name: '登录日志',
                     is_system: 1,
-                    sort: 2
+                    sort: 1
                 },
                 '/internal/mail-log': {
                     name: '邮件日志',
                     is_system: 1,
-                    sort: 3
+                    sort: 2
                 }
             }
         },
         '/permission': {
             name: '权限数据',
-            sort: 1003,
+            sort: 1004,
             children: {
                 '/internal/menu': {
                     name: '菜单列表',
@@ -177,7 +197,7 @@ const replaceObj = {
                 '/internal/role': {
                     name: '角色管理',
                     is_system: 1,
-                    sort: 5
+                    sort: 3
                 }
             }
         }
