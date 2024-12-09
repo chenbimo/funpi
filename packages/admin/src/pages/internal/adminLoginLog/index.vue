@@ -59,8 +59,7 @@ const $Data = $ref({
     },
     // 显示和隐藏
     isShow: {
-        editDataDrawer: false,
-        deleteDataDialog: false
+        editDataDrawer: false
     },
     actionType: 'insertData',
     tableData: [],
@@ -84,12 +83,6 @@ const $Method = {
         // 编辑数据
         if ($Data.actionType === 'insertData' || $Data.actionType === 'updateData') {
             $Data.isShow.editDataDrawer = true;
-            return;
-        }
-
-        // 删除数据
-        if ($Data.actionType === 'deleteData') {
-            $Data.isShow.deleteDataDialog = true;
             return;
         }
     },

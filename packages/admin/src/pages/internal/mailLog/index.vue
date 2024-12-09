@@ -91,12 +91,6 @@ const $Method = {
             $Data.isShow.sendMailDrawer = true;
             return;
         }
-
-        // 删除数据
-        if ($Data.actionType === 'deleteData') {
-            $Data.isShow.deleteDataDialog = true;
-            return;
-        }
     },
     // 刷新数据
     async fnFreshData() {

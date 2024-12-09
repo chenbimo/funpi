@@ -77,8 +77,7 @@ const $Data = $ref({
     // 显示和隐藏
     isShow: {
         editDataDrawer: false,
-        editMenuDrawer: false,
-        deleteDataDialog: false
+        editMenuDrawer: false
     },
     actionType: 'insertData',
     tableData: [],

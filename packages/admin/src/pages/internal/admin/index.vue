@@ -70,8 +70,7 @@ const $Data = $ref({
     },
     // 显示和隐藏
     isShow: {
-        editDataDrawer: false,
-        deleteDataDialog: false
+        editDataDrawer: false
     },
     actionType: 'insertData',
     categoryAll: [],
@@ -101,8 +100,15 @@ const $Method = {
 
         // 删除数据
         if ($Data.actionType === 'deleteData') {
-            $Data.isShow.deleteDataDialog = true;
-            return;
+            Modal.confirm({
+                title: '提示',
+                content: '请确认是否删除？',
+                modalClass: 'delete-modal-class',
+                alignCenter: true,
+                onOk() {
+                    $Method.apiDeleteData();
+                }
+            });
         }
     },
     // 刷新数据
@@ -121,6 +127,25 @@ const $Method = {
             });
             $Data.tableData = res.data.rows;
             $Data.pagination.total = res.data.total;
+        } catch (err) {
+            Message.error({
+                content: err.msg || err
+            });
+        }
+    },
+    // 删除菜单
+    async apiDeleteData() {
+        try {
+            const res = await $Http({
+                url: '/menu/delete',
+                data: {
+                    id: $Data.rowData.id
+                }
+            });
+            await $Method.apiSelectData();
+            Message.success({
+                content: res.msg
+            });
         } catch (err) {
             Message.error({
                 content: err.msg || err
