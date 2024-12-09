@@ -15,6 +15,12 @@
                 <template #columns>
                     <a-table-column title="名称" data-index="name" :width="200" ellipsis tooltip></a-table-column>
                     <a-table-column title="编码" data-index="code" :width="150" ellipsis tooltip></a-table-column>
+                    <a-table-column title="类型" data-index="is_system" :width="100" ellipsis tooltip>
+                        <template #cell="{ record }">
+                            <a-tag v-if="record.is_system === 1" color="red">系统角色</a-tag>
+                            <a-tag v-else color="blue">普通角色</a-tag>
+                        </template>
+                    </a-table-column>
                     <a-table-column title="描述" data-index="describe" :min-width="350" ellipsis tooltip></a-table-column>
                     <a-table-column title="菜单" data-index="menu_ids" :width="150" ellipsis tooltip></a-table-column>
                     <a-table-column title="接口" data-index="api_ids" :width="150" ellipsis tooltip></a-table-column>
@@ -72,8 +78,7 @@ const $Data = $ref({
     // 显示和隐藏
     isShow: {
         editDataDrawer: false,
-        editPermissionDrawer: false,
-        deleteDataDialog: false
+        editPermissionDrawer: false
     },
     actionType: 'insertData',
     // 表格数据
@@ -110,8 +115,15 @@ const $Method = {
 
         // 删除数据
         if ($Data.actionType === 'deleteData') {
-            $Data.isShow.deleteDataDialog = true;
-            return;
+            Modal.confirm({
+                title: '提示',
+                content: '请确认是否删除？',
+                modalClass: 'delete-modal-class',
+                alignCenter: true,
+                onOk() {
+                    $Method.apiDeleteData();
+                }
+            });
         }
     },
     // 刷新数据
@@ -135,7 +147,25 @@ const $Method = {
             Message.error({
                 content: err.msg || err
             });
-            console.log('🚀 ~ file: index.vue:122 ~ apiSelectData ~ err:', err);
+        }
+    },
+    // 删除数据
+    async apiDeleteData() {
+        try {
+            const res = await $Http({
+                url: '/admin/roleDelete',
+                data: {
+                    id: $Data.rowData.id
+                }
+            });
+            await $Method.apiSelectData();
+            Message.success({
+                content: res.msg
+            });
+        } catch (err) {
+            Message.error({
+                content: err.msg || err
+            });
         }
     }
 };
