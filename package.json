@@ -17,10 +17,6 @@
     "author": "chensuiyi <bimostyle@qq.com>",
     "homepage": "https://chensuiyi.me",
     "devDependencies": {
-        "@rollup/plugin-commonjs": "^28.0.1",
-        "@rollup/plugin-image": "^3.0.3",
-        "@rollup/plugin-json": "^6.1.0",
-        "@rollup/plugin-node-resolve": "^15.3.0",
         "lerna": "^8.1.9",
         "lint-staged": "^15.2.10",
         "nodemon": "^3.1.7",

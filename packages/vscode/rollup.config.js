@@ -14,7 +14,7 @@ export default {
         json({}),
         image({})
     ],
-    input: 'src/extension.js',
+    input: 'extension.js',
     output: {
         file: 'dist/extension.cjs',
         format: 'cjs',

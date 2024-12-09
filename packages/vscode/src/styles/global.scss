@@ -1,0 +1,433 @@
+* {
+    padding: 0;
+    border: 0;
+    margin: 0;
+    outline: 0;
+    box-sizing: border-box;
+}
+
+::placeholder {
+    font-size: 12px !important;
+    color: var(--vscode-editor-foreground) !important;
+}
+
+html,
+body {
+    font-size: 14px;
+    font-family: 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei UI', 'Microsoft YaHei', 'Noto Sans CJK SC', Sathu, EucrosiaUPC, Arial, Helvetica, sans-serif !important;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+    display: inline-block;
+}
+
+body {
+    .link {
+        color: #2588ff;
+    }
+
+    .green-color {
+        color: #44b549;
+    }
+    .red-color {
+        color: #e33;
+    }
+
+    .qrcode-wrapper {
+        display: flex;
+        justify-content: center;
+    }
+    .qrcode-box {
+        border: 4px solid #ddd;
+        width: 158px;
+        height: 158px;
+    }
+
+    .setup-tips {
+        text-align: center;
+        margin-top: 10px;
+        margin-bottom: 20px;
+    }
+
+    .setup-input {
+        width: 170px;
+        margin-bottom: 5px;
+    }
+    .setup-button {
+        margin-bottom: 8px;
+        width: 170px;
+    }
+
+    .space-tag {
+        height: 10px;
+        min-height: 10px;
+        max-height: 10px;
+        width: 100%;
+    }
+
+    .my-dialog {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .bg-contain,
+    .bg-cover {
+        background-repeat: no-repeat;
+        background-position: center center;
+    }
+    .bg-contain {
+        background-size: contain;
+    }
+    .bg-cover {
+        background-size: cover;
+    }
+
+    .arco-spin-mask {
+        background-color: rgba(0, 0, 0, 0.2);
+    }
+    .arco-dropdown,
+    .arco-select-dropdown {
+        background-color: var(--vscode-editor-background);
+        border-color: var(--vscode-editor-foreground) !important;
+    }
+
+    .arco-dropdown .arco-dropdown-option,
+    .arco-select-dropdown .arco-select-option {
+        font-size: 13px;
+        line-height: 22px;
+        background-color: var(--vscode-editor-background) !important;
+        color: var(--vscode-editor-foreground) !important;
+        &:hover {
+            background-color: var(--vscode-toolbar-hoverBackground) !important;
+        }
+    }
+
+    .arco-select-view-single:hover,
+    .arco-input-wrapper:hover {
+        background-color: var(--vscode-toolbar-hoverBackground) !important;
+    }
+
+    .arco-select-view-single .arco-select-view-value,
+    .arco-select-view-single .arco-select-view-input,
+    .arco-input-wrapper .arco-input {
+        height: 22px !important;
+        min-height: 22px !important;
+        max-height: 22px !important;
+        font-size: 12px !important;
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+    }
+
+    .arco-select-view-disabled {
+        background-color: var(--vscode-editor-background) !important;
+        color: var(--vscode-editor-foreground) !important;
+    }
+    .arco-select-view-single .arco-select-view-input[disabled] {
+        -webkit-text-fill-color: var(--vscode-editor-foreground) !important;
+    }
+
+    .arco-tag {
+        height: 22px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: var(--vscode-editor-background);
+        color: var(--vscode-editor-foreground);
+        font-size: 12px;
+        &.arco-tag-checked,
+        &:hover {
+            background-color: var(--vscode-toolbar-hoverBackground) !important;
+        }
+    }
+
+    // 时间线
+    .arco-timeline-item-content {
+        color: var(--vscode-editor-foreground);
+    }
+    .arco-timeline-item-dot-wrapper .arco-timeline-item-dot-content {
+        width: 12px !important;
+    }
+    .arco-timeline-item-dot-custom {
+        background-color: var(--vscode-editor-background) !important;
+        color: var(--vscode-editor-foreground) !important;
+    }
+
+    .arco-modal-container {
+        .arco-modal-wrapper {
+            top: 15px;
+            bottom: auto;
+            .arco-modal-body {
+                max-height: 80vh;
+                overflow-y: auto;
+                .arco-select-view-single,
+                .arco-input-wrapper {
+                    background-color: var(--color-fill-2) !important;
+                    color: var(--color-text-1) !important;
+                }
+                .arco-select-view-single:hover,
+                .arco-input-wrapper:hover {
+                    background-color: var(--color-fill-3) !important;
+                    border-color: transparent !important;
+                }
+            }
+        }
+        .footer {
+            display: flex;
+            justify-content: center;
+        }
+    }
+
+    .arco-select-view,
+    .arco-input-wrapper {
+        background-color: var(--vscode-editor-background);
+        color: var(--vscode-editor-foreground);
+    }
+
+    .arco-input-wrapper:focus-within,
+    .arco-input-wrapper.arco-input-focus,
+    .arco-select-view-single:focus-within,
+    .arco-select-view-single.arco-select-view-focus {
+        background-color: var(--vscode-editor-background);
+        color: var(--vscode-editor-foreground);
+        border-color: var(--vscode-toolbar-hoverBackground);
+    }
+
+    .arco-icon-hover:hover:before {
+        background-color: var(--vscode-toolbar-hoverBackground);
+    }
+
+    .arco-tree-node {
+        &:hover {
+            background-color: var(--vscode-list-hoverBackground);
+        }
+
+        &.arco-tree-node-selected {
+            background-color: var(--vscode-list-hoverBackground);
+        }
+        &.arco-tree-node-is-leaf {
+            .arco-tree-node-switcher {
+                // width: 8px !important;
+                width: 0px !important;
+                margin-right: 0px !important;
+                padding-left: 2px !important;
+            }
+        }
+        .cursor {
+            background-color: var(--vscode-list-hoverBackground);
+        }
+        .arco-tree-node-indent-block {
+            margin-right: 0;
+            width: 14px;
+        }
+        .arco-tree-node-switcher {
+            height: 22px;
+            color: var(--vscode-icon-foreground);
+            margin-right: 4px;
+        }
+        .arco-tree-node-title {
+            padding-top: 0;
+            padding-bottom: 0;
+            width: 100%;
+            .tree-data-title {
+                display: flex;
+                align-items: center;
+                width: 100%;
+                position: relative;
+
+                .symbol-name,
+                .symbol-label {
+                    height: 16px;
+                    line-height: 16px;
+                }
+                .title-detail {
+                    color: #666;
+                }
+                .symbol {
+                    margin-right: 4px;
+                    margin-bottom: -2px;
+                }
+                &:hover {
+                    .unPinTopHover {
+                        display: inline-block;
+                    }
+                }
+                .unPinTopHover {
+                    position: absolute;
+                    right: 4px;
+                    color: var(--vscode-sideBar-foreground);
+                    display: none;
+                }
+            }
+            &:hover {
+                color: inherit;
+                background-color: transparent;
+            }
+            .arco-tree-node-title-text {
+                color: var(--vscode-foreground);
+                word-break: break-all;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                font-size: 13px;
+                width: 100%;
+            }
+        }
+    }
+
+    .arco-btn {
+        // width: 170px;
+        // background-color: var(--vscode-toolbar-hoverBackground);
+        // color: #fff;
+        // &:hover {
+        // color: #fff !important;
+        // background-color: var(--vscode-toolbar-hoverBackground) !important;
+        // }
+
+        height: 22px;
+        background-color: var(--vscode-editor-background);
+        color: var(--vscode-editor-foreground);
+    }
+
+    .arco-btn-group {
+        .arco-btn {
+            &:hover {
+                background-color: var(--vscode-toolbar-hoverBackground) !important;
+            }
+        }
+    }
+
+    .arco-btn-group .arco-btn-primary:not(:last-child) {
+        border-right-color: var(--vscode-sideBar-background) !important;
+    }
+
+    .arco-message-list {
+        left: 0;
+        right: 0;
+        width: auto;
+    }
+
+    .arco-modal-body {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .arco-btn-size-mini {
+        height: 24px;
+        line-height: 22px;
+        padding-top: 1px;
+    }
+
+    // .arco-message-list {
+    //     width: auto !important;
+    // }
+
+    .color-symbol-array {
+        color: var(--vscode-symbolIcon-arrayForeground);
+    }
+    .color-symbol-boolean {
+        color: var(--vscode-symbolIcon-booleanForeground);
+    }
+    .color-symbol-class {
+        color: var(--vscode-symbolIcon-classForeground);
+    }
+    .color-symbol-method {
+        color: var(--vscode-symbolIcon-methodForeground);
+    }
+    .color-symbol-color {
+        color: var(--vscode-symbolIcon-colorForeground);
+    }
+    .color-symbol-constant {
+        color: var(--vscode-symbolIcon-constantForeground);
+    }
+    .color-symbol-constructor {
+        color: var(--vscode-symbolIcon-constructorForeground);
+    }
+    .color-symbol-value,
+    .color-symbol-enum {
+        color: var(--vscode-symbolIcon-enumeratorForeground);
+    }
+    .color-symbol-enum-member {
+        color: var(--vscode-symbolIcon-enumeratorMemberForeground);
+    }
+    .color-symbol-event {
+        color: var(--vscode-symbolIcon-eventForeground);
+    }
+    .color-symbol-field {
+        color: var(--vscode-symbolIcon-fieldForeground);
+    }
+    .color-symbol-file {
+        color: var(--vscode-symbolIcon-fileForeground);
+    }
+    .color-symbol-folder {
+        color: var(--vscode-symbolIcon-folderForeground);
+    }
+    .color-symbol-function {
+        color: var(--vscode-symbolIcon-functionForeground);
+    }
+    .color-symbol-interface {
+        color: var(--vscode-symbolIcon-interfaceForeground);
+    }
+    .color-symbol-key {
+        color: var(--vscode-symbolIcon-keyForeground);
+    }
+    .color-symbol-keyword {
+        color: var(--vscode-symbolIcon-keywordForeground);
+    }
+    .color-symbol-module {
+        color: var(--vscode-symbolIcon-moduleForeground);
+    }
+    .color-symbol-namespace {
+        color: var(--vscode-symbolIcon-namespaceForeground);
+    }
+    .color-symbol-null {
+        color: var(--vscode-symbolIcon-nullForeground);
+    }
+    .color-symbol-number {
+        color: var(--vscode-symbolIcon-numberForeground);
+    }
+    .color-symbol-object {
+        color: var(--vscode-symbolIcon-objectForeground);
+    }
+    .color-symbol-operator {
+        color: var(--vscode-symbolIcon-operatorForeground);
+    }
+    .color-symbol-package {
+        color: var(--vscode-symbolIcon-packageForeground);
+    }
+    .color-symbol-property {
+        color: var(--vscode-symbolIcon-propertyForeground);
+    }
+    .color-symbol-reference {
+        color: var(--vscode-symbolIcon-referenceForeground);
+    }
+    .color-symbol-snippet {
+        color: var(--vscode-symbolIcon-snippetForeground);
+    }
+    .color-symbol-string {
+        color: var(--vscode-symbolIcon-stringForeground);
+    }
+    .color-symbol-struct {
+        color: var(--vscode-symbolIcon-structForeground);
+    }
+    .color-symbol-text {
+        color: var(--vscode-symbolIcon-textForeground);
+    }
+    .color-symbol-type-parameter {
+        color: var(--vscode-symbolIcon-typeParameterForeground);
+    }
+    .color-symbol-unit {
+        color: var(--vscode-symbolIcon-unitForeground);
+    }
+    .color-symbol-variable {
+        color: var(--vscode-symbolIcon-variableForeground);
+    }
+    .color-location {
+        color: var(--vscode-symbolIcon-referenceForeground);
+    }
+    .color-codicon-symbol {
+        color: var(--vscode-symbolIcon-referenceForeground);
+    }
+}
