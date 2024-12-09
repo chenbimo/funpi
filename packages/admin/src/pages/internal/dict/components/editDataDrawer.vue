@@ -83,7 +83,7 @@ const $Data = $ref({
         code: '',
         name: '',
         value: '',
-        symbol: '',
+        symbol: 'string',
         describe: ''
     },
     categoryAllId: {},
@@ -119,8 +119,8 @@ const $Method = {
     async apiEditData() {
         try {
             const url = {
-                insertData: '/dict/insert',
-                updateData: '/dict/update'
+                insertData: '/dict/dictInsert',
+                updateData: '/dict/dictUpdate'
             }[$Prop.actionType];
 
             $Method.setCategoryCode();
