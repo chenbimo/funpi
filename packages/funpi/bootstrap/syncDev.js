@@ -42,12 +42,15 @@ async function plugin(fastify) {
         for (let keyRole in appConfig.role) {
             if (Object.prototype.hasOwnProperty.call(appConfig.role, keyRole) === false) continue;
             const item = appConfig.role[keyRole];
+            const is_system = systemRoleCodes.includes(keyRole) ? 1 : 0;
             if (roleDataByCode.includes(keyRole) === false && keyRole !== 'dev') {
                 const params = {
                     code: keyRole,
+                    name: item.name,
+                    describe: item.describe,
                     api_ids: '',
                     menu_ids: '',
-                    is_system: systemRoleCodes[keyRole] ? 1 : 0
+                    is_system: is_system
                 };
                 // 角色不存在，则添加
                 if (appConfig.tablePrimaryKey === 'time') {
@@ -60,7 +63,7 @@ async function plugin(fastify) {
                     code: keyRole,
                     name: item.name,
                     describe: item.describe,
-                    is_system: systemRoleCodes[keyRole] ? 1 : 0
+                    is_system: is_system
                 });
             }
         }
@@ -93,7 +96,8 @@ async function plugin(fastify) {
                 name: '开发管理员角色',
                 describe: '技术性相关的管理和维护',
                 menu_ids: menuIds.join(','),
-                api_ids: apiIds.join(',')
+                api_ids: apiIds.join(','),
+                is_system: 1
             };
             if (appConfig.tablePrimaryKey === 'time') {
                 insertData.id = yd_number_incrTimeID();
@@ -107,7 +111,8 @@ async function plugin(fastify) {
                 name: '开发管理员角色',
                 describe: '技术性相关的管理和维护',
                 menu_ids: menuIds.join(','),
-                api_ids: apiIds.join(',')
+                api_ids: apiIds.join(','),
+                is_system: 1
             };
             // 只有主进程才操作一次
             if (!process.env.NODE_APP_INSTANCE || process.env.NODE_APP_INSTANCE === '0') {
@@ -121,6 +126,7 @@ async function plugin(fastify) {
                 username: 'dev',
                 nickname: '开发管理员',
                 role: 'dev',
+                is_system: 1,
                 password: yd_crypto_hmacMd5(yd_crypto_md5(appConfig.devPassword), appConfig.md5Salt)
             };
             if (appConfig.tablePrimaryKey === 'time') {
@@ -134,6 +140,7 @@ async function plugin(fastify) {
             const updateData = {
                 nickname: '开发管理员',
                 role: 'dev',
+                is_system: 1,
                 password: yd_crypto_hmacMd5(yd_crypto_md5(appConfig.devPassword), appConfig.md5Salt)
             };
             // 只有主进程才操作一次
