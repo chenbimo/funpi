@@ -1,11 +1,7 @@
-// 工具函数
 import { fnRoute, fnSchema, fnField } from '../../utils/index.js';
-// 配置文件
 import { appConfig } from '../../app.js';
-// 数据表格
 import { tableData } from '../../tables/mailLog.js';
 
-// 处理函数
 export default async (fastify) => {
     fnRoute(import.meta.url, fastify, {
         // 请求参数约束

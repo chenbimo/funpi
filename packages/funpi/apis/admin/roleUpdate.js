@@ -1,11 +1,7 @@
-// 工具函数
 import { fnRoute, fnSchema } from '../../utils/index.js';
-// 配置文件夹
 import { appConfig } from '../../app.js';
-// 数据表格
 import { tableData } from '../../tables/role.js';
 
-// 处理函数
 export default async (fastify) => {
     fnRoute(import.meta.url, fastify, {
         // 请求参数约束
@@ -34,7 +30,7 @@ export default async (fastify) => {
                     .selectOne(['id']);
 
                 // 编码存在且 id 不等于当前角色
-                if (roleData?.id !== req.body.id) {
+                if (roleData?.id && roleData?.id !== req.body.id) {
                     return {
                         ...appConfig.http.INSERT_FAIL,
                         msg: '角色名称或编码已存在'

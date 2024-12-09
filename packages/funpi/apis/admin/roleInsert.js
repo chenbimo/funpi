@@ -1,11 +1,7 @@
-// 工具函数
 import { fnRoute, fnSchema } from '../../utils/index.js';
-// 配置文件
 import { appConfig } from '../../app.js';
-// 数据表格
 import { tableData } from '../../tables/role.js';
 
-// 处理函数
 export default async (fastify) => {
     fnRoute(import.meta.url, fastify, {
         // 请求参数约束
@@ -39,12 +35,12 @@ export default async (fastify) => {
                     };
                 }
 
-                const result = await roleModel.clone().updateData({
+                const result = await roleModel.clone().insertData({
                     code: req.body.code,
                     name: req.body.name,
                     describe: req.body.describe,
-                    menu_ids: req.body.menu_ids.join(','),
-                    api_ids: req.body.api_ids.join(',')
+                    menu_ids: req.body.menu_ids,
+                    api_ids: req.body.api_ids
                 });
 
                 await fastify.cacheRoleData();

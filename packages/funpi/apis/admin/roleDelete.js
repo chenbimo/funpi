@@ -1,10 +1,6 @@
-// 工具函数
 import { fnRoute, fnSchema } from '../../utils/index.js';
-// 配置文件
 import { appConfig } from '../../app.js';
-// 数据表格
 
-// 处理函数
 export default async (fastify) => {
     fnRoute(import.meta.url, fastify, {
         // 请求参数约束
@@ -30,7 +26,7 @@ export default async (fastify) => {
                 if (roleData.is_system === 1) {
                     return {
                         ...appConfig.http.DELETE_FAIL,
-                        msg: '默认角色，无法删除'
+                        msg: '系统角色，无法删除'
                     };
                 }
 
