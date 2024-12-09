@@ -5,8 +5,9 @@
                 <div class="logo bg-contain" :style="{ backgroundImage: 'url(' + utilInternalAssets('logo.png') + ')' }"></div>
                 <div class="name">{{ $GlobalData.appConfig.name }}</div>
             </div>
-            <div class="menu-area"></div>
-            <sideMenu v-if="$Data.isShow.sideMenu === true" :openMenuId="$Data.openMenuId" :selectedItemId="$Data.selectedItemId" :menuObject="$Data.menuObject" :menuTree="$Data.menuTree"></sideMenu>
+            <div class="menu-area">
+                <sideMenu v-if="$Data.isShow.sideMenu === true" :openMenuId="$Data.openMenuId" :selectedItemId="$Data.selectedItemId" :menuObject="$Data.menuObject" :menuTree="$Data.menuTree"></sideMenu>
+            </div>
         </a-layout-sider>
         <a-layout class="layout-main" style="height: 100%">
             <div class="layout-header">
@@ -123,7 +124,7 @@ const $Method = {
             console.log('🔥[ res ]-120', res);
 
             $Data.menuObject = _keyBy(_cloneDeep(res.data.rows), (item) => item.id);
-            $Data.menuTree = yd_tree_array2Tree(_sortBy(res.data.rows, 'sort'));
+            $Data.menuTree = yd_tree_array2Tree(_sortBy(res.data.rows, ['sort']));
             $Data.menuTree.forEach((menu, index) => {
                 menu.children?.forEach((item, index2) => {
                     if (item.value === $Route.path) {
