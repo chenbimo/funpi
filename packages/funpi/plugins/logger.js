@@ -26,8 +26,25 @@ const configParams = {
         debug: 5
     },
     level: 'warn',
-    format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
-    transports: []
+    format: winston.format.combine(
+        winston.format.timestamp({
+            format: () => {
+                return new Date().toLocaleString('zh-CN', {
+                    timeZone: appConfig.timezone,
+                    hour12: false,
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit'
+                });
+            }
+        }),
+        winston.format.json()
+    ),
+    transports: [],
+    exitOnError: false
 };
 
 // 如果是产品环境，则将日志写到文件中

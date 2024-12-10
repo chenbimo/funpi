@@ -26,6 +26,8 @@ const targetObject = {
     // TODO: 考虑增加 uuid 类型以及不同的 uuid 格式
     // 数据库表主键方案 default（mysql 自带）time（时序 ID）
     tablePrimaryKey: 'default',
+    // 时区
+    timezone: 'Asia/Shanghai',
     // 白名单API列表,
     whiteApis: [],
     // 黑名单API列表

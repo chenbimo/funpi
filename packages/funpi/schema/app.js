@@ -61,6 +61,11 @@ export const appSchema = {
             type: 'string',
             enum: ['default', 'time']
         },
+        timezone: {
+            title: '时区',
+            type: 'string',
+            default: 'Asia/Shanghai'
+        },
         // 自由接口列表，任何情况下可以访问的路由
         freeApis: {
             title: '自由接口',
