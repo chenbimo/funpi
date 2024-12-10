@@ -6,6 +6,12 @@
         </template>
         <div class="bodyer">
             <a-form :model="$Data.formData" layout="vertical">
+                <a-form-item field="category" label="所属目录">
+                    <a-select v-model="$Data.formData.pid">
+                        <a-option :key="0" :value="0" label="根菜单"></a-option>
+                        <a-option v-for="item in $Data.menuCategory" :key="item.id" :value="item.id" :label="item.name"></a-option>
+                    </a-select>
+                </a-form-item>
                 <a-form-item field="name" label="菜单名称">
                     <a-input v-model="$Data.formData.name" placeholder="任何合法的字符" />
                 </a-form-item>
@@ -70,6 +76,7 @@ const $Method = {
         $Data.isShow.editDataDrawer = $Prop.modelValue;
         $Data.formData = _merge($Data.formData, $Prop.rowData);
         // $Data.formData.pid = $Prop.rowData.id;
+        $Method.apiSelectMenuCategory();
     },
     // 关闭抽屉事件
     onCloseDrawer() {
@@ -78,12 +85,28 @@ const $Method = {
             $Emit('update:modelValue', false);
         }, 300);
     },
+    // 查询菜单目录
+    async apiSelectMenuCategory() {
+        try {
+            const res = await $Http({
+                url: '/admin/menuSelectAll',
+                data: {
+                    pid: 0
+                }
+            });
+            $Data.menuCategory = res.data.rows.filter((item) => item.pid === 0);
+        } catch (err) {
+            Message.error({
+                content: err.msg || err
+            });
+        }
+    },
     // 编辑
     async apiEditData() {
         try {
             const url = {
-                insertData: '/menu/insert',
-                updateData: '/menu/update'
+                insertData: '/admin/menuInsert',
+                updateData: '/admin/menuUpdate'
             }[$Prop.actionType];
 
             const res = await $Http({

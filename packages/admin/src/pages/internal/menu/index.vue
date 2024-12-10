@@ -3,8 +3,7 @@
         <div class="page-action">
             <div class="left">
                 <a-space>
-                    <a-button type="primary" @click="$Method.onDataAction('insertData', { pid: 0 })">添加目录</a-button>
-                    <a-button type="primary" @click="$Method.onDataAction('insertMenu', { pid: 0 })">添加菜单</a-button>
+                    <a-button type="primary" @click="$Method.onDataAction('insertData', { pid: 0 })">添加菜单</a-button>
                 </a-space>
             </div>
             <div class="right">
@@ -56,7 +55,6 @@ import { sortBy as _sortBy } from 'es-toolkit';
 
 // 内部集
 import editDataDrawer from './components/editDataDrawer.vue';
-import editMenuDrawer from './components/editMenuDrawer.vue';
 
 // 选项集
 defineOptions({
@@ -76,8 +74,7 @@ const $Data = $ref({
     },
     // 显示和隐藏
     isShow: {
-        editDataDrawer: false,
-        editMenuDrawer: false
+        editDataDrawer: false
     },
     actionType: 'insertData',
     tableData: [],
@@ -101,13 +98,6 @@ const $Method = {
         // 编辑目录
         if ($Data.actionType === 'insertData') {
             $Data.isShow.editDataDrawer = true;
-            return;
-        }
-
-        // 编辑菜单
-        if ($Data.actionType === 'insertMenu') {
-            $Data.isShow.editMenuDrawer = true;
-
             return;
         }
 
@@ -161,7 +151,7 @@ const $Method = {
     async apiDeleteData() {
         try {
             const res = await $Http({
-                url: '/menu/delete',
+                url: '/admin/menuDelete',
                 data: {
                     id: $Data.rowData.id
                 }
