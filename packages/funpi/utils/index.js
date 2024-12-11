@@ -78,15 +78,13 @@ export const fnFormatNow = () => {
 //  检查传参有效性
 export const fnApiCheck = (req) => {
     return new Promise((resolve, reject) => {
-        const fields = req.body;
-
-        const fieldsParams = es_omit(fields, ['sign']);
+        const fieldsParams = es_omit(req.body, ['sign']);
 
         if (Object.keys(fieldsParams).length === 0) {
             return resolve({ code: 0, msg: '接口未带参数' });
         }
 
-        if (!fieldsParams.t) {
+        if (!fieldsParams?.t) {
             return reject({ code: 1, msg: '接口请求时间无效' });
         }
 
@@ -109,8 +107,12 @@ export const fnApiCheck = (req) => {
 
         const fieldsMd5 = yd_crypto_md5(fieldsSort);
 
-        if (fieldsMd5 !== fields.sign) {
-            return reject({ code: 1, msg: '接口请求参数校验失败', detail: { sign: fieldsMd5, sort: fieldsSort } });
+        if (fieldsMd5 !== req.body.sign) {
+            return reject({
+                code: 1,
+                msg: '接口请求参数校验失败',
+                detail: { sign: fieldsMd5, sort: fieldsSort }
+            });
         }
 
         return resolve({ code: 0, msg: '接口参数正常' });

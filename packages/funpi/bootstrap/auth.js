@@ -115,7 +115,14 @@ async function plugin(fastify) {
 
             /* --------------------------------- 上传参数检测 --------------------------------- */
             if (appConfig.paramsCheck !== false) {
-                await fnApiCheck(req);
+                const result = await fnApiCheck(req);
+                if (result.code !== 0) {
+                    res.send({
+                        ...appConfig.http.PARAMS_SIGN_FAIL,
+                        detail: result?.msg || ''
+                    });
+                    return;
+                }
             }
 
             /* ---------------------------------- 白名单判断 --------------------------------- */

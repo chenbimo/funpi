@@ -53,7 +53,7 @@
         "@fastify/swagger": "^9.4.0",
         "@fastify/swagger-ui": "^5.2.0",
         "ajv": "^8.17.1",
-        "bull": "^4.16.4",
+        "bullmq": "^5.34.0",
         "croner": "^9.0.0",
         "es-toolkit": "^1.29.0",
         "fast-xml-parser": "^4.5.0",
@@ -67,7 +67,7 @@
         "safe-stable-stringify": "^2.5.0",
         "winston": "^3.17.0",
         "winston-daily-rotate-file": "^5.0.0",
-        "yidash": "link:..\\..\\..\\yidash"
+        "yidash": "^1.12.1"
     },
     "gitHead": "1c28c0de7c0af8aa4582c45ab2d98e66c597c7a1"
 }

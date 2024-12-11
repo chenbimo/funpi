@@ -44,7 +44,7 @@
     "dependencies": {
         "@arco-design/web-vue": "^2.56.3",
         "@arco-plugins/vite-vue": "^1.4.5",
-        "@iconify/json": "^2.2.280",
+        "@iconify/json": "^2.2.281",
         "axios": "^1.7.9",
         "date-fns": "^4.1.0",
         "es-toolkit": "^1.29.0",
@@ -59,7 +59,7 @@
         "yite-cli": "^3.8.3"
     },
     "devDependencies": {
-        "lint-staged": "^15.2.10",
+        "lint-staged": "^15.2.11",
         "prettier": "^3.4.2",
         "simple-git-hooks": "^2.11.1"
     },

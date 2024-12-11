@@ -113,7 +113,8 @@ const replaceObj = {
         NO_API: { symbol: 'NO_API', code: 18, msg: '接口不存在' },
         NO_USER: { symbol: 'NO_USER', code: 19, msg: '用户不存在' },
         NO_DATA: { symbol: 'NO_DATA', code: 20, msg: '数据不存在' },
-        NO_PERMISSION: { symbol: 'NO_PERMISSION', code: 21, msg: '无操作权限' }
+        NO_PERMISSION: { symbol: 'NO_PERMISSION', code: 21, msg: '无操作权限' },
+        PARAMS_SIGN_FAIL: { symbol: 'PARAMS_SIGN_FAIL', code: 22, msg: '参数签名错误' }
     },
     // 角色配置
     role: {
