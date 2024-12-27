@@ -6,7 +6,7 @@ export const tableData = {
         default: '',
         min: 1,
         max: 50,
-        pattern: '^[a-zA-Z][a-zA-Z0-9_-]*$'
+        pattern: '^[a-z][a-z0-9_-]*$'
     },
     name: {
         name: '字典分类名称',

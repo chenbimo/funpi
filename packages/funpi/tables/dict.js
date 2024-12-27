@@ -13,14 +13,14 @@ export const tableData = {
         default: '',
         isIndex: true,
         max: 50,
-        pattern: '^[a-zA-Z][a-zA-Z0-9_-]*$'
+        pattern: '^[a-z][a-z0-9_-]*$'
     },
     code: {
         name: '字典编码',
         type: 'string',
         default: '',
         max: 50,
-        pattern: '^[a-zA-Z][a-zA-Z0-9_-]*$'
+        pattern: '^[a-z][a-z0-9_-]*$'
     },
     name: {
         name: '字典名称',
