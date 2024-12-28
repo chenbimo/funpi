@@ -71,7 +71,12 @@ const targetObject = {
         keyPrefix: 'test:'
     },
     // 定时器
-    cron: []
+    cron: [],
+    // 文件上传
+    upload: {
+        fieldNameSize: 100, // 文件名长度 100 字节
+        fieldSize: 100 // 文件大小 100M
+    }
 };
 
 // 不变对象

@@ -311,6 +311,27 @@ export const appSchema = {
                 required: ['timer', 'handler', 'name', 'code']
             }
         },
+        // 文件上传
+        upload: {
+            title: '文件上传配置',
+            type: 'object',
+            properties: {
+                fieldNameSize: {
+                    title: '上传名称长度',
+                    type: 'number'
+                },
+                fieldSize: {
+                    title: '上传内容大小',
+                    type: 'number'
+                }
+            },
+            additionalProperties: false,
+            required: [
+                //
+                'fieldNameSize',
+                'fieldSize'
+            ]
+        },
         // 缓存配置
         cache: {
             title: '缓存名称配置',

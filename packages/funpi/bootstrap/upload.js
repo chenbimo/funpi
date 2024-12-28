@@ -8,7 +8,7 @@ async function plugin(fastify) {
             fieldNameSize: 100,
             fieldSize: 100,
             fields: 10,
-            fileSize: 100000000, // 文件最大为100M
+            fileSize: 100000000,
             files: 1,
             headerPairs: 2000,
             parts: 1000
