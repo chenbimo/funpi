@@ -10,6 +10,7 @@ import swaggerPlugin from './plugins/swagger.js';
 import loggerPlugin from './plugins/logger.js';
 import jwtPlugin from './plugins/jwt.js';
 import xmlParsePlugin from './bootstrap/xmlParse.js';
+import uploadPlugin from './bootstrap/upload.js';
 import redisPlugin from './bootstrap/redis.js';
 import mysqlPlugin from './bootstrap/mysql.js';
 import toolPlugin from './bootstrap/tool.js';
@@ -112,6 +113,7 @@ if (appConfig.isSwagger === true) {
 }
 fastify.register(jwtPlugin, {});
 fastify.register(xmlParsePlugin, {});
+fastify.register(uploadPlugin, {});
 fastify.register(redisPlugin, {});
 fastify.register(mysqlPlugin, {});
 fastify.register(toolPlugin, {});

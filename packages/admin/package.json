@@ -44,13 +44,13 @@
     "dependencies": {
         "@arco-design/web-vue": "^2.56.3",
         "@arco-plugins/vite-vue": "^1.4.5",
-        "@iconify/json": "^2.2.289",
+        "@iconify/json": "^2.2.292",
         "axios": "^1.7.9",
         "date-fns": "^4.1.0",
         "es-toolkit": "^1.31.0",
         "js-md5": "^0.8.3",
         "pinia": "^2.3.0",
-        "sass": "^1.83.0",
+        "sass": "^1.83.1",
         "store2": "^2.14.4",
         "vue": "^3.5.13",
         "vue-i18n": "^11.0.1",
@@ -59,7 +59,7 @@
         "yite-cli": "^3.9.0"
     },
     "devDependencies": {
-        "lint-staged": "^15.2.11",
+        "lint-staged": "^15.3.0",
         "prettier": "^3.4.2",
         "simple-git-hooks": "^2.11.1"
     },

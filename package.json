@@ -18,7 +18,7 @@
     "homepage": "https://chensuiyi.me",
     "devDependencies": {
         "lerna": "^8.1.9",
-        "lint-staged": "^15.2.11",
+        "lint-staged": "^15.3.0",
         "nodemon": "^3.1.9",
         "prettier": "^3.4.2",
         "simple-git-hooks": "^2.11.1"
