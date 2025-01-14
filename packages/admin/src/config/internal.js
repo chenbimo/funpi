@@ -13,6 +13,8 @@ export const $InternalConfig = {
         y: '100%',
         maxHeight: '100%'
     },
+    modalShortWidth: 600,
+    modalLongWidth: 1200,
     // 抽屉默认宽度
     drawerWidth: 400,
     // 每页显示数量

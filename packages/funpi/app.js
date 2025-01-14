@@ -181,10 +181,15 @@ const replaceObj = {
                     is_system: 1,
                     sort: 1
                 },
+                '/internal/admin-action-log': {
+                    name: '操作日志',
+                    is_system: 1,
+                    sort: 2
+                },
                 '/internal/mail-log': {
                     name: '邮件日志',
                     is_system: 1,
-                    sort: 2
+                    sort: 3
                 }
             }
         },

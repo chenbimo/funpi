@@ -5,6 +5,7 @@ import { cwd, env, platform } from 'node:process';
 import { isString as es_isString, isFunction as es_isFunction, omit as es_omit } from 'es-toolkit';
 import { isObject as es_isObject } from 'es-toolkit/compat';
 import { yd_crypto_md5 } from 'yidash/node';
+import { configure } from 'safe-stable-stringify';
 import { colors } from './colors.js';
 
 // 字段协议映射
@@ -26,6 +27,12 @@ const tableFieldSchemaMap = {
     // 双精度型
     double: 'number'
 };
+
+const safeStableStringify = configure({
+    bigint: true,
+    deterministic: false,
+    maximumDepth: 3
+});
 
 export const isUnicodeSupported = () => {
     const { TERM, TERM_PROGRAM } = env;
@@ -60,6 +67,51 @@ export const log4state = (state) => {
     if (state === 'error') {
         return colors.red('x');
     }
+};
+
+// 数据清洗
+export const fnDataClear = (data, excludeKeys = [], includeKeys = [], maxLen = 500, removeValues = [null, undefined]) => {
+    const data2 = {};
+    for (let key in data) {
+        if (
+            //
+            Object.prototype.hasOwnProperty.call(data, key) &&
+            excludeKeys.includes(key) === false &&
+            removeValues.includes(data[key]) === false
+        ) {
+            if (includeKeys.length > 0) {
+                if (includeKeys.includes(key)) {
+                    const strValue = safeStableStringify(data[key]);
+                    if (strValue?.length > maxLen) {
+                        data2[key] = strValue?.substring(0, maxLen);
+                    } else {
+                        data2[key] = data[key];
+                    }
+                }
+            } else {
+                const strValue = safeStableStringify(data[key]);
+                if (strValue?.length > maxLen) {
+                    data2[key] = strValue?.substring(0, maxLen);
+                } else {
+                    data2[key] = data[key];
+                }
+            }
+        }
+    }
+    return data2;
+};
+
+export const fnRequestLog = (req) => {
+    return {
+        user_id: req.session.id,
+        username: req.session.username,
+        nickname: req.session.nickname,
+        role: req.session.role,
+        ip: req.ip,
+        ua: req.headers['user-agent'],
+        api: req.routeOptions.url,
+        params: JSON.stringify(req.body)
+    };
 };
 
 export const fnFormatNow = () => {

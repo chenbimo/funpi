@@ -1,4 +1,4 @@
-import { fnRoute, fnSchema } from '../../utils/index.js';
+import { fnRoute, fnSchema, fnDataClear, fnRequestLog } from '../../utils/index.js';
 import { appConfig } from '../../app.js';
 
 export default async (fastify) => {
@@ -15,6 +15,7 @@ export default async (fastify) => {
         apiHandler: async (req) => {
             try {
                 const menuModel = fastify.mysql.table('sys_menu');
+                const adminActionLogModel = fastify.mysql.table('sys_admin_action_log');
 
                 const menuData = await menuModel.clone().selectOne(['id']);
 
@@ -42,6 +43,8 @@ export default async (fastify) => {
                 }
 
                 const result = await menuModel.clone().where({ id: req.body.id }).deleteData();
+                await adminActionLogModel.clone().insertData(fnDataClear(fnRequestLog(req)));
+
                 await fastify.cacheMenuData();
                 return {
                     ...appConfig.http.DELETE_SUCCESS,

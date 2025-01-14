@@ -1,4 +1,4 @@
-import { fnRoute, fnSchema } from '../../utils/index.js';
+import { fnRoute, fnSchema, fnDataClear, fnRequestLog } from '../../utils/index.js';
 import { appConfig } from '../../app.js';
 import { tableData } from '../../tables/role.js';
 
@@ -19,8 +19,8 @@ export default async (fastify) => {
         // 执行函数
         apiHandler: async (req) => {
             try {
-                const roleModel = fastify.mysql //
-                    .table('sys_role');
+                const roleModel = fastify.mysql.table('sys_role');
+                const adminActionLogModel = fastify.mysql.table('sys_admin_action_log');
 
                 const roleData = await roleModel //
                     .clone()
@@ -42,6 +42,7 @@ export default async (fastify) => {
                     menu_ids: req.body.menu_ids,
                     api_ids: req.body.api_ids
                 });
+                await adminActionLogModel.clone().insertData(fnDataClear(fnRequestLog(req)));
 
                 await fastify.cacheRoleData();
 

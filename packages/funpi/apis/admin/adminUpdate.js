@@ -1,5 +1,5 @@
 import { yd_crypto_hmacMd5 } from 'yidash/node';
-import { fnRoute, fnSchema } from '../../utils/index.js';
+import { fnRoute, fnSchema, fnDataClear, fnRequestLog } from '../../utils/index.js';
 import { appConfig } from '../../app.js';
 import { tableData } from '../../tables/admin.js';
 
@@ -10,6 +10,7 @@ export default async (fastify) => {
             type: 'object',
             properties: {
                 id: fnSchema('id'),
+                username: fnSchema(tableData.username),
                 password: fnSchema(tableData.password),
                 nickname: fnSchema(tableData.nickname),
                 role: fnSchema(tableData.role)
@@ -25,15 +26,28 @@ export default async (fastify) => {
                         msg: '不能增加开发管理员角色'
                     };
                 }
-                const adminModel = fastify.mysql //
-                    .table('sys_admin')
-                    .where({ id: req.body.id });
+                const adminModel = fastify.mysql.table('sys_admin');
+                const adminActionLogModel = fastify.mysql.table('sys_admin_action_log');
 
-                await adminModel.clone().updateData({
-                    password: yd_crypto_hmacMd5(req.body.password, appConfig.md5Salt),
+                const adminData = await adminModel.clone().where('username', req.body.username).selectOne(['id']);
+                if (adminData?.id && adminData?.id !== req.body.id) {
+                    return {
+                        ...appConfig.http.FAIL,
+                        msg: '管理员账号已存在'
+                    };
+                }
+                const updateData = {
                     nickname: req.body.nickname,
+                    username: req.body.username,
                     role: req.body.role
-                });
+                };
+
+                if (req.body.password) {
+                    updateData.password = yd_crypto_hmacMd5(req.body.password, appConfig.md5Salt);
+                }
+                await adminModel.clone().where({ id: req.body.id }).updateData(updateData);
+
+                await adminActionLogModel.clone().insertData(fnDataClear(fnRequestLog(req, ['password'])));
 
                 return appConfig.http.UPDATE_SUCCESS;
             } catch (err) {

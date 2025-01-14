@@ -1,5 +1,5 @@
 import { camelCase } from 'es-toolkit';
-import { fnRoute, fnSchema } from '../../utils/index.js';
+import { fnRoute, fnSchema, fnDataClear, fnRequestLog } from '../../utils/index.js';
 import { appConfig } from '../../app.js';
 import { tableData } from '../../tables/dict.js';
 
@@ -35,6 +35,7 @@ export default async (fastify) => {
                 }
 
                 const dictModel = fastify.mysql.table('sys_dict');
+                const adminActionLogModel = fastify.mysql.table('sys_admin_action_log');
 
                 const result = await dictModel.insertData({
                     category_id: req.body.category_id,
@@ -46,6 +47,7 @@ export default async (fastify) => {
                     thumbnail: req.body.thumbnail,
                     describe: req.body.describe
                 });
+                await adminActionLogModel.clone().insertData(fnDataClear(fnRequestLog(req)));
 
                 return {
                     ...appConfig.http.INSERT_SUCCESS,

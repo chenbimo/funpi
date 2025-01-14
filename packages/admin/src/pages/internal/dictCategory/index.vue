@@ -38,7 +38,7 @@
         </div>
 
         <!-- 编辑数据抽屉 -->
-        <editDataDrawer v-if="$Data.isShow.editDataDrawer" v-model="$Data.isShow.editDataDrawer" :pageConfig="$Data.pageConfig" :actionType="$Data.actionType" :rowData="$Data.rowData" @success="$Method.fnFreshData"></editDataDrawer>
+        <editDataDrawer v-if="$Data.isShow.editDataDrawer" v-model="$Data.isShow.editDataDrawer" :actionType="$Data.actionType" :rowData="$Data.rowData" @success="$Method.fnFreshData"></editDataDrawer>
     </div>
 </template>
 
@@ -48,11 +48,6 @@ import editDataDrawer from './components/editDataDrawer.vue';
 
 // 外部集
 
-// 选项集
-defineOptions({
-    name: 'dict'
-});
-
 // 全局集
 const { $GlobalData, $GlobalComputed, $GlobalMethod } = useGlobal();
 
@@ -60,10 +55,6 @@ const { $GlobalData, $GlobalComputed, $GlobalMethod } = useGlobal();
 
 // 数据集
 const $Data = $ref({
-    // 页面配置
-    pageConfig: {
-        name: '字典分类'
-    },
     // 显示和隐藏
     isShow: {
         editDataDrawer: false

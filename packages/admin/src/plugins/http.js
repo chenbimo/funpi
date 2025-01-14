@@ -7,7 +7,20 @@ const $Http = axios.create({
     withCredentials: false,
     responseType: 'json',
     responseEncoding: 'utf8',
-    headers: {}
+    headers: {
+        'Content-Type': 'application/json; charset=utf-8'
+    },
+    transformRequest: [
+        (data, headers) => {
+            const data2 = {};
+            for (let key in data) {
+                if (Object.prototype.hasOwnProperty.call(data, key) && [null, undefined].includes(data[key]) === false) {
+                    data2[key] = data[key];
+                }
+            }
+            return JSON.stringify(data2);
+        }
+    ]
 });
 // 添加请求拦截器
 $Http.interceptors.request.use(

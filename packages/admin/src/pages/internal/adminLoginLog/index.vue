@@ -26,9 +26,6 @@
                 <a-pagination v-model:current="$Data.pagination.page" :total="$Data.pagination.total" :default-page-size="$GlobalData.pageLimit" show-total show-jumper @change="$Method.apiSelectData()" />
             </div>
         </div>
-
-        <!-- 编辑数据抽屉 -->
-        <editDataDrawer v-if="$Data.isShow.editDataDrawer" v-model="$Data.isShow.editDataDrawer" :pageConfig="$Data.pageConfig" :actionType="$Data.actionType" :rowData="$Data.rowData" @success="$Method.fnFreshData"></editDataDrawer>
     </div>
 </template>
 
@@ -37,14 +34,8 @@
 import { yd_datetime_relativeTime } from 'yidash';
 
 // 内部集
-import editDataDrawer from './components/editDataDrawer.vue';
 
 // 外部集
-
-// 选项集
-defineOptions({
-    name: 'AdminLoginLog'
-});
 
 // 全局集
 const { $GlobalData, $GlobalComputed, $GlobalMethod } = useGlobal();
@@ -53,10 +44,6 @@ const { $GlobalData, $GlobalComputed, $GlobalMethod } = useGlobal();
 
 // 数据集
 const $Data = $ref({
-    // 页面配置
-    pageConfig: {
-        name: '登录日志'
-    },
     // 显示和隐藏
     isShow: {
         editDataDrawer: false

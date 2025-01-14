@@ -1,5 +1,5 @@
 <template>
-    <a-drawer :width="$GlobalData.drawerWidth" :visible="$Data.isShow.sendMailDrawer" unmountOnClose @cancel="$Method.onCloseDrawer" @ok="$Method.apiEditData">
+    <a-modal v-model:visible="$Data.visible" :width="$GlobalData.modalShortWidth" body-class="my-modal-class" :esc-to-close="false" :mask-closable="false" :closable="false" unmountOnClose>
         <template #title> 发送邮件 </template>
         <div class="bodyer">
             <a-form :model="$Data.formData" layout="vertical">
@@ -19,7 +19,15 @@
                 </a-form-item>
             </a-form>
         </div>
-    </a-drawer>
+        <template #footer>
+            <div class="footer flex justify-center">
+                <a-space size="large">
+                    <a-button @click="$Method.onClose">取消</a-button>
+                    <a-button type="primary" @click="$Method.apiEditData">确定</a-button>
+                </a-space>
+            </div>
+        </template>
+    </a-modal>
 </template>
 <script setup>
 // 外部集
@@ -41,10 +49,7 @@ const $Emit = defineEmits(['update:modelValue', 'success']);
 
 // 数据集
 const $Data = $ref({
-    // 显示和隐藏
-    isShow: {
-        sendMailDrawer: false
-    },
+    visible: false,
     // 表单数据
     formData: {
         email_type: 'common',
@@ -58,11 +63,11 @@ const $Data = $ref({
 // 方法集
 const $Method = {
     async initData() {
-        $Data.isShow.sendMailDrawer = $Prop.modelValue;
+        $Data.visible = $Prop.modelValue;
     },
     // 关闭抽屉事件
-    onCloseDrawer() {
-        $Data.isShow.sendMailDrawer = false;
+    onClose() {
+        $Data.visible = false;
         setTimeout(() => {
             $Emit('update:modelValue', false);
         }, 300);
@@ -85,7 +90,7 @@ const $Method = {
                 url: '/tool/sendMail',
                 data: formData
             });
-            $Method.onCloseDrawer();
+            $Method.onClose();
             $Emit('success');
         } catch (err) {
             Message.warning({

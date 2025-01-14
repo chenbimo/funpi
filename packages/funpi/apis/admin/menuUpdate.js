@@ -1,4 +1,4 @@
-import { fnRoute, fnSchema } from '../../utils/index.js';
+import { fnRoute, fnSchema, fnDataClear, fnRequestLog } from '../../utils/index.js';
 import { appConfig } from '../../app.js';
 import { tableData } from '../../tables/menu.js';
 
@@ -23,6 +23,7 @@ export default async (fastify) => {
         apiHandler: async (req) => {
             try {
                 const menuModel = fastify.mysql.table('sys_menu');
+                const adminActionLogModel = fastify.mysql.table('sys_admin_action_log');
 
                 // 如果传了 pid 值
                 if (req.body.pid) {
@@ -43,19 +44,16 @@ export default async (fastify) => {
                     };
                 }
 
-                await menuModel
-                    //
-                    .clone()
-                    .where({ id: req.body.id })
-                    .updateData({
-                        pid: req.body.pid,
-                        name: req.body.name,
-                        value: req.body.value,
-                        image: req.body.image,
-                        sort: req.body.sort,
-                        is_open: req.body.is_open,
-                        describe: req.body.describe
-                    });
+                await menuModel.clone().where({ id: req.body.id }).updateData({
+                    pid: req.body.pid,
+                    name: req.body.name,
+                    value: req.body.value,
+                    image: req.body.image,
+                    sort: req.body.sort,
+                    is_open: req.body.is_open,
+                    describe: req.body.describe
+                });
+                await adminActionLogModel.clone().insertData(fnDataClear(fnRequestLog(req)));
 
                 await fastify.cacheMenuData();
                 return appConfig.http.UPDATE_SUCCESS;

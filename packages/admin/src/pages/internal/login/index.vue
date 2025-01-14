@@ -46,11 +46,6 @@
 // 外部集
 import { md5 } from 'js-md5';
 
-// 选项集
-defineOptions({
-    name: 'login'
-});
-
 // 外部集
 
 // 全局集

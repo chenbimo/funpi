@@ -1,5 +1,5 @@
 import { yd_crypto_md5, yd_crypto_hmacMd5 } from 'yidash/node';
-import { fnRoute, fnSchema } from '../../utils/index.js';
+import { fnRoute, fnSchema, fnDataClear, fnRequestLog } from '../../utils/index.js';
 import { appConfig } from '../../app.js';
 import { tableData } from '../../tables/admin.js';
 
@@ -26,11 +26,13 @@ export default async (fastify) => {
                     };
                 }
                 const adminModel = fastify.mysql.table('sys_admin');
+                const adminActionLogModel = fastify.mysql.table('sys_admin_action_log');
+
                 const adminData = await adminModel.clone().where('username', req.body.username).selectOne(['id']);
                 if (adminData?.id) {
                     return {
                         ...appConfig.http.FAIL,
-                        msg: '管理员账号或昵称已存在'
+                        msg: '管理员账号已存在'
                     };
                 }
 
@@ -40,6 +42,9 @@ export default async (fastify) => {
                     nickname: req.body.nickname,
                     role: req.body.role
                 });
+
+                await adminActionLogModel.clone().insertData(fnDataClear(fnRequestLog(req, ['password'])));
+
                 return {
                     ...appConfig.http.INSERT_SUCCESS,
                     data: result

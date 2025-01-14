@@ -1,4 +1,4 @@
-import { fnRoute, fnSchema } from '../../utils/index.js';
+import { fnRoute, fnSchema, fnDataClear, fnRequestLog } from '../../utils/index.js';
 import { appConfig } from '../../app.js';
 
 export default async (fastify) => {
@@ -14,9 +14,8 @@ export default async (fastify) => {
         // 执行函数
         apiHandler: async (req) => {
             try {
-                const adminModel = fastify.mysql //
-                    .table('sys_admin')
-                    .where({ id: req.body.id });
+                const adminModel = fastify.mysql.table('sys_admin').where({ id: req.body.id });
+                const adminActionLogModel = fastify.mysql.table('sys_admin_action_log');
 
                 const adminData = await adminModel.clone().selectOne(['id']);
                 if (!adminData?.id) {
@@ -24,6 +23,7 @@ export default async (fastify) => {
                 }
 
                 const result = await adminModel.deleteData();
+                await adminActionLogModel.clone().insertData(fnDataClear(fnRequestLog(req)));
 
                 return {
                     ...appConfig.http.DELETE_SUCCESS,

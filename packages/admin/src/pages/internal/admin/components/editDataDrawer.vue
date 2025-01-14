@@ -1,8 +1,8 @@
 <template>
-    <a-drawer :width="$GlobalData.drawerWidth" :visible="$Data.isShow.editDataDrawer" unmountOnClose @cancel="$Method.onCloseDrawer" @ok="$Method.apiEditData">
+    <a-modal v-model:visible="$Data.visible" :width="$GlobalData.modalShortWidth" body-class="my-modal-class" :esc-to-close="false" :mask-closable="false" :closable="false" unmountOnClose>
         <template #title>
-            <template v-if="$Prop.actionType === 'insertData'">{{ `添加${$Prop.pageConfig.name}` }}</template>
-            <template v-if="$Prop.actionType === 'updateData'">{{ `编辑${$Prop.pageConfig.name}` }}</template>
+            <template v-if="$Prop.actionType === 'insertData'">添加管理员</template>
+            <template v-if="$Prop.actionType === 'updateData'">编辑管理员</template>
         </template>
         <div class="bodyer">
             <a-form :model="$Data.formData" layout="vertical">
@@ -22,11 +22,18 @@
                 </a-form-item>
             </a-form>
         </div>
-    </a-drawer>
+        <template #footer>
+            <div class="footer flex justify-center">
+                <a-space size="large">
+                    <a-button @click="$Method.onClose">取消</a-button>
+                    <a-button type="primary" @click="$Method.apiEditData">确定</a-button>
+                </a-space>
+            </div>
+        </template>
+    </a-modal>
 </template>
 <script setup>
 // 外部集
-import { merge as _merge, omit as _omit } from 'es-toolkit';
 
 // 内部集
 
@@ -35,9 +42,6 @@ const { $GlobalData, $GlobalComputed, $GlobalMethod } = useGlobal();
 
 // 属性集
 const $Prop = defineProps({
-    pageConfig: {
-        type: Object
-    },
     modelValue: {
         type: Boolean
     },
@@ -63,10 +67,9 @@ const $Emit = defineEmits(['update:modelValue', 'success', 'changeCategory']);
 
 // 数据集
 const $Data = $ref({
+    visible: false,
     // 显示和隐藏
-    isShow: {
-        editDataDrawer: false
-    },
+    isShow: {},
     // 表单数据
     formData: {
         role: '',
@@ -81,12 +84,12 @@ const $Data = $ref({
 const $Method = {
     async initData() {
         await $Method.apiSelectAllRole();
-        $Data.isShow.editDataDrawer = $Prop.modelValue;
-        $Data.formData = _merge($Data.formData, _omit($Prop.rowData, ['password']));
+        $Data.visible = $Prop.modelValue;
+        $Data.formData = Object.assign($Data.formData, $Prop.rowData, { password: '' });
     },
     // 关闭抽屉事件
-    onCloseDrawer() {
-        $Data.isShow.editDataDrawer = false;
+    onClose() {
+        $Data.visible = false;
         setTimeout(() => {
             $Emit('update:modelValue', false);
         }, 300);
@@ -95,12 +98,11 @@ const $Method = {
     async apiSelectAllRole() {
         try {
             const res = await $Http({
-                url: '/role/selectAll',
+                url: '/admin/roleSelectAll',
                 data: {}
             });
             $Data.roleAll = res.data.rows.filter((item) => item.code !== 'dev');
         } catch (err) {
-            console.log('🚀 ~ file: index.vue:86 ~ apiSelectData ~ err:', err);
             Message.error(err.msg || err);
         }
     },
@@ -108,15 +110,21 @@ const $Method = {
     async apiEditData() {
         try {
             const url = {
-                insertData: '/admin/insert',
-                updateData: '/admin/update'
+                insertData: '/admin/adminInsert?t1=d1&t2=d2',
+                updateData: '/admin/adminUpdate'
             }[$Prop.actionType];
+            const password = $Data.formData.password.trim();
 
             const res = await $Http({
                 url: url,
-                data: $Data.formData
+                data: {
+                    ...$Data.formData,
+                    ...{
+                        password: !password ? null : password
+                    }
+                }
             });
-            $Method.onCloseDrawer();
+            $Method.onClose();
             $Emit('success');
         } catch (err) {
             Message.warning({

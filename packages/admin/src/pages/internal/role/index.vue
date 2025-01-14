@@ -48,7 +48,7 @@
         </div>
 
         <!-- 编辑数据抽屉 -->
-        <editDataDrawer v-if="$Data.isShow.editDataDrawer" v-model="$Data.isShow.editDataDrawer" :pageConfig="$Data.pageConfig" :actionType="$Data.actionType" :rowData="$Data.rowData" @success="$Method.fnFreshData()"></editDataDrawer>
+        <editDataDrawer v-if="$Data.isShow.editDataDrawer" v-model="$Data.isShow.editDataDrawer" :actionType="$Data.actionType" :rowData="$Data.rowData" @success="$Method.fnFreshData()"></editDataDrawer>
     </div>
 </template>
 
@@ -58,11 +58,6 @@ import { yd_datetime_relativeTime } from 'yidash';
 // 内部集
 import editDataDrawer from './components/editDataDrawer.vue';
 
-// 选项集
-defineOptions({
-    name: 'role'
-});
-
 // 全局集
 const { $GlobalData, $GlobalComputed, $GlobalMethod } = useGlobal();
 
@@ -71,10 +66,6 @@ const $Router = useRouter();
 
 // 数据集
 const $Data = $ref({
-    // 页面配置
-    pageConfig: {
-        name: '角色'
-    },
     // 显示和隐藏
     isShow: {
         editDataDrawer: false,

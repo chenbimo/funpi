@@ -1,4 +1,4 @@
-import { fnRoute, fnSchema } from '../../utils/index.js';
+import { fnRoute, fnSchema, fnDataClear, fnRequestLog } from '../../utils/index.js';
 import { appConfig } from '../../app.js';
 
 export default async (fastify) => {
@@ -14,9 +14,8 @@ export default async (fastify) => {
         // 执行函数
         apiHandler: async (req) => {
             try {
-                const roleModel = fastify.mysql //
-                    .table('sys_role')
-                    .where('id', req.body.id);
+                const roleModel = fastify.mysql.table('sys_role').where('id', req.body.id);
+                const adminActionLogModel = fastify.mysql.table('sys_admin_action_log');
 
                 const roleData = await roleModel.clone().selectOne(['id', 'is_system']);
                 if (!roleData?.id) {
@@ -31,6 +30,7 @@ export default async (fastify) => {
                 }
 
                 const result = await roleModel.clone().deleteData();
+                await adminActionLogModel.clone().insertData(fnDataClear(fnRequestLog(req)));
 
                 // 生成新的权限
                 await fastify.cacheRoleData();

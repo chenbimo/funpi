@@ -1,5 +1,5 @@
 import { camelCase } from 'es-toolkit';
-import { fnRoute, fnSchema } from '../../utils/index.js';
+import { fnRoute, fnSchema, fnDataClear, fnRequestLog } from '../../utils/index.js';
 import { appConfig } from '../../app.js';
 import { tableData } from '../../tables/dictCategory.js';
 
@@ -20,20 +20,21 @@ export default async (fastify) => {
         apiHandler: async (req) => {
             try {
                 const dictCategoryModel = fastify.mysql.table('sys_dict_category');
+                const adminActionLogModel = fastify.mysql.table('sys_admin_action_log');
 
                 const dictCategoryData = await dictCategoryModel
                     .clone()
                     .where({ code: camelCase(req.body.code) })
                     .selectOne(['id']);
 
-                if (dictCategoryData?.id) {
+                if (dictCategoryData?.id && dictCategoryData?.id !== req.body.id) {
                     return {
                         ...appConfig.http.FAIL,
                         msg: '当前编号已存在'
                     };
                 }
 
-                const result = await dictCategoryModel //
+                const result = await dictCategoryModel
                     .clone()
                     .where({ id: req.body.id })
                     .updateData({
@@ -41,6 +42,7 @@ export default async (fastify) => {
                         name: req.body.name,
                         describe: req.body.describe
                     });
+                await adminActionLogModel.clone().insertData(fnDataClear(fnRequestLog(req)));
 
                 return appConfig.http.UPDATE_SUCCESS;
             } catch (err) {

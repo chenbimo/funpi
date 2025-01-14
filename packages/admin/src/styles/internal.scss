@@ -44,6 +44,14 @@ a {
     left: 0;
 }
 
+.my-modal-class {
+    .bodyer {
+        max-height: 60vh;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+}
+
 .menu-area {
     .arco-menu .arco-icon {
         margin-right: 0 !important;

@@ -55,11 +55,6 @@ import { keyBy as _keyBy, cloneDeep as _cloneDeep, sortBy as _sortBy } from 'es-
 // 内部集
 import sideMenu from './components/sideMenu.vue';
 
-// 选项集
-defineOptions({
-    name: 'default'
-});
-
 // 全局集
 const { $GlobalData, $GlobalComputed, $GlobalMethod } = useGlobal();
 const $Router = useRouter();

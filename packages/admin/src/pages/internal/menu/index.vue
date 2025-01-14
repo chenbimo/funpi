@@ -41,10 +41,10 @@
         </div>
 
         <!-- 编辑目录抽屉 -->
-        <editDataDrawer v-if="$Data.isShow.editDataDrawer" v-model="$Data.isShow.editDataDrawer" :pageConfig="$Data.pageConfig" :actionType="$Data.actionType" :rowData="$Data.rowData" @success="$Method.fnFreshData"></editDataDrawer>
+        <editDataDrawer v-if="$Data.isShow.editDataDrawer" v-model="$Data.isShow.editDataDrawer" :actionType="$Data.actionType" :rowData="$Data.rowData" @success="$Method.fnFreshData"></editDataDrawer>
 
         <!-- 编辑菜单抽屉 -->
-        <editMenuDrawer v-if="$Data.isShow.editMenuDrawer" v-model="$Data.isShow.editMenuDrawer" :pageConfig="$Data.pageConfig" :actionType="$Data.actionType" :rowData="$Data.rowData" @success="$Method.fnFreshData"></editMenuDrawer>
+        <editMenuDrawer v-if="$Data.isShow.editMenuDrawer" v-model="$Data.isShow.editMenuDrawer" :actionType="$Data.actionType" :rowData="$Data.rowData" @success="$Method.fnFreshData"></editMenuDrawer>
     </div>
 </template>
 
@@ -56,11 +56,6 @@ import { sortBy as _sortBy } from 'es-toolkit';
 // 内部集
 import editDataDrawer from './components/editDataDrawer.vue';
 
-// 选项集
-defineOptions({
-    name: 'menu2'
-});
-
 // 全局集
 const { $GlobalData, $GlobalComputed, $GlobalMethod } = useGlobal();
 
@@ -68,10 +63,6 @@ const { $GlobalData, $GlobalComputed, $GlobalMethod } = useGlobal();
 
 // 数据集
 const $Data = $ref({
-    // 页面配置
-    pageConfig: {
-        name: '目录'
-    },
     // 显示和隐藏
     isShow: {
         editDataDrawer: false

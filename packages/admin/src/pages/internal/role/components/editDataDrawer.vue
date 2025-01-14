@@ -1,8 +1,8 @@
 <template>
-    <a-drawer width="600px" :visible="$Data.isShow.editDataDrawer" unmountOnClose @cancel="$Method.onCloseDrawer" @ok="$Method.apiRoleBindPermission">
+    <a-modal v-model:visible="$Data.visible" :width="$GlobalData.modalShortWidth" body-class="my-modal-class" :esc-to-close="false" :mask-closable="false" :closable="false" unmountOnClose>
         <template #title>
-            <template v-if="$Prop.actionType === 'insertData'">{{ `添加${$Prop.pageConfig.name}` }}</template>
-            <template v-if="$Prop.actionType === 'updateData'">{{ `编辑${$Prop.pageConfig.name}` }}</template>
+            <template v-if="$Prop.actionType === 'insertData'">添加角色</template>
+            <template v-if="$Prop.actionType === 'updateData'">编辑角色</template>
         </template>
         <div class="bodyer">
             <div class="top">
@@ -33,7 +33,15 @@
                 </div>
             </div>
         </div>
-    </a-drawer>
+        <template #footer>
+            <div class="footer flex justify-center">
+                <a-space size="large">
+                    <a-button @click="$Method.onClose">取消</a-button>
+                    <a-button type="primary" @click="$Method.apiRoleBindPermission">确定</a-button>
+                </a-space>
+            </div>
+        </template>
+    </a-modal>
 </template>
 <script setup>
 // 外部集
@@ -48,9 +56,6 @@ const { $GlobalData, $GlobalComputed, $GlobalMethod } = useGlobal();
 
 // 属性集
 const $Prop = defineProps({
-    pageConfig: {
-        type: Object
-    },
     modelValue: {
         type: Boolean
     },
@@ -69,10 +74,7 @@ const $Emit = defineEmits(['update:modelValue', 'success']);
 
 // 数据集
 const $Data = $ref({
-    // 显示和隐藏
-    isShow: {
-        editDataDrawer: false
-    },
+    visible: false,
     // 表单数据
     formData: {
         name: '',
@@ -104,7 +106,7 @@ const $Data = $ref({
 // 方法集
 const $Method = {
     async initData() {
-        $Data.isShow.editDataDrawer = $Prop.modelValue;
+        $Data.visible = $Prop.modelValue;
         $Data.formData = Object.assign($Data.formData, $Prop.rowData, {
             api_ids: $Prop.rowData?.api_ids?.split(',')?.map((id) => Number(id)) || [],
             menu_ids: $Prop.rowData?.menu_ids?.split(',')?.map((id) => Number(id)) || []
@@ -119,8 +121,8 @@ const $Method = {
         });
     },
     // 关闭抽屉事件
-    onCloseDrawer() {
-        $Data.isShow.editDataDrawer = false;
+    onClose() {
+        $Data.visible = false;
         setTimeout(() => {
             $Emit('update:modelValue', false);
         }, 300);
@@ -144,7 +146,6 @@ const $Method = {
             $Data.allMenuTreeData = yd_tree_array2Tree(_cloneDeep(data));
             $Data.allMenuDataObject = _keyBy(data, (item) => item.id);
         } catch (err) {
-            console.log('🚀 ~ file: index.vue:201 ~ apiSelectAllMenuData ~ err', err);
             Message.error(err.msg || err);
         }
     },
@@ -167,7 +168,6 @@ const $Method = {
             $Data.allApiTreeData = yd_tree_array2Tree(_cloneDeep(data));
             $Data.allApiDataObject = _keyBy(data, (item) => item.id);
         } catch (err) {
-            console.log('🚀 ~ file: index.vue:227 ~ apiSelectAllApiData ~ err', err);
             Message.error(err.msg || err);
         }
     },
@@ -193,7 +193,7 @@ const $Method = {
             Message.success({
                 content: res.msg
             });
-            $Method.onCloseDrawer();
+            $Method.onClose();
             $Emit('success');
         } catch (err) {
             Message.warning({

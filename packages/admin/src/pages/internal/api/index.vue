@@ -35,11 +35,6 @@
 import { yd_tree_array2Tree, yd_datetime_relativeTime } from 'yidash';
 import { sortBy as _sortBy } from 'es-toolkit';
 
-// 选项集
-defineOptions({
-    name: 'api'
-});
-
 // 全局集
 const { $GlobalData, $GlobalComputed, $GlobalMethod } = useGlobal();
 

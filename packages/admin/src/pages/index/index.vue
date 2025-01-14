@@ -3,11 +3,6 @@
 </template>
 
 <script setup>
-// 选项集
-defineOptions({
-    name: 'index'
-});
-
 // 全局集
 const { $GlobalData, $GlobalComputed, $GlobalMethod } = useGlobal();
 

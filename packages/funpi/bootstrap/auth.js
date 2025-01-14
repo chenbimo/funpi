@@ -6,17 +6,10 @@ import fp from 'fastify-plugin';
 import picomatch from 'picomatch';
 import { uniq as es_uniq, isPlainObject as es_isPlainObject } from 'es-toolkit';
 import { find as es_find } from 'es-toolkit/compat';
-import { configure } from 'safe-stable-stringify';
 // 配置文件
 import { appConfig } from '../app.js';
 // 工具函数
-import { fnApiCheck } from '../utils/index.js';
-
-const safeStableStringify = configure({
-    bigint: true,
-    deterministic: false,
-    maximumDepth: 3
-});
+import { fnApiCheck, fnDataClear } from '../utils/index.js';
 
 async function plugin(fastify) {
     fastify.addHook('onRequest', async (req) => {
@@ -72,20 +65,9 @@ async function plugin(fastify) {
              */
 
             if (es_isPlainObject(req?.body)) {
-                const body = {};
-                for (let key in req.body) {
-                    if (Object.hasOwnProperty.call(req.body, key)) {
-                        const strValue = safeStableStringify(req.body[key]);
-                        if (strValue?.length > 200) {
-                            body[key] = strValue?.substring(0, 200);
-                        } else {
-                            body[key] = req.body[key];
-                        }
-                    }
-                }
                 fastify.log.warn({
                     apiPath: req?.url,
-                    body: body,
+                    body: fnDataClear(req.body),
                     session: req?.session,
                     reqId: req?.id
                 });
