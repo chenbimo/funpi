@@ -11,14 +11,14 @@
         <div class="page-table">
             <a-table :data="$Data.tableData" :scroll="$GlobalData.tableScroll" :pagination="false" :bordered="$GlobalData.tableBordered" row-key="id">
                 <template #columns>
-                    <a-table-column title="用户名" data-index="username" :width="200" ellipsis tooltip></a-table-column>
+                    <a-table-column title="用户名" data-index="username" :width="150" ellipsis tooltip></a-table-column>
                     <a-table-column title="昵称" data-index="nickname" :width="200" ellipsis tooltip></a-table-column>
                     <a-table-column title="角色" data-index="role" :width="150" ellipsis tooltip></a-table-column>
                     <a-table-column title="接口" data-index="api" :width="300" ellipsis tooltip></a-table-column>
                     <a-table-column title="参数" data-index="params" :min-width="300" ellipsis tooltip></a-table-column>
-                    <a-table-column title="IP地址" data-index="ip" :width="200" ellipsis tooltip></a-table-column>
-                    <a-table-column title="UA" data-index="ua" :width="300" ellipsis tooltip></a-table-column>
                     <a-table-column title="操作时间" data-index="created_at2" :width="150"></a-table-column>
+                    <a-table-column title="IP地址" data-index="ip" :width="150" ellipsis tooltip></a-table-column>
+                    <a-table-column title="UA" data-index="ua" :width="300" ellipsis tooltip></a-table-column>
                 </template>
             </a-table>
         </div>

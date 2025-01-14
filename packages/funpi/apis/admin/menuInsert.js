@@ -22,6 +22,7 @@ export default async (fastify) => {
         apiHandler: async (req) => {
             try {
                 const menuModel = fastify.mysql.table('sys_menu');
+                const adminActionLogModel = fastify.mysql.table('sys_admin_action_log');
 
                 // 如果传了 pid 值，则判断父级是否存在
                 if (req.body.pid) {

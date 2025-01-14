@@ -18,7 +18,7 @@
                     <a-input v-model="$Data.formData.nickname" placeholder="任何合法的字符" />
                 </a-form-item>
                 <a-form-item field="password" label="密码">
-                    <a-input v-model="$Data.formData.password" placeholder="不小于6位的字母、数字、下划线和短横线的组合" />
+                    <a-input v-model="$Data.formData.password" type="password" placeholder="不小于6位的字母、数字、下划线和短横线的组合" />
                 </a-form-item>
             </a-form>
         </div>
