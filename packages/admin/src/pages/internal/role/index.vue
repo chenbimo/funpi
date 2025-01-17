@@ -13,7 +13,7 @@
         <div class="page-table">
             <a-table :data="$Data.tableData" :scroll="$GlobalData.tableScroll" :pagination="false" :bordered="$GlobalData.tableBordered" row-key="id">
                 <template #columns>
-                    <a-table-column title="名称" data-index="name" :width="200" ellipsis tooltip></a-table-column>
+                    <a-table-column title="名称" data-index="name" :width="150" fixed="left" ellipsis tooltip></a-table-column>
                     <a-table-column title="编码" data-index="code" :width="150" ellipsis tooltip></a-table-column>
                     <a-table-column title="类型" data-index="is_system" :width="100" ellipsis tooltip>
                         <template #cell="{ record }">
@@ -21,9 +21,9 @@
                             <a-tag v-else color="blue">普通角色</a-tag>
                         </template>
                     </a-table-column>
-                    <a-table-column title="描述" data-index="describe" :min-width="350" ellipsis tooltip></a-table-column>
                     <a-table-column title="菜单" data-index="menu_ids" :width="150" ellipsis tooltip></a-table-column>
                     <a-table-column title="接口" data-index="api_ids" :width="150" ellipsis tooltip></a-table-column>
+                    <a-table-column title="描述" data-index="describe" :min-width="350" ellipsis tooltip></a-table-column>
                     <a-table-column title="创建时间" data-index="created_at2" :width="150"></a-table-column>
                     <a-table-column title="更新时间" data-index="updated_at2" :width="150"></a-table-column>
                     <a-table-column title="操作" fixed="right" :width="100" align="right">

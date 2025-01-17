@@ -1,5 +1,5 @@
 <template>
-    <a-modal v-model:visible="$Data.visible" :width="$GlobalData.modalShortWidth" body-class="my-modal-class" :esc-to-close="false" :mask-closable="false" :closable="false" unmountOnClose>
+    <a-modal v-model:visible="$Data.visible" width="80vw" body-class="my-modal-class" :esc-to-close="false" :mask-closable="false" :closable="false" unmountOnClose>
         <template #title>
             <template v-if="$Prop.actionType === 'insertData'">添加角色</template>
             <template v-if="$Prop.actionType === 'updateData'">编辑角色</template>
@@ -7,15 +7,23 @@
         <div class="bodyer">
             <div class="top">
                 <a-form :model="$Data.formData" layout="horizontal" label-align="left" auto-label-width>
-                    <a-form-item field="code" label="角色编码">
-                        <a-input v-model="$Data.formData.code" placeholder="请输入角色编码" />
-                    </a-form-item>
-                    <a-form-item field="name" label="角色名称">
-                        <a-input v-model="$Data.formData.name" placeholder="请输入角色名称" />
-                    </a-form-item>
-                    <a-form-item field="describe" label="角色描述">
-                        <a-input v-model="$Data.formData.describe" placeholder="请输入角色描述" />
-                    </a-form-item>
+                    <a-row class="grid-demo" :gutter="24">
+                        <a-col :xs="12" :sm="12" :md="8" :lg="8" :xl="8" :xxl="8">
+                            <a-form-item field="code" label="角色编码">
+                                <a-input v-model="$Data.formData.code" placeholder="请输入角色编码" />
+                            </a-form-item>
+                        </a-col>
+                        <a-col :xs="12" :sm="12" :md="8" :lg="8" :xl="8" :xxl="8">
+                            <a-form-item field="name" label="角色名称">
+                                <a-input v-model="$Data.formData.name" placeholder="请输入角色名称" />
+                            </a-form-item>
+                        </a-col>
+                        <a-col :xs="12" :sm="12" :md="8" :lg="8" :xl="8" :xxl="8">
+                            <a-form-item field="name" label="角色描述">
+                                <a-input v-model="$Data.formData.describe" placeholder="请输入角色描述" />
+                            </a-form-item>
+                        </a-col>
+                    </a-row>
                 </a-form>
             </div>
             <div class="bottom">
@@ -23,13 +31,19 @@
                     <div class="panel-name">
                         <a-tag color="red" size="medium" :default-checked="true">菜单权限</a-tag>
                     </div>
-                    <a-tree v-model:checked-keys="$Data.menuCheckedKeys" v-model:half-checked-keys="$Data.menuHalfCheckedKeys" :checkable="true" :data="$Data.allMenuTreeData" :field-names="$Data.fieldNames" action-on-node-click="expand" show-line block-node />
+                    <div class="panel-list" v-for="group in $Data.allMenuTreeData" :key="group.id">
+                        <div class="title">📂{{ group.name }}</div>
+                        <a-checkbox class="box" v-model="item.checked" :value="item.id" v-for="item in group.children">{{ item.name }}</a-checkbox>
+                    </div>
                 </div>
                 <div class="right">
                     <div class="panel-name">
                         <a-tag color="red" size="medium" :default-checked="true">接口权限</a-tag>
                     </div>
-                    <a-tree v-model:checked-keys="$Data.apiCheckedKeys" v-model:half-checked-keys="$Data.apiHalfCheckedKeys" :checkable="true" :data="$Data.allApiTreeData" :field-names="$Data.fieldNames" action-on-node-click="expand" show-line block-node />
+                    <div class="panel-list" v-for="group in $Data.allApiTreeData" :key="group.id">
+                        <div class="title">📂{{ group.name }}</div>
+                        <a-checkbox class="box" v-model="item.checked" :value="item.id" v-for="item in group.children">{{ item.name }}</a-checkbox>
+                    </div>
                 </div>
             </div>
         </div>
@@ -45,7 +59,7 @@
 </template>
 <script setup>
 // 外部集
-import { yd_tree_array2Tree } from 'yidash';
+import { yd_tree_array2Tree, yd_tree_traverse } from 'yidash';
 import { cloneDeep as _cloneDeep, keyBy as _keyBy } from 'es-toolkit';
 import { concat as _concat } from 'es-toolkit/compat';
 
@@ -79,28 +93,12 @@ const $Data = $ref({
     formData: {
         name: '',
         code: '',
-        describe: ''
+        describe: '',
+        api_ids: [],
+        menu_ids: []
     },
-    fieldNames: {
-        key: 'id',
-        title: 'name'
-    },
-    // 菜单数据
-    allMenuTableData: [],
     allMenuTreeData: [],
-    allMenuDataObject: {},
-    // 接口数据
-    allApiTableData: [],
-    allApiTreeData: [],
-    allApiDataObject: {},
-    // 选中的菜单复选框
-    menuCheckedKeys: [],
-    // 半选的菜单复选框
-    menuHalfCheckedKeys: [],
-    // 选中的接口复选框
-    apiCheckedKeys: [],
-    // 半选的接口复选框
-    apiHalfCheckedKeys: []
+    allApiTreeData: []
 });
 
 // 方法集
@@ -113,12 +111,6 @@ const $Method = {
         });
         await $Method.apiSelectAllMenuData();
         await $Method.apiSelectAllApiData();
-        $Data.apiCheckedKeys = $Data.formData.api_ids.filter((id) => {
-            return $Data.allApiDataObject[id]?.is_bool === 1;
-        });
-        $Data.menuCheckedKeys = $Data.formData.menu_ids.filter((id) => {
-            return $Data.allMenuDataObject[id]?.pid !== 0;
-        });
     },
     // 关闭抽屉事件
     onClose() {
@@ -142,9 +134,7 @@ const $Method = {
                 }
                 return item;
             });
-            $Data.allMenuTableData = data;
-            $Data.allMenuTreeData = yd_tree_array2Tree(_cloneDeep(data));
-            $Data.allMenuDataObject = _keyBy(data, (item) => item.id);
+            $Data.allMenuTreeData = yd_tree_array2Tree(data);
         } catch (err) {
             Message.error(err.msg || err);
         }
@@ -164,9 +154,7 @@ const $Method = {
                 }
                 return item;
             });
-            $Data.allApiTableData = data;
-            $Data.allApiTreeData = yd_tree_array2Tree(_cloneDeep(data));
-            $Data.allApiDataObject = _keyBy(data, (item) => item.id);
+            $Data.allApiTreeData = yd_tree_array2Tree(data);
         } catch (err) {
             Message.error(err.msg || err);
         }
@@ -179,8 +167,22 @@ const $Method = {
                 updateData: '/admin/roleUpdate'
             }[$Prop.actionType];
 
-            const menuIds = _concat($Data.menuCheckedKeys, $Data.menuHalfCheckedKeys);
-            const apiIds = _concat($Data.apiCheckedKeys, $Data.apiHalfCheckedKeys);
+            const menuIds = [];
+            const apiIds = [];
+            $Data.allMenuTreeData.forEach((item) => {
+                yd_tree_traverse(item, (item2, index, parent) => {
+                    if (item2.checked) {
+                        menuIds.push(item2.id);
+                    }
+                });
+            });
+            $Data.allApiTreeData.forEach((item) => {
+                yd_tree_traverse(item, (item2, index, parent) => {
+                    if (item2.checked) {
+                        apiIds.push(item2.id);
+                    }
+                });
+            });
 
             const res = await $Http({
                 url: url,
@@ -235,6 +237,18 @@ $Method.initData();
 
     .panel-name {
         margin-bottom: 10px;
+    }
+    .panel-list {
+        padding-bottom: 20px;
+        .title {
+            padding-left: 2px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .box {
+            margin-right: 10px;
+            margin-bottom: 5px;
+        }
     }
 }
 </style>
