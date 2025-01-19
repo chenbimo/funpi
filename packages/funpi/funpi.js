@@ -5,6 +5,7 @@ import Fastify from 'fastify';
 import autoLoad from '@fastify/autoload';
 import fp from 'fastify-plugin';
 import fastifyStatic from '@fastify/static';
+import ajv from 'ajv';
 // 启动插件
 import swaggerPlugin from './plugins/swagger.js';
 import loggerPlugin from './plugins/logger.js';
@@ -192,6 +193,8 @@ export {
     fastify,
     fp,
     initServer,
+    ajv,
+    ajvZh,
     // 环境目录
     appDir,
     funpiDir,
