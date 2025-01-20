@@ -31,7 +31,7 @@ const dbInsert = (obj) => {
 // 更新函数
 const dbUpdate = (obj) => {
     const excludeFields = ['id', 'created_at'];
-    let newObj = {};
+    const newObj = {};
     for (const key in obj) {
         if (Object.prototype.hasOwnProperty.call(obj, key)) {
             if (obj[key] !== null && obj[key] !== undefined && !excludeFields.includes(key)) {
