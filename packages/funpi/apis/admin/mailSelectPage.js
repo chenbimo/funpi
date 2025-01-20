@@ -19,7 +19,7 @@ export default async (fastify) => {
                 const mailLogModel = fastify.mysql //
                     .table('sys_mail_log')
                     .modify(function (db) {
-                        if (req.body.keyword !== undefined) {
+                        if (req.body.keyword) {
                             db.where('nickname', 'like', `%${req.body.keyword}%`);
                         }
                     });

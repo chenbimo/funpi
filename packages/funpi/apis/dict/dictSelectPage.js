@@ -23,7 +23,7 @@ export default async (fastify) => {
                     .table('sys_dict')
                     .where('category_code', req.body.category_code)
                     .modify(function (db) {
-                        if (req.body.keyword !== undefined) {
+                        if (req.body.keyword) {
                             db.where('name', 'like', `%${req.body.keyword}%`);
                         }
                     });

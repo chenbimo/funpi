@@ -19,7 +19,7 @@ export default async (fastify) => {
                 const dictCategoryModel = fastify.mysql //
                     .table('sys_dict_category')
                     .modify(function (db) {
-                        if (req.body.keyword !== undefined) {
+                        if (req.body.keyword) {
                             db.where('name', 'like', `%${req.body.keyword}%`);
                         }
                     });
