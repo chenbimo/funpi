@@ -2,7 +2,7 @@ module.exports = {
     apps: [
         {
             name: 'funpiba',
-            instances: 'max',
+            instances: 1,
             script: './funpi.js',
             exec_mode: 'cluster',
             watch: false,
