@@ -57,7 +57,6 @@ import sideMenu from './components/sideMenu.vue';
 
 // 全局集
 const { $GlobalData, $GlobalComputed, $GlobalMethod } = useGlobal();
-const $Router = useRouter();
 const $Route = useRoute();
 
 // 数据集

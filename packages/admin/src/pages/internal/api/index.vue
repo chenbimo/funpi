@@ -39,7 +39,6 @@ import { sortBy as _sortBy } from 'es-toolkit';
 const { $GlobalData, $GlobalComputed, $GlobalMethod } = useGlobal();
 
 // 工具集
-const $Router = useRouter();
 
 // 数据集
 const $Data = $ref({

@@ -52,7 +52,6 @@ import { md5 } from 'js-md5';
 const { $GlobalData, $GlobalComputed, $GlobalMethod } = useGlobal();
 
 // 实例集
-const $Router = useRouter();
 const $Route = useRoute();
 
 // 数据集
