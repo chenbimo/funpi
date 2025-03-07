@@ -1,5 +1,5 @@
 import fp from 'fastify-plugin';
-import fxp from 'fast-xml-parser';
+import { XMLParser, XMLValidator } from 'fast-xml-parser';
 
 async function plugin(fastify) {
     const opts = {
@@ -8,7 +8,7 @@ async function plugin(fastify) {
     };
 
     function contentParser(req, payload, done) {
-        const xmlParser = new fxp.XMLParser(opts);
+        const xmlParser = new XMLParser(opts);
         const parsingOpts = opts;
 
         let body = '';
@@ -21,7 +21,7 @@ async function plugin(fastify) {
         }
         function endListener() {
             if (parsingOpts.validate) {
-                const result = fxp.XMLValidator.validate(body, parsingOpts);
+                const result = XMLValidator.validate(body, parsingOpts);
                 if (result.err) {
                     const invalidFormat = new Error('Invalid Format: ' + result.err.msg);
                     invalidFormat.statusCode = 400;
