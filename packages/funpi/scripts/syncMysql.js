@@ -168,8 +168,12 @@ export const syncMysql = async () => {
                         fieldHandler = fieldHandler.unique();
                     }
 
-                    // 设置不能为空、编码、注释
-                    fieldHandler = fieldHandler.notNullable().collate('utf8mb4_general_ci').comment(itemData.name);
+                    // 如果是文本类型，则允许为空
+                    if (['mediumText', 'text', 'bigText'].includes(itemData.type) === true) {
+                        fieldHandler = fieldHandler.collate('utf8mb4_general_ci').comment(itemData.name);
+                    } else {
+                        fieldHandler = fieldHandler.notNullable().collate('utf8mb4_general_ci').comment(itemData.name);
+                    }
                 }
             });
 

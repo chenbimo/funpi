@@ -30,6 +30,7 @@ const schema = {
     text: {
         name: { title: '字段名称', type: 'string' },
         default2: { title: '默认值', type: 'string' },
+        default: { title: '默认值', type: 'string' },
         min: { title: '最小长度', type: 'integer', minimum: 0 },
         max: { title: '最大长度', type: 'integer' },
         enum: { title: '枚举值', type: 'array' },

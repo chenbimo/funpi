@@ -17,10 +17,10 @@
     "author": "chensuiyi <bimostyle@qq.com>",
     "homepage": "https://chensuiyi.me",
     "devDependencies": {
-        "lerna": "^8.1.9",
+        "lerna": "^8.2.1",
         "lint-staged": "^15.4.3",
         "nodemon": "^3.1.9",
-        "prettier": "^3.5.1",
+        "prettier": "^3.5.3",
         "simple-git-hooks": "^2.11.1"
     },
     "simple-git-hooks": {
