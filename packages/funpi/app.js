@@ -28,48 +28,8 @@ const targetObject = {
     tablePrimaryKey: 'default',
     // 时区
     timezone: 'Asia/Shanghai',
-    // 白名单API列表,
-    whiteApis: [],
-    // 黑名单API列表
-    blackApis: [],
-    // 无限制API列表
-    freeApis: [],
     // 请求限制
     rate: {},
-    // jwt 配置
-    jwt: {
-        secret: 'funpi123456', // 密钥
-        expiresIn: '7d' // 过期时间
-    },
-    // 邮件配置
-    mail: {
-        host: 'demo.com',
-        port: 465,
-        pool: true,
-        secure: true,
-        // qq 邮箱
-        user: 'demo@qq.com',
-        pass: '',
-        from_name: '易接口',
-        from_email: 'demo@qq.com'
-    },
-    // mysql 数据库配置
-    mysql: {
-        host: '127.0.0.1', // 主机地址
-        port: 3306, // 端口
-        db: 'test3', // 数据库名称
-        username: 'root', // 数据库用户名
-        password: 'root' // 数据库密码
-    },
-    // redis 缓存配置
-    redis: {
-        host: '127.0.0.1',
-        port: 6379,
-        username: '',
-        password: '',
-        db: 0,
-        keyPrefix: 'test:'
-    },
     // 定时器
     cron: [],
     // 文件上传

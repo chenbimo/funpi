@@ -9,8 +9,8 @@ async function plugin(fastify) {
         mode: 'dynamic',
         swagger: {
             info: {
-                title: `${appConfig.appName}接口文档`,
-                description: `${appConfig.appName}接口文档`,
+                title: `${process.env.APP_NAME}接口文档`,
+                description: `${process.env.APP_NAME}接口文档`,
                 version: '1.0.0'
             },
             host: '127.0.0.1',

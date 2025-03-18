@@ -1,16 +1,15 @@
 import fp from 'fastify-plugin';
 import nodemailer from 'nodemailer';
-import { appConfig } from '../app.js';
 
 async function plugin(fastify) {
     const mailTransport = await nodemailer.createTransport({
-        host: appConfig.mail.host,
-        port: appConfig.mail.port,
-        pool: appConfig.mail.pool,
-        secure: appConfig.mail.secure,
+        host: process.env.MAIL_HOST,
+        port: process.env.MAIL_PORT,
+        pool: process.env.MAIL_POOL,
+        secure: process.env.MAIL_SECURE,
         auth: {
-            user: appConfig.mail.user,
-            pass: appConfig.mail.pass
+            user: process.env.MAIL_USER,
+            pass: process.env.MAIL_PASS
         }
     });
 
@@ -20,8 +19,8 @@ async function plugin(fastify) {
             try {
                 const result = mailTransport.sendMail({
                     from: {
-                        name: appConfig.mail.from_name,
-                        address: appConfig.mail.from_email
+                        name: process.env.MAIL_FROM_NAME,
+                        address: process.env.MAIL_FROM_EMAIL
                     },
                     ...params
                 });

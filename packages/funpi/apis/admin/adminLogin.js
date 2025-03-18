@@ -37,7 +37,7 @@ export default async (fastify) => {
                 }
 
                 // 判断密码
-                if (yd_crypto_hmacMd5(req.body.password, appConfig.md5Salt) !== adminData.password) {
+                if (yd_crypto_hmacMd5(req.body.password, process.env.MD5_SALT) !== adminData.password) {
                     return {
                         ...appConfig.http.FAIL,
                         msg: '密码错误'

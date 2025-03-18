@@ -46,7 +46,7 @@ import { appConfig } from './app.js';
 const fastify = Fastify({
     loggerInstance: loggerPlugin,
     pluginTimeout: 0,
-    bodyLimit: appConfig.bodyLimit * 1048576,
+    bodyLimit: Number(process.env.BODY_LIMIT) * 1048576,
     ajv: {
         customOptions: {
             allErrors: true,
@@ -109,7 +109,7 @@ fastify.register(fastifyStatic, {
 });
 
 // 加载启动插件
-if (appConfig.isSwagger === true) {
+if (process.env.SWAGGER_ENABLE === '1') {
     fastify.register(swaggerPlugin, {});
 }
 fastify.register(jwtPlugin, {});
@@ -166,13 +166,13 @@ function initServer() {
         // 初始化检查
         await initCheck();
         // 启动服务！
-        fastify.listen({ port: appConfig.port, host: appConfig.host }, async function (err, address) {
+        fastify.listen({ port: process.env.LISTEN_PORT, host: process.env.LISTEN_HOST }, async function (err, address) {
             if (err) {
                 fastify.log.error(err);
                 process.exit();
             }
-            fastify.log.warn(`${appConfig.appName} 接口服务已启动： ${address}`);
-            console.log(`${appConfig.appName} 接口服务已启动： ${address}`);
+            fastify.log.warn(`${process.env.APP_NAME} 接口服务已启动： ${address}`);
+            console.log(`${process.env.APP_NAME} 接口服务已启动： ${address}`);
         });
 
         fastify.ready((err) => {

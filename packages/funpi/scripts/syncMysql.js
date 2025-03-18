@@ -43,11 +43,11 @@ export const syncMysql = async () => {
     const mysql = await new Knex({
         client: 'mysql2',
         connection: {
-            host: appConfig.mysql.host,
-            port: appConfig.mysql.port,
-            user: appConfig.mysql.username,
-            password: appConfig.mysql.password,
-            database: appConfig.mysql.db
+            host: process.env.MYSQL_HOST,
+            port: process.env.MYSQL_PORT,
+            user: process.env.MYSQL_USERNAME,
+            password: process.env.MYSQL_PASSWORD,
+            database: process.env.MYSQL_DB
         },
         acquireConnectionTimeout: 30000,
         asyncStackTraces: true,
@@ -202,13 +202,13 @@ export const syncMysql = async () => {
         }
         await trx.commit();
         await trx.destroy();
-        console.log(`${log4state('success')} ${appConfig.mysql.db} 数据库表同步成功`);
+        console.log(`${log4state('success')} ${process.env.MYSQL_DB} 数据库表同步成功`);
         process.exit();
     } catch (err) {
         console.log('🚀 ~ syncMysql ~ err:', err);
         await trx.rollback();
         await trx.destroy();
-        console.log(`${log4state('error')} ${appConfig.mysql.db} 数据库表同步失败`);
+        console.log(`${log4state('error')} ${process.env.MYSQL_DB} 数据库表同步失败`);
         process.exit();
     }
 };

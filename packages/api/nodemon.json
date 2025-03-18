@@ -2,7 +2,7 @@
     "verbose": true,
     "ignore": ["*.test.js", "**/fixtures/*", "**/node_modules/**/*", "**/logs/*", "**/tables/*"],
     "execMap": {
-        "js": "node funpi.js"
+        "js": "node --env-file=./.env.development funpi.js"
     },
     "env": {
         "NODE_ENV": "development"

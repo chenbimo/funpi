@@ -1,8 +1,6 @@
 import fp from 'fastify-plugin';
 import Redis from 'ioredis';
 
-import { appConfig } from '../app.js';
-
 function close(fastify) {
     return fastify.redis.quit();
 }
@@ -14,7 +12,14 @@ function plugin(fastify, opts, next) {
         return next(new Error('Redis 已注册'));
     } else {
         try {
-            client = new Redis(appConfig.redis);
+            client = new Redis({
+                host: process.env.REDIS_HOST,
+                port: process.env.REDIS_PORT,
+                username: process.env.REDIS_USERNAME,
+                password: process.env.REDIS_PASSWORD,
+                db: process.env.REDIS_DB,
+                keyPrefix: process.env.REDIS_KEY_PREFIX
+            });
         } catch (err) {
             return next(err);
         }

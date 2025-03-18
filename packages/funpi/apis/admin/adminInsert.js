@@ -38,7 +38,7 @@ export default async (fastify) => {
 
                 const result = await adminModel.clone().insertData({
                     username: req.body.username,
-                    password: yd_crypto_hmacMd5(yd_crypto_md5(req.body.password), appConfig.md5Salt),
+                    password: yd_crypto_hmacMd5(yd_crypto_md5(req.body.password), process.env.MD5_SALT),
                     nickname: req.body.nickname,
                     role: req.body.role
                 });

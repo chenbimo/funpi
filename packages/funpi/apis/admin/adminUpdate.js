@@ -43,7 +43,7 @@ export default async (fastify) => {
                 };
 
                 if (req.body.password) {
-                    updateData.password = yd_crypto_hmacMd5(req.body.password, appConfig.md5Salt);
+                    updateData.password = yd_crypto_hmacMd5(req.body.password, process.env.MD5_SALT);
                 }
                 await adminModel.clone().where({ id: req.body.id }).updateData(updateData);
 

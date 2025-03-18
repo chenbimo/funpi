@@ -24,13 +24,13 @@ async function plugin(fastify) {
             // 如果是收藏图标，则直接通过
             if (routePath === 'favicon.ico') return;
             if (routePath === '/') {
-                res.send({ code: 0, msg: `${appConfig.appName} 接口程序已启动` });
+                res.send({ code: 0, msg: `${process.env.APP_NAME} 接口程序已启动` });
                 return;
             }
             if (routePath.startsWith('/swagger/')) return;
 
             /* --------------------------------- 接口禁用检测 --------------------------------- */
-            const isMatchBlackApi = picomatch.isMatch(routePath, appConfig.blackApis);
+            const isMatchBlackApi = picomatch.isMatch(routePath, []);
             if (isMatchBlackApi === true) {
                 res.send(appConfig.http.API_DISABLED);
                 return;
@@ -74,7 +74,7 @@ async function plugin(fastify) {
             }
 
             /* --------------------------------- 自由接口判断 --------------------------------- */
-            const isMatchFreeApi = picomatch.isMatch(routePath, appConfig.freeApis);
+            const isMatchFreeApi = picomatch.isMatch(routePath, ['/', '/favicon.*', '/public/**', '/api/admin/adminLogin']);
             // 如果是自由通行的接口，则直接返回
             if (isMatchFreeApi === true) return;
 
@@ -96,7 +96,7 @@ async function plugin(fastify) {
             }
 
             /* --------------------------------- 上传参数检测 --------------------------------- */
-            if (appConfig.paramsCheck !== false) {
+            if (process.env.PARAMS_CHECK === '1') {
                 const result = await fnApiCheck(req);
                 if (result.code !== 0) {
                     res.send({
@@ -110,8 +110,8 @@ async function plugin(fastify) {
             /* ---------------------------------- 白名单判断 --------------------------------- */
             // 从缓存获取白名单接口
             const dataApiWhiteLists = await fastify.redisGet(appConfig.cache.apiWhiteLists);
-            const whiteApis = dataApiWhiteLists?.map((item) => item.value);
-            const allWhiteApis = es_uniq([...appConfig.whiteApis, ...(whiteApis || [])]);
+            const whiteApis = dataApiWhiteLists?.map((item) => item.value) || [];
+            const allWhiteApis = es_uniq(whiteApis);
 
             // 是否匹配白名单
             const isMatchWhiteApi = picomatch.isMatch(routePath, allWhiteApis);

@@ -66,33 +66,6 @@ export const appSchema = {
             type: 'string',
             default: 'Asia/Shanghai'
         },
-        // 自由接口列表，任何情况下可以访问的路由
-        freeApis: {
-            title: '自由接口',
-            type: 'array',
-            items: {
-                type: 'string'
-            },
-            uniqueItems: true
-        },
-        // 白名单接口列表，登录后访问无限制
-        whiteApis: {
-            title: '白名单接口',
-            type: 'array',
-            items: {
-                type: 'string'
-            },
-            uniqueItems: true
-        },
-        // 黑名单接口列表，不可访问的接口
-        blackApis: {
-            title: '黑名单接口',
-            type: 'array',
-            items: {
-                type: 'string'
-            },
-            uniqueItems: true
-        },
         // 请求限制
         rate: {
             title: '请求频率',
@@ -124,156 +97,6 @@ export const appSchema = {
                 }
             },
             additionalProperties: false
-        },
-        // 邮件配置
-        mail: {
-            // 邮件配置
-            title: '邮件配置',
-            type: 'object',
-            properties: {
-                host: {
-                    title: '主机地址',
-                    type: 'string'
-                },
-                port: {
-                    title: '端口',
-                    type: 'number'
-                },
-                pool: {
-                    title: '是否开启连接池',
-                    type: 'boolean'
-                },
-                secure: {
-                    title: '是否开启 https',
-                    type: 'boolean'
-                },
-                user: {
-                    title: '账号',
-                    type: 'string'
-                },
-                pass: {
-                    title: '密码',
-                    type: 'string'
-                },
-                from_name: {
-                    title: '发送者昵称',
-                    type: 'string'
-                },
-                from_email: {
-                    title: '发送者邮箱',
-                    type: 'string'
-                }
-            },
-            additionalProperties: false,
-            required: [
-                //
-                'host',
-                'port',
-                'pool',
-                'secure',
-                'user',
-                'pass',
-                'from_name',
-                'from_email'
-            ]
-        },
-        // jwt 认证
-        jwt: {
-            title: 'jwt 配置',
-            type: 'object',
-            properties: {
-                secret: {
-                    title: '加密字符',
-                    type: 'string'
-                },
-                expiresIn: {
-                    title: '过期时间',
-                    type: 'string'
-                }
-            },
-            additionalProperties: false,
-            required: [
-                //
-                'secret',
-                'expiresIn'
-            ]
-        },
-        // mysql 配置
-        mysql: {
-            title: '数据库配合',
-            type: 'object',
-            properties: {
-                db: {
-                    title: '数据库名称',
-                    type: 'string'
-                },
-                username: {
-                    title: '用户名',
-                    type: 'string'
-                },
-                password: {
-                    title: '密码',
-                    type: 'string'
-                },
-                host: {
-                    title: '主机地址',
-                    type: 'string'
-                },
-                port: {
-                    title: '监听端口',
-                    type: 'number'
-                }
-            },
-            additionalProperties: false,
-            required: [
-                //
-                'db',
-                'username',
-                'password',
-                'host',
-                'port'
-            ]
-        },
-        // redis 缓存
-        redis: {
-            title: '缓存配置',
-            type: 'object',
-            properties: {
-                keyPrefix: {
-                    title: '缓存前缀',
-                    type: 'string'
-                },
-                username: {
-                    title: '用户名',
-                    type: 'string'
-                },
-                password: {
-                    title: '连接密码',
-                    type: 'string'
-                },
-                host: {
-                    title: '主机地址',
-                    type: 'string'
-                },
-                db: {
-                    title: '库序号',
-                    type: 'number'
-                },
-                port: {
-                    title: '监听端口',
-                    type: 'number'
-                }
-            },
-            additionalProperties: false,
-            required: [
-                //
-                'keyPrefix',
-                'username',
-                'password',
-                'db',
-                'host',
-                'port'
-            ]
         },
         // 定时器
         cron: {
@@ -477,14 +300,7 @@ export const appSchema = {
         'paramsCheck',
         'isSwagger',
         'tablePrimaryKey',
-        'freeApis',
-        'whiteApis',
-        'blackApis',
         'rate',
-        'mail',
-        'jwt',
-        'mysql',
-        'redis',
         'cron',
         'cache',
         'http',

@@ -127,7 +127,7 @@ async function plugin(fastify) {
                 nickname: '开发管理员',
                 role: 'dev',
                 is_system: 1,
-                password: yd_crypto_hmacMd5(yd_crypto_md5(appConfig.devPassword), appConfig.md5Salt)
+                password: yd_crypto_hmacMd5(yd_crypto_md5(appConfig.devPassword), process.env.MD5_SALT)
             };
             if (appConfig.tablePrimaryKey === 'time') {
                 insertData.id = yd_number_incrTimeID();
@@ -141,7 +141,7 @@ async function plugin(fastify) {
                 nickname: '开发管理员',
                 role: 'dev',
                 is_system: 1,
-                password: yd_crypto_hmacMd5(yd_crypto_md5(appConfig.devPassword), appConfig.md5Salt)
+                password: yd_crypto_hmacMd5(yd_crypto_md5(appConfig.devPassword), process.env.MD5_SALT)
             };
             // 只有主进程才操作一次
             if (!process.env.NODE_APP_INSTANCE || process.env.NODE_APP_INSTANCE === '0') {

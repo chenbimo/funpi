@@ -10,11 +10,11 @@
         "registry": "https://registry.npmjs.org"
     },
     "scripts": {
-        "dev": "nodemon --config=nodemon.json",
+        "dev": "bun --watch --env-file=./.env.development funpi.js",
         "server": "pm2 start pm2.config.cjs",
-        "ct": "node ./scripts/checkTable.js",
-        "syncDb:dev": "pnpm dlx cross-env NODE_ENV=development node ./scripts/syncMysql.js",
-        "syncDb:prod": "pnpm dlx cross-env NODE_ENV=production node ./scripts/syncMysql.js",
+        "ct": "bun ./scripts/checkTable.js",
+        "syncDb:dev": "bun --env-file=./.env.development ./scripts/syncMysql.js",
+        "syncDb:prod": "bun --env-file=./.env.production ./scripts/syncMysql.js",
         "flamegraph": "pnpm dlx cross-env NODE_ENV=development & pnpm dlx rimraf .cache/0x & pnpm dlx 0x --output-dir=.cache/0x --output-html={outputDir}/index.html -- node funpi.js"
     },
     "keywords": [
@@ -48,6 +48,7 @@
         "url": "https://github.com/chenbimo/yicode.git"
     },
     "dependencies": {
+        "dotenv": "^16.4.7",
         "funpi": "workspace:^",
         "yidash": "^1.12.1"
     },

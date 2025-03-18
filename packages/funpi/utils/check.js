@@ -80,18 +80,17 @@ export const initCheck = async () => {
 
     // ==================================================
 
-    if (appConfig.devPassword === 'funpi123456') {
-        // 启动前验证
-        console.log(`${log4state('warn')} 请修改超级管理员密码！位置：appConfig.devPassword`);
-    }
-
     // 启动前验证
-    if (appConfig.md5Salt === 'funpi123456') {
-        console.log(`${log4state('warn')} 请修改默认加密盐值！位置：appConfig.md5Salt`);
+    if (process.env.MD5_SALT === 'funpi123456') {
+        console.log(`${log4state('warn')} 请修改默认加密盐值！位置：process.env.MD5_SALT`);
     }
 
-    // jwt密钥验证
-    if (appConfig.jwt.secret === 'funpi123456') {
-        console.log(`${log4state('warn')} 请修改jwt默认密钥！位置：appConfig.jwt.secret`);
+    if (existsSync(resolve(appConfig.appDir, 'funpi.js')) === false) {
+        console.log(`${log4state('warn')} 请在 funpi 项目根目录下运行`);
+        process.exit();
+    }
+
+    if (process.env.DEV_PASSWORD === 'funpi123456') {
+        console.log(`${log4state('warn')} 请修改开发管理员密码！位置：process.env.DEV_PASSWORD`);
     }
 };

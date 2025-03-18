@@ -3,10 +3,6 @@ import Knex from 'knex';
 import { isArray as es_isArray } from 'es-toolkit/compat';
 import { yd_number_incrTimeID } from 'yidash/node';
 
-// 工具集
-// 配置集
-import { appConfig } from '../app.js';
-// 函数集
 // 添加函数
 const dbInsert = (obj) => {
     const newObj = {};
@@ -19,9 +15,9 @@ const dbInsert = (obj) => {
     }
     newObj.created_at = Date.now();
     newObj.updated_at = Date.now();
-    if (appConfig.tablePrimaryKey !== 'default') {
+    if (process.env.TABLE_PRIMARY_KEY !== 'default') {
         // 当主键为 time 模式时，更改 id 字段的值
-        if (appConfig.tablePrimaryKey === 'time') {
+        if (process.env.TABLE_PRIMARY_KEY === 'time') {
             newObj.id = yd_number_incrTimeID();
         }
     }
@@ -100,11 +96,11 @@ async function plugin(fastify) {
         const mysql = await new Knex({
             client: 'mysql2',
             connection: {
-                host: appConfig.mysql.host,
-                port: appConfig.mysql.port,
-                user: appConfig.mysql.username,
-                password: appConfig.mysql.password,
-                database: appConfig.mysql.db
+                host: process.env.MYSQL_HOST,
+                port: process.env.MYSQL_PORT,
+                user: process.env.MYSQL_USERNAME,
+                password: process.env.MYSQL_PASSWORD,
+                database: process.env.MYSQL_DB
             },
             acquireConnectionTimeout: 30000,
             asyncStackTraces: true,
