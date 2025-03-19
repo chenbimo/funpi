@@ -41,9 +41,6 @@ import { checkTable } from './scripts/checkTable.js';
 import { appDir, funpiDir } from './config/path.js';
 import { httpConfig } from './config/http.js';
 
-// 初始化检查
-await initCheck();
-
 // 初始化项目实例
 const fastify = Fastify({
     loggerInstance: loggerPlugin,
@@ -163,6 +160,8 @@ fastify.register(autoLoad, {
 // 初始化服务
 function initServer() {
     return new Promise(async (resolve) => {
+        // 初始化检查
+        await initCheck();
         // 启动服务！
         fastify.listen({ port: Number(process.env.APP_PORT), host: process.env.LISTEN_HOST }, async function (err, address) {
             if (err) {
