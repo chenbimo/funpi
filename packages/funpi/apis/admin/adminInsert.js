@@ -1,5 +1,5 @@
 import { fnRoute, fnSchema, fnDataClear, fnRequestLog, fnCryptoMD5, fnCryptoHmacMD5 } from '../../utils/index.js';
-import { appConfig } from '../../app.js';
+import { httpConfig } from '../../config/http.js';
 import { tableData } from '../../tables/admin.js';
 
 export default async (fastify) => {
@@ -20,7 +20,7 @@ export default async (fastify) => {
             try {
                 if (req.body.role === 'dev') {
                     return {
-                        ...appConfig.http.FAIL,
+                        ...httpConfig.FAIL,
                         msg: '不能增加开发管理员角色'
                     };
                 }
@@ -30,7 +30,7 @@ export default async (fastify) => {
                 const adminData = await adminModel.clone().where('username', req.body.username).selectOne(['id']);
                 if (adminData?.id) {
                     return {
-                        ...appConfig.http.FAIL,
+                        ...httpConfig.FAIL,
                         msg: '管理员账号已存在'
                     };
                 }
@@ -45,12 +45,12 @@ export default async (fastify) => {
                 await adminActionLogModel.clone().insertData(fnDataClear(fnRequestLog(req, ['password'])));
 
                 return {
-                    ...appConfig.http.INSERT_SUCCESS,
+                    ...httpConfig.INSERT_SUCCESS,
                     data: result
                 };
             } catch (err) {
                 fastify.log.error(err);
-                return appConfig.http.INSERT_FAIL;
+                return httpConfig.INSERT_FAIL;
             }
         }
     });

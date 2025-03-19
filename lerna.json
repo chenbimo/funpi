@@ -1,7 +1,7 @@
 {
     "version": "7.14.4",
     "packages": ["packages/*"],
-    "npmClient": "pnpm",
+    "npmClient": "bun",
     "command": {
         "version": {
             "allowBranch": ["main", "master"],

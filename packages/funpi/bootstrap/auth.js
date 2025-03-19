@@ -7,7 +7,8 @@ import picomatch from 'picomatch';
 import { uniq as es_uniq, isPlainObject as es_isPlainObject } from 'es-toolkit';
 import { find as es_find } from 'es-toolkit/compat';
 // 配置文件
-import { appConfig } from '../app.js';
+import { appDir } from '../config/path.js';
+import { httpConfig } from '../config/http.js';
 // 工具函数
 import { fnApiCheck, fnDataClear } from '../utils/index.js';
 
@@ -32,18 +33,18 @@ async function plugin(fastify) {
             /* --------------------------------- 接口禁用检测 --------------------------------- */
             const isMatchBlackApi = picomatch.isMatch(routePath, []);
             if (isMatchBlackApi === true) {
-                res.send(appConfig.http.API_DISABLED);
+                res.send(httpConfig.API_DISABLED);
                 return;
             }
 
             /* --------------------------------- 请求资源判断 --------------------------------- */
             if (routePath.startsWith('/public')) {
-                const filePath = join(appConfig.appDir, routePath);
+                const filePath = join(appDir, routePath);
                 if (existsSync(filePath) === true) {
                     return;
                 } else {
                     // 文件不存在
-                    res.send(appConfig.http.NO_FILE);
+                    res.send(httpConfig.NO_FILE);
                     return;
                 }
             }
@@ -79,17 +80,17 @@ async function plugin(fastify) {
             if (isMatchFreeApi === true) return;
 
             /* --------------------------------- 接口存在性判断 -------------------------------- */
-            const allApiNames = await fastify.redisGet(appConfig.cache.apiNames);
+            const allApiNames = await fastify.redisGet('cacheData_apiNames');
 
             if (allApiNames.includes(routePath) === false) {
-                res.send(appConfig.http.NO_API);
+                res.send(httpConfig.NO_API);
                 return;
             }
 
             /* --------------------------------- 接口登录检测 --------------------------------- */
             if (isAuthFail === true) {
                 res.send({
-                    ...appConfig.http.NOT_LOGIN,
+                    ...httpConfig.NOT_LOGIN,
                     detail: 'token 验证失败'
                 });
                 return;
@@ -100,7 +101,7 @@ async function plugin(fastify) {
                 const result = await fnApiCheck(req);
                 if (result.code !== 0) {
                     res.send({
-                        ...appConfig.http.PARAMS_SIGN_FAIL,
+                        ...httpConfig.PARAMS_SIGN_FAIL,
                         detail: result?.msg || ''
                     });
                     return;
@@ -109,7 +110,7 @@ async function plugin(fastify) {
 
             /* ---------------------------------- 白名单判断 --------------------------------- */
             // 从缓存获取白名单接口
-            const dataApiWhiteLists = await fastify.redisGet(appConfig.cache.apiWhiteLists);
+            const dataApiWhiteLists = await fastify.redisGet('cacheData_apiWhiteLists');
             const whiteApis = dataApiWhiteLists?.map((item) => item.value) || [];
             const allWhiteApis = es_uniq(whiteApis);
 
@@ -125,7 +126,7 @@ async function plugin(fastify) {
 
             if (!hasApi) {
                 res.send({
-                    ...appConfig.http.FAIL,
+                    ...httpConfig.FAIL,
                     msg: `您没有 [ ${req?.routeOptions?.schema?.summary || routePath} ] 接口的操作权限`
                 });
                 return;
@@ -133,7 +134,7 @@ async function plugin(fastify) {
         } catch (err) {
             fastify.log.error(err);
             res.send({
-                ...appConfig.http.FAIL,
+                ...httpConfig.FAIL,
                 msg: err.msg || '认证异常',
                 other: err.other || ''
             });

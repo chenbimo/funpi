@@ -1,7 +1,6 @@
 // 外部模块
 import fp from 'fastify-plugin';
 // 配置文件
-import { appConfig } from '../app.js';
 
 async function plugin(fastify) {
     // 设置 redis
@@ -33,7 +32,7 @@ async function plugin(fastify) {
 
         // 提取所有角色拥有的接口
         let apiIds = [];
-        const dataRoleCodes = await redisGet(appConfig.cache.role);
+        const dataRoleCodes = await redisGet('cacheData_role');
         dataRoleCodes.forEach((item) => {
             if (session.role === item.code) {
                 apiIds = item.api_ids
@@ -45,7 +44,7 @@ async function plugin(fastify) {
 
         // 将接口进行唯一性处理
         const userApiIds = [...new Set(apiIds)];
-        const dataApi = await redisGet(appConfig.cache.api);
+        const dataApi = await redisGet('cacheData_api');
         // 最终的用户接口列表
         const result = dataApi.filter((item) => {
             return userApiIds.includes(item.id);
@@ -60,7 +59,7 @@ async function plugin(fastify) {
             // 所有菜单 ID
             let menuIds = [];
 
-            const dataRoleCodes = await redisGet(appConfig.cache.role);
+            const dataRoleCodes = await redisGet('cacheData_role');
             dataRoleCodes.forEach((item) => {
                 if (session.role === item.code) {
                     menuIds = item.menu_ids
@@ -71,7 +70,7 @@ async function plugin(fastify) {
             });
 
             const userMenuIds = [...new Set(menuIds)];
-            const dataMenu = await redisGet(appConfig.cache.menu);
+            const dataMenu = await redisGet('cacheData_menu');
 
             const result = dataMenu.filter((item) => {
                 return userMenuIds.includes(item.id);
@@ -87,8 +86,8 @@ async function plugin(fastify) {
         const dataMenu = await fastify.mysql.table('sys_menu').selectAll();
 
         // 菜单树数据
-        await redisSet(appConfig.cache.menu, []);
-        await redisSet(appConfig.cache.menu, dataMenu);
+        await redisSet('cacheData_menu', []);
+        await redisSet('cacheData_menu', dataMenu);
     };
 
     const cacheApiData = async () => {
@@ -99,27 +98,27 @@ async function plugin(fastify) {
         const dataApiWhiteLists = dataApi.filter((item) => item.is_open === 1).map((item) => item.value);
 
         // 接口树数据
-        await redisSet(appConfig.cache.api, []);
-        await redisSet(appConfig.cache.api, dataApi);
+        await redisSet('cacheData_api', []);
+        await redisSet('cacheData_api', dataApi);
 
         // 接口名称缓存
-        await redisSet(appConfig.cache.apiNames, []);
+        await redisSet('cacheData_apiNames', []);
         await redisSet(
-            appConfig.cache.apiNames,
+            'cacheData_apiNames',
             dataApi.filter((item) => item.is_bool === 1).map((item) => `/api${item.value}`)
         );
 
         // 白名单接口数据
-        await redisSet(appConfig.cache.apiWhiteLists, []);
-        await redisSet(appConfig.cache.apiWhiteLists, dataApiWhiteLists);
+        await redisSet('cacheData_apiWhiteLists', []);
+        await redisSet('cacheData_apiWhiteLists', dataApiWhiteLists);
     };
 
     const cacheRoleData = async () => {
         // 角色类别
         const dataRole = await fastify.mysql.table('sys_role').selectAll();
 
-        await redisSet(appConfig.cache.role, []);
-        await redisSet(appConfig.cache.role, dataRole);
+        await redisSet('cacheData_role', []);
+        await redisSet('cacheData_role', dataRole);
     };
 
     // 设置和获取缓存数据

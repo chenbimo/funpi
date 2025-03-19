@@ -5,8 +5,8 @@ async function plugin(fastify) {
     const mailTransport = await nodemailer.createTransport({
         host: process.env.MAIL_HOST,
         port: process.env.MAIL_PORT,
-        pool: process.env.MAIL_POOL,
-        secure: process.env.MAIL_SECURE,
+        pool: process.env.MAIL_POOL === '1' ? true : false,
+        secure: process.env.MAIL_SECURE === '1' ? true : false,
         auth: {
             user: process.env.MAIL_USER,
             pass: process.env.MAIL_PASS

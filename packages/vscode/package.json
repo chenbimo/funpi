@@ -1,0 +1,32 @@
+{
+    "name": "@funpi/vscode",
+    "version": "7.0.0",
+    "description": "FunPi(放屁) - VSCode插件占位",
+    "type": "module",
+    "private": false,
+    "publishConfig": {
+        "access": "public",
+        "registry": "https://registry.npmjs.org"
+    },
+    "exports": {},
+    "keywords": [
+        "fastify",
+        "nodejs",
+        "api"
+    ],
+    "files": [
+        "LICENSE",
+        "package.json",
+        "README.md"
+    ],
+    "engines": {
+        "node": ">=20.6.0"
+    },
+    "author": "chensuiyi <bimostyle@qq.com>",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/chenbimo/funpi"
+    },
+    "homepage": "https://chensuiyi.me",
+    "gitHead": "1c28c0de7c0af8aa4582c45ab2d98e66c597c7a1"
+}

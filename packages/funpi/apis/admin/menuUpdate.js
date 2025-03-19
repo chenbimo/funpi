@@ -1,5 +1,5 @@
 import { fnRoute, fnSchema, fnDataClear, fnRequestLog } from '../../utils/index.js';
-import { appConfig } from '../../app.js';
+import { httpConfig } from '../../config/http.js';
 import { tableData } from '../../tables/menu.js';
 
 export default async (fastify) => {
@@ -30,7 +30,7 @@ export default async (fastify) => {
                     const parentData = await menuModel.clone().where('id', req.body.pid).selectOne(['id']);
                     if (!parentData?.id) {
                         return {
-                            ...appConfig.http.FAIL,
+                            ...httpConfig.FAIL,
                             msg: '父级菜单不存在'
                         };
                     }
@@ -39,7 +39,7 @@ export default async (fastify) => {
                 const selfData = await menuModel.clone().where('id', req.body.id).selectOne(['id']);
                 if (!selfData?.id) {
                     return {
-                        ...appConfig.http.FAIL,
+                        ...httpConfig.FAIL,
                         msg: '菜单不存在'
                     };
                 }
@@ -56,10 +56,10 @@ export default async (fastify) => {
                 await adminActionLogModel.clone().insertData(fnDataClear(fnRequestLog(req)));
 
                 await fastify.cacheMenuData();
-                return appConfig.http.UPDATE_SUCCESS;
+                return httpConfig.UPDATE_SUCCESS;
             } catch (err) {
                 fastify.log.error(err);
-                return appConfig.http.UPDATE_FAIL;
+                return httpConfig.UPDATE_FAIL;
             }
         }
     });

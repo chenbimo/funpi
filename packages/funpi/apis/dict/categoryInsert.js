@@ -1,6 +1,6 @@
 import { camelCase } from 'es-toolkit';
 import { fnRoute, fnSchema, fnDataClear, fnRequestLog } from '../../utils/index.js';
-import { appConfig } from '../../app.js';
+import { httpConfig } from '../../config/http.js';
 import { tableData } from '../../tables/dictCategory.js';
 
 export default async (fastify) => {
@@ -28,7 +28,7 @@ export default async (fastify) => {
 
                 if (dictCategoryData?.id) {
                     return {
-                        ...appConfig.http.INSERT_FAIL,
+                        ...httpConfig.INSERT_FAIL,
                         msg: '当前编号已存在'
                     };
                 }
@@ -41,12 +41,12 @@ export default async (fastify) => {
                 await adminActionLogModel.clone().insertData(fnDataClear(fnRequestLog(req)));
 
                 return {
-                    ...appConfig.http.INSERT_SUCCESS,
+                    ...httpConfig.INSERT_SUCCESS,
                     data: result
                 };
             } catch (err) {
                 fastify.log.error(err);
-                return appConfig.http.INSERT_FAIL;
+                return httpConfig.INSERT_FAIL;
             }
         }
     });

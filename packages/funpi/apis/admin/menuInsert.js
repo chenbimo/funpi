@@ -1,5 +1,5 @@
 import { fnRoute, fnSchema, fnDataClear, fnRequestLog } from '../../utils/index.js';
-import { appConfig } from '../../app.js';
+import { httpConfig } from '../../config/http.js';
 import { tableData } from '../../tables/menu.js';
 
 export default async (fastify) => {
@@ -33,7 +33,7 @@ export default async (fastify) => {
 
                     if (!parentData?.id) {
                         return {
-                            ...appConfig.http.FAIL,
+                            ...httpConfig.FAIL,
                             msg: '父级菜单不存在'
                         };
                     }
@@ -51,10 +51,10 @@ export default async (fastify) => {
                 await adminActionLogModel.clone().insertData(fnDataClear(fnRequestLog(req)));
 
                 await fastify.cacheMenuData();
-                return appConfig.http.INSERT_SUCCESS;
+                return httpConfig.INSERT_SUCCESS;
             } catch (err) {
                 fastify.log.error(err);
-                return appConfig.http.INSERT_FAIL;
+                return httpConfig.INSERT_FAIL;
             }
         }
     });

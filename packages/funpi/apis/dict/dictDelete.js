@@ -1,5 +1,5 @@
 import { fnRoute, fnSchema, fnDataClear, fnRequestLog } from '../../utils/index.js';
-import { appConfig } from '../../app.js';
+import { httpConfig } from '../../config/http.js';
 
 // 处理函数
 export default async (fastify) => {
@@ -20,19 +20,19 @@ export default async (fastify) => {
 
                 const dictData = await dictModel.clone().selectOne(['id']);
                 if (!dictData?.id) {
-                    return appConfig.http.NO_DATA;
+                    return httpConfig.NO_DATA;
                 }
 
                 const result = await dictModel.clone().deleteData();
                 await adminActionLogModel.clone().insertData(fnDataClear(fnRequestLog(req)));
 
                 return {
-                    ...appConfig.http.DELETE_SUCCESS,
+                    ...httpConfig.DELETE_SUCCESS,
                     data: result
                 };
             } catch (err) {
                 fastify.log.error(err);
-                return appConfig.http.DELETE_FAIL;
+                return httpConfig.DELETE_FAIL;
             }
         }
     });

@@ -1,5 +1,5 @@
 import { fnRoute } from '../../utils/index.js';
-import { appConfig } from '../../app.js';
+import { httpConfig } from '../../config/http.js';
 
 export default async (fastify) => {
     fnRoute(import.meta.url, fastify, {
@@ -11,17 +11,17 @@ export default async (fastify) => {
         // 执行函数
         apiHandler: async () => {
             try {
-                const result = await fastify.redisGet(appConfig.cache.api);
+                const result = await fastify.redisGet('cacheData_api');
 
                 return {
-                    ...appConfig.http.SELECT_SUCCESS,
+                    ...httpConfig.SELECT_SUCCESS,
                     data: {
                         rows: result
                     }
                 };
             } catch (err) {
                 fastify.log.error(err);
-                return appConfig.http.SELECT_FAIL;
+                return httpConfig.SELECT_FAIL;
             }
         }
     });

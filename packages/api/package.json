@@ -14,8 +14,7 @@
         "server": "pm2 start pm2.config.cjs",
         "ct": "bun ./scripts/checkTable.js",
         "syncDb:dev": "bun --env-file=./.env.development ./scripts/syncMysql.js",
-        "syncDb:prod": "bun --env-file=./.env.production ./scripts/syncMysql.js",
-        "flamegraph": "pnpm dlx cross-env NODE_ENV=development & pnpm dlx rimraf .cache/0x & pnpm dlx 0x --output-dir=.cache/0x --output-html={outputDir}/index.html -- node funpi.js"
+        "syncDb:prod": "bun --env-file=./.env.production ./scripts/syncMysql.js"
     },
     "keywords": [
         "api",
@@ -32,11 +31,8 @@
         ".gitignore",
         ".npmrc",
         ".prettier",
-        "app.js",
-        "env.js",
         "funpi.js",
         "LICENSE",
-        "nodemon.json",
         "package.json",
         "pm2.config.cjs",
         "README.md"
@@ -48,18 +44,15 @@
         "url": "https://github.com/chenbimo/yicode.git"
     },
     "dependencies": {
-        "dotenv": "^16.4.7",
-        "funpi": "workspace:^",
-        "yidash": "^1.12.1"
+        "funpi": "workspace:^"
     },
     "devDependencies": {
         "lint-staged": "^15.4.3",
-        "nodemon": "^3.1.9",
         "prettier": "^3.5.3",
         "simple-git-hooks": "^2.11.1"
     },
     "simple-git-hooks": {
-        "pre-commit": "pnpm exec lint-staged"
+        "pre-commit": "bun lint-staged"
     },
     "lint-staged": {
         "*": [

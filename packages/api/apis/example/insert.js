@@ -1,4 +1,4 @@
-import { fnRoute, fnSchema, appConfig } from 'funpi';
+import { fnRoute, fnSchema, httpConfig } from 'funpi';
 import { tableData } from '../../tables/example.js';
 
 export default async (fastify) => {
@@ -28,13 +28,13 @@ export default async (fastify) => {
 
                 await trx.commit();
                 return {
-                    ...appConfig.http.INSERT_SUCCESS,
+                    ...httpConfig.INSERT_SUCCESS,
                     data: result
                 };
             } catch (err) {
                 await trx.rollback();
                 fastify.log.error(err);
-                return appConfig.http.INSERT_FAIL;
+                return httpConfig.INSERT_FAIL;
             }
         }
     });

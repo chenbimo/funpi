@@ -1,5 +1,5 @@
 import { fnRoute, fnSchema, fnDataClear, fnRequestLog } from '../../utils/index.js';
-import { appConfig } from '../../app.js';
+import { httpConfig } from '../../config/http.js';
 
 export default async (fastify) => {
     fnRoute(import.meta.url, fastify, {
@@ -19,19 +19,19 @@ export default async (fastify) => {
 
                 const adminData = await adminModel.clone().selectOne(['id']);
                 if (!adminData?.id) {
-                    return appConfig.http.NO_DATA;
+                    return httpConfig.NO_DATA;
                 }
 
                 const result = await adminModel.deleteData();
                 await adminActionLogModel.clone().insertData(fnDataClear(fnRequestLog(req)));
 
                 return {
-                    ...appConfig.http.DELETE_SUCCESS,
+                    ...httpConfig.DELETE_SUCCESS,
                     data: result
                 };
             } catch (err) {
                 fastify.log.error(err);
-                return appConfig.http.DELETE_FAIL;
+                return httpConfig.DELETE_FAIL;
             }
         }
     });

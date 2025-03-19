@@ -2,309 +2,233 @@ export const appSchema = {
     title: '应用基本配置',
     type: 'object',
     properties: {
-        appDir: {
-            title: '应用目录',
+        APP_MODE: {
+            title: '应用模式',
             type: 'string',
-            minLength: 1
+            enum: ['development', 'production']
         },
-        funpiDir: {
-            title: '内核目录',
-            type: 'string',
-            minLength: 1
-        },
-        appName: {
+        APP_NAME: {
             title: '应用名称',
             type: 'string',
             minLength: 1,
             maxLength: 50
         },
-        md5Salt: {
+        MD5_SALT: {
             title: 'MD5加密盐值',
             type: 'string',
             minLength: 1,
             maxLength: 300
         },
-        port: {
+        APP_PORT: {
             title: '监听端口',
             type: 'integer',
             minimum: 0
         },
-        host: {
+        LISTEN_HOST: {
             title: '监听主机',
             type: 'string',
             minLength: 1,
             maxLength: 30
         },
-        devPassword: {
+        DEV_PASSWORD: {
             title: '开发者密码',
             type: 'string',
             minLength: 6,
             maxLength: 20
         },
-        bodyLimit: {
+        BODY_LIMIT: {
             title: '请求体大小限制',
             type: 'integer'
         },
-        paramsCheck: {
+        PARAMS_CHECK: {
             title: '接口参数验证',
-            type: 'boolean',
-            default: false
+            type: 'string',
+            default: '0',
+            enum: ['0', '1']
         },
-        isSwagger: {
+        SWAGGER: {
             title: '是否开启接口文档',
-            type: 'boolean',
-            default: false
+            type: 'string',
+            default: '0',
+            enum: ['0', '1']
         },
         // 数据库表主键方案
-        tablePrimaryKey: {
+        TABLE_PRIMARY_KEY: {
             title: '数据库表主键方案',
             type: 'string',
             enum: ['default', 'time']
         },
-        timezone: {
+        TIMEZONE: {
             title: '时区',
             type: 'string',
             default: 'Asia/Shanghai'
         },
-        // 请求限制
-        rate: {
-            title: '请求频率',
-            type: 'object',
-            properties: {
-                global: {
-                    type: 'boolean',
-                    title: '是否影响全部的路由'
-                },
-                max: {
-                    type: 'number',
-                    title: '限制时间内的最大请求数'
-                },
-                timeWindow: {
-                    type: 'number',
-                    title: '限制时间'
-                },
-                hook: {
-                    type: 'string',
-                    title: '触发的钩子'
-                },
-                cache: {
-                    type: 'number',
-                    title: '内存缓存大小'
-                },
-                allowList: {
-                    type: 'array',
-                    title: '白名单'
-                }
-            },
-            additionalProperties: false
+        // 数据库配置
+        MYSQL_HOST: {
+            title: '数据库地址',
+            type: 'string',
+            default: '127.0.0.1'
         },
-        // 定时器
-        cron: {
-            // 定时器配置
-            title: '定时器',
-            type: 'array',
-            items: {
-                type: 'object',
-                properties: {
-                    timer: {
-                        title: '定时器',
-                        type: 'string'
-                    },
-                    name: {
-                        title: '定时器名称',
-                        type: 'string'
-                    },
-                    code: {
-                        title: '定时器代号',
-                        type: 'string'
-                    },
-                    maxRuns: {
-                        title: '最大运行次数',
-                        type: 'number'
-                    },
-                    timezone: {
-                        title: '时区',
-                        type: 'string'
-                    },
-                    handler: {
-                        title: '处理函数'
-                    }
-                },
-                additionalProperties: false,
-                required: ['timer', 'handler', 'name', 'code']
-            }
+        MYSQL_PORT: {
+            title: '数据库地址',
+            type: 'integer',
+            default: 3306
         },
-        // 文件上传
-        upload: {
-            title: '文件上传配置',
-            type: 'object',
-            properties: {
-                fieldNameSize: {
-                    title: '上传名称长度',
-                    type: 'number'
-                },
-                fieldSize: {
-                    title: '上传内容大小',
-                    type: 'number'
-                }
-            },
-            additionalProperties: false,
-            required: [
-                //
-                'fieldNameSize',
-                'fieldSize'
-            ]
+        MYSQL_DB: {
+            title: '数据库名称',
+            type: 'string',
+            default: 'funpi_demo'
         },
-        // 缓存配置
-        cache: {
-            title: '缓存名称配置',
-            type: 'object',
-            patternProperties: {
-                '^[a-z][a-zA-Z0-9_]*$': {
-                    title: '缓存名称',
-                    type: 'string'
-                }
-            },
-            additionalProperties: false
+        MYSQL_USERNAME: {
+            title: '数据库用户名',
+            type: 'string',
+            default: 'root'
         },
-        // http 状态码
-        http: {
-            title: 'HTTP返回码',
-            type: 'object',
-            properties: {
-                '*': {
-                    title: '任意字段',
-                    type: 'object',
-                    properties: {
-                        symbol: {
-                            title: '唯一符号',
-                            type: 'string'
-                        },
-                        code: {
-                            title: '状态码',
-                            type: 'integer',
-                            minimum: 0
-                        },
-                        msg: {
-                            title: '消息内容',
-                            type: 'string'
-                        }
-                    },
-                    additionalProperties: false,
-                    required: ['symbol', 'code', 'msg']
-                }
-            }
+        MYSQL_PASSWORD: {
+            title: '数据库密码',
+            type: 'string',
+            default: 'root'
         },
-        // 角色配置
-        role: {
-            title: '角色配置',
-            type: 'object',
-            patternProperties: {
-                '^[a-z][a-z0-9_]*$': {
-                    title: '角色代号',
-                    type: 'object',
-                    properties: {
-                        name: {
-                            title: '角色名称',
-                            type: 'string',
-                            minLength: 1,
-                            maxLength: 20
-                        },
-                        describe: {
-                            title: '角色描述',
-                            type: 'string',
-                            minLength: 0,
-                            maxLength: 200
-                        },
-                        is_system: {
-                            title: '是否系统角色',
-                            type: 'integer',
-                            default: 0,
-                            enum: [0, 1]
-                        }
-                    },
-                    additionalProperties: false,
-                    required: ['name', 'describe']
-                }
-            },
-            additionalProperties: false
+        // Redis配置
+        REDIS_HOST: {
+            title: 'Redis地址',
+            type: 'string',
+            default: '127.0.0.1'
         },
-        // 菜单配置
-        menu: {
-            title: '菜单字段',
-            type: 'object',
-            patternProperties: {
-                '^\\/[a-z][a-z0-9\\/-]*$': {
-                    title: '主菜单',
-                    type: 'object',
-                    properties: {
-                        name: {
-                            title: '菜单名称',
-                            type: 'string'
-                        },
-                        is_system: {
-                            title: '是否系统菜单',
-                            type: 'integer',
-                            enum: [0, 1]
-                        },
-                        sort: {
-                            title: '菜单排序',
-                            type: 'integer',
-                            minimum: 1,
-                            maximum: 9999
-                        },
-                        children: {
-                            title: '子菜单',
-                            type: 'object',
-                            patternProperties: {
-                                '^\\/[a-z][a-z0-9\\/-]*$': {
-                                    type: 'object',
-                                    properties: {
-                                        name: {
-                                            title: '菜单名称',
-                                            type: 'string'
-                                        },
-                                        sort: {
-                                            title: '菜单排序',
-                                            type: 'integer',
-                                            minimum: 1,
-                                            maximum: 9999
-                                        },
-                                        is_system: {
-                                            title: '是否系统菜单',
-                                            type: 'integer',
-                                            enum: [0, 1]
-                                        }
-                                    },
-                                    additionalProperties: false,
-                                    required: ['name', 'sort']
-                                }
-                            },
-                            additionalProperties: false
-                        }
-                    },
-                    additionalProperties: false,
-                    required: ['name', 'sort', 'children']
-                }
-            }
+        REDIS_PORT: {
+            title: 'Redis端口',
+            type: 'integer',
+            default: 6379
+        },
+        REDIS_USERNAME: {
+            title: 'Redis用户名',
+            type: 'string',
+            default: ''
+        },
+        REDIS_PASSWORD: {
+            title: 'Redis密码',
+            type: 'string',
+            default: ''
+        },
+        REDIS_DB: {
+            title: 'Redis数据库',
+            type: 'integer',
+            default: 0
+        },
+        REDIS_KEY_PREFIX: {
+            title: 'Redis键前缀',
+            type: 'string',
+            default: 'funpi_demo:'
+        },
+        // JWT配置
+        JWT_SECRET: {
+            title: 'JWT密钥',
+            type: 'string',
+            default: 'funpi123456'
+        },
+        JWT_EXPIRES_IN: {
+            title: 'JWT过期时间',
+            type: 'string',
+            default: '30d'
+        },
+        JWT_ALGORITHM: {
+            title: 'JWT算法',
+            type: 'string',
+            default: 'HS256'
+        },
+        // 邮件配置
+        MAIL_HOST: {
+            title: '邮件地址',
+            type: 'string',
+            default: ''
+        },
+        MAIL_PORT: {
+            title: '邮件端口',
+            type: 'integer',
+            default: 465
+        },
+        MAIL_POOL: {
+            title: '邮件池',
+            type: 'string',
+            default: '1',
+            enum: ['0', '1']
+        },
+        MAIL_SECURE: {
+            title: '邮件安全',
+            type: 'string',
+            default: '1',
+            enum: ['0', '1']
+        },
+        MAIL_USER: {
+            title: '邮件用户',
+            type: 'string',
+            default: 'funpi_demo@qq.com'
+        },
+        MAIL_PASS: {
+            title: '邮件密码',
+            type: 'string',
+            default: ''
+        },
+        MAIL_SENDER: {
+            title: '发件人',
+            type: 'string',
+            default: ''
+        },
+        MAIL_ADDRESS: {
+            title: '发件地址',
+            type: 'string',
+            default: ''
         }
     },
     additionalProperties: false,
     required: [
-        //
-        'appName',
-        'md5Salt',
-        'port',
-        'host',
-        'devPassword',
-        'paramsCheck',
-        'isSwagger',
-        'tablePrimaryKey',
-        'rate',
-        'cron',
-        'cache',
-        'http',
-        'role',
-        'menu'
+        // NODE模式
+        'APP_MODE',
+        // 应用名称
+        'APP_NAME',
+        // 加密盐
+        'MD5_SALT',
+        // 监听端口
+        'APP_PORT',
+        // 监听主机
+        'LISTEN_HOST',
+        // 超级管理员密码
+        'DEV_PASSWORD',
+        // 请求体大小 10M
+        'BODY_LIMIT',
+        // 是否进行参数验证
+        'PARAMS_CHECK',
+        // 是否显示接口文档
+        'SWAGGER',
+        // 数据库表主键方案
+        'TABLE_PRIMARY_KEY',
+        // 时区
+        'TIMEZONE',
+        // 数据库配置
+        'MYSQL_HOST',
+        'MYSQL_PORT',
+        'MYSQL_DB',
+        'MYSQL_USERNAME',
+        'MYSQL_PASSWORD',
+        // Redis配置
+        'REDIS_HOST',
+        'REDIS_PORT',
+        'REDIS_USERNAME',
+        'REDIS_PASSWORD',
+        'REDIS_DB',
+        'REDIS_KEY_PREFIX',
+        // JWT配置
+        'JWT_SECRET',
+        'JWT_EXPIRES_IN',
+        'JWT_ALGORITHM',
+        // 邮件配置
+        'MAIL_HOST',
+        'MAIL_PORT',
+        'MAIL_POOL',
+        'MAIL_SECURE',
+        'MAIL_USER',
+        'MAIL_PASS',
+        'MAIL_SENDER',
+        'MAIL_ADDRESS'
     ]
 };

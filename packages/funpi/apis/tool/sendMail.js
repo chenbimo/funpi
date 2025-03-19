@@ -1,6 +1,6 @@
 import { randomInt } from 'es-toolkit';
 import { fnRoute, fnSchema } from '../../utils/index.js';
-import { appConfig } from '../../app.js';
+import { httpConfig } from '../../config/http.js';
 
 export default async (fastify) => {
     fnRoute(import.meta.url, fastify, {
@@ -49,7 +49,7 @@ export default async (fastify) => {
                         text_content: req.body.content
                     });
                     return {
-                        ...appConfig.http.SUCCESS,
+                        ...httpConfig.SUCCESS,
                         msg: '邮件已发送',
                         from: 'new'
                     };
@@ -61,7 +61,7 @@ export default async (fastify) => {
                     const existsVerifyCode = await fastify.redisGet(`${req.body.verify_name}:${req.body.to_email}`);
                     if (existsVerifyCode) {
                         return {
-                            ...appConfig.http.SUCCESS,
+                            ...httpConfig.SUCCESS,
                             msg: '邮箱验证码已发送（5 分钟有效）',
                             from: 'cache'
                         };
@@ -84,14 +84,14 @@ export default async (fastify) => {
                         text_content: '******'
                     });
                     return {
-                        ...appConfig.http.SUCCESS,
+                        ...httpConfig.SUCCESS,
                         msg: '邮箱验证码已发送（5 分钟有效）',
                         from: 'new'
                     };
                 }
             } catch (err) {
                 fastify.log.error(err);
-                return appConfig.http.FAIL;
+                return httpConfig.FAIL;
             }
         }
     });

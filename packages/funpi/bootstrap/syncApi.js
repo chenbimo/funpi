@@ -10,25 +10,28 @@ import { isObject as es_isObject } from 'es-toolkit/compat';
 // 工具函数
 import { fnImport, fnIncrTimeID } from '../utils/index.js';
 // 配置文件
-import { appConfig } from '../app.js';
+import { appDir, funpiDir } from '../config/path.js';
 
 // 获取所有接口文件
 async function fnAllApiFiles(type) {
-    const coreApiFiles = readdirSync(resolve(appConfig.funpiDir, 'apis'), { recursive: true });
-    const appApiFiles = readdirSync(resolve(appConfig.appDir, 'apis'), { recursive: true });
+    console.log('🔥[ resolve(funpiDir, "apis") ]-18', resolve(funpiDir, 'apis'));
+    console.log('🔥[ resolve(appDir, "apis") ]-21', resolve(appDir, 'apis'));
+
+    const coreApiFiles = readdirSync(resolve(funpiDir, 'apis'), { recursive: true });
+    const appApiFiles = readdirSync(resolve(appDir, 'apis'), { recursive: true });
 
     const allApiFiles = [
         //
         ...coreApiFiles.map((file) => {
             return {
                 where: 'core',
-                filePath: resolve(appConfig.funpiDir, 'apis', file).replace(/\\+/gi, '/')
+                filePath: resolve(funpiDir, 'apis', file).replace(/\\+/gi, '/')
             };
         }),
         ...appApiFiles.map((file) => {
             return {
                 where: 'app',
-                filePath: resolve(appConfig.appDir, 'apis', file).replace(/\\+/gi, '/')
+                filePath: resolve(appDir, 'apis', file).replace(/\\+/gi, '/')
             };
         })
     ];

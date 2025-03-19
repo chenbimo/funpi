@@ -32,8 +32,8 @@ export const tableData = {
     sort: {
         name: '角色排序',
         type: 'bigInt',
-        default: 0,
-        min: 0
+        default: 100,
+        min: 100
     },
     is_system: {
         name: '是否系统角色（不可删除）',

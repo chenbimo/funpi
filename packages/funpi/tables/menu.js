@@ -29,8 +29,8 @@ export const tableData = {
     sort: {
         name: '字典排序',
         type: 'bigInt',
-        default: 0,
-        min: 0
+        default: 100,
+        min: 100
     },
     describe: {
         name: '描述',

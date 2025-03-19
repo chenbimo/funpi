@@ -4,10 +4,10 @@ import { resolve } from 'node:path';
 import winston from 'winston';
 import 'winston-daily-rotate-file';
 
-import { appConfig } from '../app.js';
+import { appDir } from '../config/path.js';
 
 const fileConfig = {
-    dirname: resolve(appConfig.appDir, 'logs'),
+    dirname: resolve(appDir, 'logs'),
     filename: '%DATE%.log',
     datePattern: 'YYYY-MM-DD',
     zippedArchive: false,
@@ -30,7 +30,7 @@ const configParams = {
         winston.format.timestamp({
             format: () => {
                 return new Date().toLocaleString('zh-CN', {
-                    timeZone: appConfig.timezone,
+                    timeZone: process.env.TIMEZONE,
                     hour12: false,
                     year: 'numeric',
                     month: '2-digit',

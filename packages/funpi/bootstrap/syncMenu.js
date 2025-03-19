@@ -4,7 +4,7 @@ import { omit as es_omit, uniq as es_uniq, keyBy as es_keyBy } from 'es-toolkit'
 // 工具函数
 import { fnIncrTimeID } from '../utils/index.js';
 // 配置文件
-import { appConfig } from '../app.js';
+import { menuConfig } from '../config/menu.js';
 
 // 同步菜单目录
 async function syncMenuDir(fastify) {
@@ -21,9 +21,9 @@ async function syncMenuDir(fastify) {
         const updateMenuDb = [];
         let menuDbIndex = 1;
 
-        for (let keyDir in appConfig.menu) {
-            if (Object.prototype.hasOwnProperty.call(appConfig.menu, keyDir) === false) continue;
-            const itemDir = appConfig.menu[keyDir];
+        for (let keyDir in menuConfig) {
+            if (Object.prototype.hasOwnProperty.call(menuConfig, keyDir) === false) continue;
+            const itemDir = menuConfig[keyDir];
             const menuDirData = menuDirDbByValue[keyDir];
             if (menuDirData?.id) {
                 updateMenuDb.push({
@@ -51,7 +51,7 @@ async function syncMenuDir(fastify) {
 
         // 获得删除数据
         menuDirDb.forEach((item) => {
-            if (!item.value || !appConfig.menu[item.value]) {
+            if (!item.value || !menuConfig[item.value]) {
                 deleteMenuDb.push(item.id);
             }
         });
@@ -103,13 +103,13 @@ async function syncMenuFile(fastify) {
         const deleteMenuDb = [];
         const menuConfigByFileValue = {};
 
-        for (let keyDir in appConfig.menu) {
-            if (Object.prototype.hasOwnProperty.call(appConfig.menu, keyDir) === false) continue;
-            const menuChildren = appConfig.menu[keyDir].children;
+        for (let keyDir in menuConfig) {
+            if (Object.prototype.hasOwnProperty.call(menuConfig, keyDir) === false) continue;
+            const menuChildren = menuConfig[keyDir].children;
             let menuDbIndex = 1;
             for (let keyFile in menuChildren) {
                 if (Object.prototype.hasOwnProperty.call(menuChildren, keyFile) === false) continue;
-                // const itemDir = appConfig.menu[keyDir];
+                // const itemDir = menuConfig[keyDir];
                 const itemFile = menuChildren[keyFile];
                 const menuFileData = menuFileDbByValue[keyFile];
                 const menuDirData = menuDirDbByValue[keyDir];

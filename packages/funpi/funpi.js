@@ -16,16 +16,14 @@ import redisPlugin from './bootstrap/redis.js';
 import mysqlPlugin from './bootstrap/mysql.js';
 import toolPlugin from './bootstrap/tool.js';
 import corsPlugin from './bootstrap/cors.js';
-import cronPlugin from './bootstrap/cron.js';
 import authPlugin from './bootstrap/auth.js';
 import mailPlugin from './bootstrap/mail.js';
-import ratePlugin from './bootstrap/rate.js';
 import syncApiPlugin from './bootstrap/syncApi.js';
 import syncMenuPlugin from './bootstrap/syncMenu.js';
 import syncDevPlugin from './bootstrap/syncDev.js';
 
 // 工具函数
-import { fnRoute, fnSchema, fnField } from './utils/index.js';
+import { fnRoute, fnSchema, fnField, fnIncrTimeID } from './utils/index.js';
 import { ajvZh } from './utils/ajvZh.js';
 
 // 数据库表
@@ -40,7 +38,11 @@ import { syncMysql } from './scripts/syncMysql.js';
 import { checkTable } from './scripts/checkTable.js';
 
 // 配置信息
-import { appConfig } from './app.js';
+import { appDir, funpiDir } from './config/path.js';
+import { httpConfig } from './config/http.js';
+
+// 初始化检查
+await initCheck();
 
 // 初始化项目实例
 const fastify = Fastify({
@@ -103,13 +105,13 @@ fastify.setNotFoundHandler(function (req, res) {
 
 // 静态资源托管
 fastify.register(fastifyStatic, {
-    root: resolve(appConfig.appDir, 'public'),
+    root: resolve(appDir, 'public'),
     prefix: '/public/',
     list: true
 });
 
 // 加载启动插件
-if (process.env.SWAGGER_ENABLE === '1') {
+if (process.env.SWAGGER === '1') {
     fastify.register(swaggerPlugin, {});
 }
 fastify.register(jwtPlugin, {});
@@ -119,17 +121,15 @@ fastify.register(redisPlugin, {});
 fastify.register(mysqlPlugin, {});
 fastify.register(toolPlugin, {});
 fastify.register(corsPlugin, {});
-fastify.register(cronPlugin, {});
 fastify.register(authPlugin, {});
 fastify.register(mailPlugin, {});
-fastify.register(ratePlugin, {});
 fastify.register(syncMenuPlugin, {});
 fastify.register(syncApiPlugin, {});
 fastify.register(syncDevPlugin, {});
 
 // 加载用户插件
 fastify.register(autoLoad, {
-    dir: join(appConfig.appDir, 'plugins'),
+    dir: join(appDir, 'plugins'),
     matchFilter: (_path) => {
         return _path.endsWith('.js') === true;
     },
@@ -138,7 +138,7 @@ fastify.register(autoLoad, {
 
 // 加载系统接口
 fastify.register(autoLoad, {
-    dir: join(appConfig.funpiDir, 'apis'),
+    dir: join(funpiDir, 'apis'),
     matchFilter: (_path) => {
         return _path.endsWith('.js') === true;
     },
@@ -150,7 +150,7 @@ fastify.register(autoLoad, {
 
 // 加载用户接口
 fastify.register(autoLoad, {
-    dir: join(appConfig.appDir, 'apis'),
+    dir: join(appDir, 'apis'),
     matchFilter: (_path) => {
         return _path.endsWith('.js') === true;
     },
@@ -163,10 +163,8 @@ fastify.register(autoLoad, {
 // 初始化服务
 function initServer() {
     return new Promise(async (resolve) => {
-        // 初始化检查
-        await initCheck();
         // 启动服务！
-        fastify.listen({ port: process.env.LISTEN_PORT, host: process.env.LISTEN_HOST }, async function (err, address) {
+        fastify.listen({ port: Number(process.env.APP_PORT), host: process.env.LISTEN_HOST }, async function (err, address) {
             if (err) {
                 fastify.log.error(err);
                 process.exit();
@@ -185,9 +183,6 @@ function initServer() {
     });
 }
 
-const appDir = appConfig.appDir;
-const funpiDir = appConfig.funpiDir;
-
 export {
     //
     fastify,
@@ -202,8 +197,9 @@ export {
     fnRoute,
     fnSchema,
     fnField,
+    fnIncrTimeID,
     // 配置数据
-    appConfig,
+    httpConfig,
     // 脚本工具
     syncMysql,
     checkTable,

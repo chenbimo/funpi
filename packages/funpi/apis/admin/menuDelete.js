@@ -1,5 +1,5 @@
 import { fnRoute, fnSchema, fnDataClear, fnRequestLog } from '../../utils/index.js';
-import { appConfig } from '../../app.js';
+import { httpConfig } from '../../config/http.js';
 
 export default async (fastify) => {
     fnRoute(import.meta.url, fastify, {
@@ -21,14 +21,14 @@ export default async (fastify) => {
 
                 if (!menuData?.id) {
                     return {
-                        ...appConfig.http.DELETE_FAIL,
+                        ...httpConfig.DELETE_FAIL,
                         msg: '菜单不存在'
                     };
                 }
 
                 if (menuData.is_system === 1) {
                     return {
-                        ...appConfig.http.DELETE_FAIL,
+                        ...httpConfig.DELETE_FAIL,
                         msg: '默认菜单，无法删除'
                     };
                 }
@@ -37,7 +37,7 @@ export default async (fastify) => {
 
                 if (childData?.id) {
                     return {
-                        ...appConfig.http.DELETE_FAIL,
+                        ...httpConfig.DELETE_FAIL,
                         msg: '存在子菜单，无法删除'
                     };
                 }
@@ -47,12 +47,12 @@ export default async (fastify) => {
 
                 await fastify.cacheMenuData();
                 return {
-                    ...appConfig.http.DELETE_SUCCESS,
+                    ...httpConfig.DELETE_SUCCESS,
                     data: result
                 };
             } catch (err) {
                 fastify.log.error(err);
-                return appConfig.http.DELETE_FAIL;
+                return httpConfig.DELETE_FAIL;
             }
         }
     });

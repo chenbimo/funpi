@@ -1,4 +1,4 @@
-import { fnRoute, fnSchema, fnField, appConfig } from 'funpi';
+import { fnRoute, fnSchema, fnField, httpConfig } from 'funpi';
 import { tableData } from '../../tables/example.js';
 
 export default async (fastify) => {
@@ -23,12 +23,12 @@ export default async (fastify) => {
                     .selectOne(fnField(tableData));
 
                 return {
-                    ...appConfig.http.SELECT_SUCCESS,
+                    ...httpConfig.SELECT_SUCCESS,
                     data: result
                 };
             } catch (err) {
                 fastify.log.error(err);
-                return appConfig.http.SELECT_FAIL;
+                return httpConfig.SELECT_FAIL;
             }
         }
     });

@@ -1,5 +1,5 @@
 import { fnRoute, fnSchema } from '../../utils/index.js';
-import { appConfig } from '../../app.js';
+import { httpConfig } from '../../config/http.js';
 import { tableData } from '../../tables/dict.js';
 
 // 处理函数
@@ -47,7 +47,7 @@ export default async (fastify) => {
                 });
 
                 return {
-                    ...appConfig.http.SELECT_SUCCESS,
+                    ...httpConfig.SELECT_SUCCESS,
                     data: {
                         total: totalCount,
                         rows: rows,
@@ -57,7 +57,7 @@ export default async (fastify) => {
                 };
             } catch (err) {
                 fastify.log.error(err);
-                return appConfig.http.SELECT_FAIL;
+                return httpConfig.SELECT_FAIL;
             }
         }
     });

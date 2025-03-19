@@ -5,7 +5,6 @@ import { randomInt } from 'node:crypto';
 // 外部模块
 import Knex from 'knex';
 // 配置文件
-import { appConfig } from '../app.js';
 import { tableSchema } from '../schema/table.js';
 // 工具函数
 import { initCheck } from '../utils/check.js';

@@ -1,5 +1,5 @@
 import { fnRoute, fnSchema } from '../../utils/index.js';
-import { appConfig } from '../../app.js';
+import { httpConfig } from '../../config/http.js';
 
 export default async (fastify) => {
     fnRoute(import.meta.url, fastify, {
@@ -27,7 +27,7 @@ export default async (fastify) => {
                     .selectData(req.body.page, req.body.limit);
 
                 return {
-                    ...appConfig.http.SELECT_SUCCESS,
+                    ...httpConfig.SELECT_SUCCESS,
                     data: {
                         total: totalCount,
                         rows: rows,
@@ -37,7 +37,7 @@ export default async (fastify) => {
                 };
             } catch (err) {
                 fastify.log.error(err);
-                return appConfig.http.SELECT_FAIL;
+                return httpConfig.SELECT_FAIL;
             }
         }
     });

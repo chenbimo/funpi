@@ -1,4 +1,4 @@
-import { fnRoute, fnSchema, appConfig } from 'funpi';
+import { fnRoute, fnSchema, httpConfig } from 'funpi';
 
 export default async (fastify) => {
     fnRoute(import.meta.url, fastify, {
@@ -19,12 +19,12 @@ export default async (fastify) => {
                 const result = await newsModel.clone().where('id', req.body.id).deleteData();
 
                 return {
-                    ...appConfig.http.INSERT_SUCCESS,
+                    ...httpConfig.INSERT_SUCCESS,
                     data: result
                 };
             } catch (err) {
                 fastify.log.error(err);
-                return appConfig.http.SELECT_FAIL;
+                return httpConfig.SELECT_FAIL;
             }
         }
     });

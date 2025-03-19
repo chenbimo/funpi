@@ -1,5 +1,5 @@
 import { fnRoute } from '../../utils/index.js';
-import { appConfig } from '../../app.js';
+import { httpConfig } from '../../config/http.js';
 
 export default async (fastify) => {
     fnRoute(import.meta.url, fastify, {
@@ -15,7 +15,7 @@ export default async (fastify) => {
                 try {
                     const jwtData = await req.jwtVerify();
                     return {
-                        ...appConfig.http.SUCCESS,
+                        ...httpConfig.SUCCESS,
                         data: {
                             state: 'yes'
                         },
@@ -24,7 +24,7 @@ export default async (fastify) => {
                 } catch (err) {
                     fastify.log.error(err);
                     return {
-                        ...appConfig.http.SUCCESS,
+                        ...httpConfig.SUCCESS,
                         data: {
                             state: 'no'
                         }
@@ -32,7 +32,7 @@ export default async (fastify) => {
                 }
             } catch (err) {
                 fastify.log.error(err);
-                return appConfig.http.FAIL;
+                return httpConfig.FAIL;
             }
         }
     });

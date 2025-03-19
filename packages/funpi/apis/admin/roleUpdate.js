@@ -1,5 +1,5 @@
 import { fnRoute, fnSchema, fnDataClear, fnRequestLog } from '../../utils/index.js';
-import { appConfig } from '../../app.js';
+import { httpConfig } from '../../config/http.js';
 import { tableData } from '../../tables/role.js';
 
 export default async (fastify) => {
@@ -32,7 +32,7 @@ export default async (fastify) => {
                 // 编码存在且 id 不等于当前角色
                 if (roleData?.id && roleData?.id !== req.body.id) {
                     return {
-                        ...appConfig.http.INSERT_FAIL,
+                        ...httpConfig.INSERT_FAIL,
                         msg: '角色名称或编码已存在'
                     };
                 }
@@ -49,12 +49,12 @@ export default async (fastify) => {
                 await fastify.cacheRoleData();
 
                 return {
-                    ...appConfig.http.UPDATE_SUCCESS,
+                    ...httpConfig.UPDATE_SUCCESS,
                     data: result
                 };
             } catch (err) {
                 fastify.log.error(err);
-                return appConfig.http.UPDATE_FAIL;
+                return httpConfig.UPDATE_FAIL;
             }
         }
     });

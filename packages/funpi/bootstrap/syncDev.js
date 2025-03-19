@@ -4,7 +4,7 @@ import { omit as es_omit } from 'es-toolkit';
 // 工具函数
 import { fnIncrTimeID, fnCryptoHmacMD5, fnCryptoMD5 } from '../utils/index.js';
 // 配置文件
-import { appConfig } from '../app.js';
+import { roleConfig } from '../config/role.js';
 
 // 系统角色码
 const systemRoleCodes = ['visitor', 'user', 'admin', 'super', 'dev'];
@@ -39,9 +39,9 @@ async function plugin(fastify) {
         const updateRoleData = [];
 
         // 需要同步的角色，过滤掉数据库中已经存在的角色
-        for (let keyRole in appConfig.role) {
-            if (Object.prototype.hasOwnProperty.call(appConfig.role, keyRole) === false) continue;
-            const item = appConfig.role[keyRole];
+        for (let keyRole in roleConfig) {
+            if (Object.prototype.hasOwnProperty.call(roleConfig, keyRole) === false) continue;
+            const item = roleConfig[keyRole];
             const is_system = systemRoleCodes.includes(keyRole) ? 1 : 0;
             if (roleDataByCode.includes(keyRole) === false && keyRole !== 'dev') {
                 const params = {
@@ -127,7 +127,7 @@ async function plugin(fastify) {
                 nickname: '开发管理员',
                 role: 'dev',
                 is_system: 1,
-                password: fnCryptoHmacMD5(fnCryptoMD5(appConfig.devPassword), process.env.MD5_SALT)
+                password: fnCryptoHmacMD5(fnCryptoMD5(process.env.DEV_PASSWORD), process.env.MD5_SALT)
             };
             if (process.env.TABLE_PRIMARY_KEY === 'time') {
                 insertData.id = fnIncrTimeID();
@@ -141,7 +141,7 @@ async function plugin(fastify) {
                 nickname: '开发管理员',
                 role: 'dev',
                 is_system: 1,
-                password: fnCryptoHmacMD5(fnCryptoMD5(appConfig.devPassword), process.env.MD5_SALT)
+                password: fnCryptoHmacMD5(fnCryptoMD5(process.env.DEV_PASSWORD), process.env.MD5_SALT)
             };
             // 只有主进程才操作一次
             if (!process.env.NODE_APP_INSTANCE || process.env.NODE_APP_INSTANCE === '0') {

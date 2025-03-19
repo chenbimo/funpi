@@ -1,6 +1,6 @@
 import { camelCase } from 'es-toolkit';
 import { fnRoute, fnSchema, fnDataClear, fnRequestLog } from '../../utils/index.js';
-import { appConfig } from '../../app.js';
+import { httpConfig } from '../../config/http.js';
 import { tableData } from '../../tables/dict.js';
 
 // 处理函数
@@ -28,7 +28,7 @@ export default async (fastify) => {
                 if (req.body.symbol === 'number') {
                     if (Number.isNaN(Number(req.body.value)) === true) {
                         return {
-                            ...appConfig.http.INSERT_FAIL,
+                            ...httpConfig.INSERT_FAIL,
                             msg: '字典值不是一个数字类型'
                         };
                     }
@@ -50,12 +50,12 @@ export default async (fastify) => {
                 await adminActionLogModel.clone().insertData(fnDataClear(fnRequestLog(req)));
 
                 return {
-                    ...appConfig.http.INSERT_SUCCESS,
+                    ...httpConfig.INSERT_SUCCESS,
                     data: result
                 };
             } catch (err) {
                 fastify.log.error(err);
-                return appConfig.http.INSERT_FAIL;
+                return httpConfig.INSERT_FAIL;
             }
         }
     });

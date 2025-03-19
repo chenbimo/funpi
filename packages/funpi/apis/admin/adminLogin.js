@@ -1,6 +1,6 @@
 import { omit as es_omit } from 'es-toolkit';
 import { fnRoute, fnSchema, fnCryptoHmacMD5 } from '../../utils/index.js';
-import { appConfig } from '../../app.js';
+import { httpConfig } from '../../config/http.js';
 import { tableData } from '../../tables/admin.js';
 
 export default async (fastify) => {
@@ -30,7 +30,7 @@ export default async (fastify) => {
                 // 判断用户存在
                 if (!adminData?.id) {
                     return {
-                        ...appConfig.http.FAIL,
+                        ...httpConfig.FAIL,
                         msg: '用户不存在'
                     };
                 }
@@ -38,7 +38,7 @@ export default async (fastify) => {
                 // 判断密码
                 if (fnCryptoHmacMD5(req.body.password, process.env.MD5_SALT) !== adminData.password) {
                     return {
-                        ...appConfig.http.FAIL,
+                        ...httpConfig.FAIL,
                         msg: '密码错误'
                     };
                 }
@@ -54,7 +54,7 @@ export default async (fastify) => {
 
                 // 成功返回
                 return {
-                    ...appConfig.http.SUCCESS,
+                    ...httpConfig.SUCCESS,
                     msg: '登录成功',
                     data: es_omit(adminData, ['password']),
                     token: await fastify.jwt.sign({
@@ -68,7 +68,7 @@ export default async (fastify) => {
             } catch (err) {
                 fastify.log.error(err);
                 return {
-                    ...appConfig.http.FAIL,
+                    ...httpConfig.FAIL,
                     msg: '登录失败'
                 };
             }

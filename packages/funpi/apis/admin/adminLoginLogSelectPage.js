@@ -1,5 +1,5 @@
 import { fnRoute, fnSchema, fnField } from '../../utils/index.js';
-import { appConfig } from '../../app.js';
+import { httpConfig } from '../../config/http.js';
 import { tableData } from '../../tables/adminLoginLog.js';
 
 export default async (fastify) => {
@@ -26,7 +26,7 @@ export default async (fastify) => {
                     .selectData(req.body.page, req.body.limit, fnField(tableData));
 
                 return {
-                    ...appConfig.http.SELECT_SUCCESS,
+                    ...httpConfig.SELECT_SUCCESS,
                     data: {
                         total: totalCount,
                         rows: rows,
@@ -36,7 +36,7 @@ export default async (fastify) => {
                 };
             } catch (err) {
                 fastify.log.error(err);
-                return appConfig.http.SELECT_FAIL;
+                return httpConfig.SELECT_FAIL;
             }
         }
     });

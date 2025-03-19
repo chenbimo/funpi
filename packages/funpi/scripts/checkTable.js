@@ -10,7 +10,7 @@ import { isPlainObject as es_isPlainObject, snakeCase as es_snakeCase } from 'es
 import { isObject as es_isObject } from 'es-toolkit/compat';
 // 配置文件
 
-import { appConfig } from '../app.js';
+import { appDir, funpiDir } from '../config/path.js';
 import { tableSchema } from '../schema/table.js';
 import { ajvZh } from '../utils/ajvZh.js';
 import { fnImport, log4state, fnArrayContain, fnArrayDiffBoth } from '../utils/index.js';
@@ -65,20 +65,20 @@ export const checkTable = async (trx) => {
         // 所有的表数据
         const allDbTable = [];
         // 所有表文件
-        const sysDbFiles = readdirSync(resolve(appConfig.funpiDir, 'tables'));
-        const appDbFiles = readdirSync(resolve(appConfig.appDir, 'tables'));
+        const sysDbFiles = readdirSync(resolve(funpiDir, 'tables'));
+        const appDbFiles = readdirSync(resolve(appDir, 'tables'));
         const allDbFiles = [
             //
             ...sysDbFiles.map((file) => {
                 return {
                     prefix: 'sys_',
-                    file: resolve(appConfig.funpiDir, 'tables', file)
+                    file: resolve(funpiDir, 'tables', file)
                 };
             }),
             ...appDbFiles.map((file) => {
                 return {
                     prefix: '',
-                    file: resolve(appConfig.appDir, 'tables', file)
+                    file: resolve(appDir, 'tables', file)
                 };
             })
         ];
