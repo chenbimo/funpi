@@ -31,7 +31,11 @@ async function plugin(fastify) {
             if (routePath.startsWith('/swagger/')) return;
 
             /* --------------------------------- 接口禁用检测 --------------------------------- */
-            const isMatchBlackApi = picomatch.isMatch(routePath, []);
+            const dataApiBlackLists = await fastify.redisGet('cacheData_apiBlackLists');
+            const blackApis = dataApiBlackLists?.map((item) => item.value) || [];
+            const allBlackApis = es_uniq(blackApis);
+
+            const isMatchBlackApi = picomatch.isMatch(routePath, allBlackApis);
             if (isMatchBlackApi === true) {
                 res.send(httpConfig.API_DISABLED);
                 return;
@@ -53,7 +57,6 @@ async function plugin(fastify) {
             let isAuthFail = false;
             try {
                 await req.jwtVerify();
-                // eslint-disable-next-line no-unused-vars
             } catch (err) {
                 isAuthFail = true;
             }
