@@ -28,6 +28,8 @@
         "public/",
         "scripts/",
         "tables/",
+        ".env.development",
+        ".env.production",
         ".gitignore",
         ".npmrc",
         ".prettier",
