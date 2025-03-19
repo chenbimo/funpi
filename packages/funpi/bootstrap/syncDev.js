@@ -1,8 +1,8 @@
 // 外部模块
 import fp from 'fastify-plugin';
 import { omit as es_omit } from 'es-toolkit';
-import { yd_number_incrTimeID, yd_crypto_md5, yd_crypto_hmacMd5 } from 'yidash/node';
 // 工具函数
+import { fnIncrTimeID, fnCryptoHmacMD5, fnCryptoMD5 } from '../utils/index.js';
 // 配置文件
 import { appConfig } from '../app.js';
 
@@ -53,8 +53,8 @@ async function plugin(fastify) {
                     is_system: is_system
                 };
                 // 角色不存在，则添加
-                if (appConfig.tablePrimaryKey === 'time') {
-                    params.id = yd_number_incrTimeID();
+                if (process.env.TABLE_PRIMARY_KEY === 'time') {
+                    params.id = fnIncrTimeID();
                 }
 
                 insertRoleData.push(params);
@@ -99,8 +99,8 @@ async function plugin(fastify) {
                 api_ids: apiIds.join(','),
                 is_system: 1
             };
-            if (appConfig.tablePrimaryKey === 'time') {
-                insertData.id = yd_number_incrTimeID();
+            if (process.env.TABLE_PRIMARY_KEY === 'time') {
+                insertData.id = fnIncrTimeID();
             }
             // 只有主进程才操作一次
             if (!process.env.NODE_APP_INSTANCE || process.env.NODE_APP_INSTANCE === '0') {
@@ -127,10 +127,10 @@ async function plugin(fastify) {
                 nickname: '开发管理员',
                 role: 'dev',
                 is_system: 1,
-                password: yd_crypto_hmacMd5(yd_crypto_md5(appConfig.devPassword), process.env.MD5_SALT)
+                password: fnCryptoHmacMD5(fnCryptoMD5(appConfig.devPassword), process.env.MD5_SALT)
             };
-            if (appConfig.tablePrimaryKey === 'time') {
-                insertData.id = yd_number_incrTimeID();
+            if (process.env.TABLE_PRIMARY_KEY === 'time') {
+                insertData.id = fnIncrTimeID();
             }
             // 只有主进程才操作一次
             if (!process.env.NODE_APP_INSTANCE || process.env.NODE_APP_INSTANCE === '0') {
@@ -141,7 +141,7 @@ async function plugin(fastify) {
                 nickname: '开发管理员',
                 role: 'dev',
                 is_system: 1,
-                password: yd_crypto_hmacMd5(yd_crypto_md5(appConfig.devPassword), process.env.MD5_SALT)
+                password: fnCryptoHmacMD5(fnCryptoMD5(appConfig.devPassword), process.env.MD5_SALT)
             };
             // 只有主进程才操作一次
             if (!process.env.NODE_APP_INSTANCE || process.env.NODE_APP_INSTANCE === '0') {

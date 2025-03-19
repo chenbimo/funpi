@@ -24,8 +24,6 @@ const targetObject = {
     // 是否显示接口文档
     isSwagger: false,
     // TODO: 考虑增加 uuid 类型以及不同的 uuid 格式
-    // 数据库表主键方案 default（mysql 自带）time（时序 ID）
-    tablePrimaryKey: 'default',
     // 时区
     timezone: 'Asia/Shanghai',
     // 请求限制

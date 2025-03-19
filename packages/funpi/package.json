@@ -66,8 +66,7 @@
         "picomatch": "^4.0.2",
         "safe-stable-stringify": "^2.5.0",
         "winston": "^3.17.0",
-        "winston-daily-rotate-file": "^5.0.0",
-        "yidash": "^1.12.1"
+        "winston-daily-rotate-file": "^5.0.0"
     },
     "gitHead": "1c28c0de7c0af8aa4582c45ab2d98e66c597c7a1"
 }

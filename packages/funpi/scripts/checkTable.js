@@ -8,13 +8,12 @@ import Knex from 'knex';
 import Ajv from 'ajv';
 import { isPlainObject as es_isPlainObject, snakeCase as es_snakeCase } from 'es-toolkit';
 import { isObject as es_isObject } from 'es-toolkit/compat';
-import { yd_is_arrayContain, yd_array_diffBoth } from 'yidash';
 // 配置文件
 
 import { appConfig } from '../app.js';
 import { tableSchema } from '../schema/table.js';
 import { ajvZh } from '../utils/ajvZh.js';
-import { fnImport, log4state } from '../utils/index.js';
+import { fnImport, log4state, fnArrayContain, fnArrayDiffBoth } from '../utils/index.js';
 import { colors } from '../utils/colors.js';
 
 const ajv = new Ajv({
@@ -123,7 +122,7 @@ export const checkTable = async (trx) => {
                 isThisFileError = true;
             }
 
-            if (yd_is_arrayContain(Object.keys(tableData), denyFields) === true) {
+            if (fnArrayContain(Object.keys(tableData), denyFields) === true) {
                 fieldErrors.push(`${log4state('error')} tableData 不能包含 ${denyFields} 字段`);
                 isAllFileError = true;
                 isThisFileError = true;

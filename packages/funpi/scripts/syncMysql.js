@@ -4,13 +4,12 @@
 import { randomInt } from 'node:crypto';
 // 外部模块
 import Knex from 'knex';
-import { yd_array_diffBoth } from 'yidash';
 // 配置文件
 import { appConfig } from '../app.js';
 import { tableSchema } from '../schema/table.js';
 // 工具函数
 import { initCheck } from '../utils/check.js';
-import { fnFormatNow, log4state } from '../utils/index.js';
+import { fnFormatNow, log4state, fnArrayDiffBoth } from '../utils/index.js';
 import { colors } from '../utils/colors.js';
 import { checkTable } from './checkTable.js';
 
@@ -96,7 +95,7 @@ export const syncMysql = async () => {
                 ...denyFields
             ];
             // 判断字段是否有调整，如果没有调整则不用进行数据转移
-            const allFieldDiff = yd_array_diffBoth(allNewFields, allOldFields);
+            const allFieldDiff = fnArrayDiffBoth(allNewFields, allOldFields);
 
             // 删除旧表
             // await trx.schema.dropTableIfExists(tableItem.tableOldName);
@@ -108,10 +107,10 @@ export const syncMysql = async () => {
                 // 设置表名称
                 table.comment(tableItem.tableName);
                 // 默认每个表的 ID 为自增流水号
-                if (appConfig.tablePrimaryKey === 'default') {
+                if (process.env.TABLE_PRIMARY_KEY === 'default') {
                     table.increments('id');
                 }
-                if (appConfig.tablePrimaryKey === 'time') {
+                if (process.env.TABLE_PRIMARY_KEY === 'time') {
                     table.bigint('id').primary().notNullable().unsigned().comment('主键 ID');
                 }
                 // 设置时间

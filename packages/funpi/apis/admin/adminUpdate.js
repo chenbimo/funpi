@@ -1,5 +1,4 @@
-import { yd_crypto_hmacMd5 } from 'yidash/node';
-import { fnRoute, fnSchema, fnDataClear, fnRequestLog } from '../../utils/index.js';
+import { fnRoute, fnSchema, fnDataClear, fnRequestLog, fnCryptoHmacMD5 } from '../../utils/index.js';
 import { appConfig } from '../../app.js';
 import { tableData } from '../../tables/admin.js';
 
@@ -43,7 +42,7 @@ export default async (fastify) => {
                 };
 
                 if (req.body.password) {
-                    updateData.password = yd_crypto_hmacMd5(req.body.password, process.env.MD5_SALT);
+                    updateData.password = fnCryptoHmacMD5(req.body.password, process.env.MD5_SALT);
                 }
                 await adminModel.clone().where({ id: req.body.id }).updateData(updateData);
 

@@ -1,7 +1,7 @@
 import fp from 'fastify-plugin';
 import Knex from 'knex';
 import { isArray as es_isArray } from 'es-toolkit/compat';
-import { yd_number_incrTimeID } from 'yidash/node';
+import { fnIncrTimeID } from '../utils/index.js';
 
 // 添加函数
 const dbInsert = (obj) => {
@@ -18,7 +18,7 @@ const dbInsert = (obj) => {
     if (process.env.TABLE_PRIMARY_KEY !== 'default') {
         // 当主键为 time 模式时，更改 id 字段的值
         if (process.env.TABLE_PRIMARY_KEY === 'time') {
-            newObj.id = yd_number_incrTimeID();
+            newObj.id = fnIncrTimeID();
         }
     }
     return newObj;

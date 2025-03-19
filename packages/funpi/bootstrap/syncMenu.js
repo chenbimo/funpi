@@ -1,8 +1,8 @@
 // 外部插件
 import fp from 'fastify-plugin';
-import { yd_number_incrTimeID } from 'yidash/node';
 import { omit as es_omit, uniq as es_uniq, keyBy as es_keyBy } from 'es-toolkit';
 // 工具函数
+import { fnIncrTimeID } from '../utils/index.js';
 // 配置文件
 import { appConfig } from '../app.js';
 
@@ -42,8 +42,8 @@ async function syncMenuDir(fastify) {
                     is_open: 0,
                     is_system: itemDir.is_system || 0
                 };
-                if (appConfig.tablePrimaryKey === 'time') {
-                    insertData.id = yd_number_incrTimeID();
+                if (process.env.TABLE_PRIMARY_KEY === 'time') {
+                    insertData.id = fnIncrTimeID();
                 }
                 insertMenuDb.push(insertData);
             }
@@ -133,8 +133,8 @@ async function syncMenuFile(fastify) {
                             is_open: 0,
                             is_system: itemFile.is_system || 0
                         };
-                        if (appConfig.tablePrimaryKey === 'time') {
-                            insertMenuData.id = yd_number_incrTimeID();
+                        if (process.env.TABLE_PRIMARY_KEY === 'time') {
+                            insertMenuData.id = fnIncrTimeID();
                         }
                         insertMenuDb.push(insertMenuData);
                     }

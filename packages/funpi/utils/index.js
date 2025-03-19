@@ -1,10 +1,10 @@
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { dirname, basename } from 'node:path';
 import { cwd, env, platform } from 'node:process';
+import { randomInt, createHash, createHmac } from 'node:crypto';
 
 import { isString as es_isString, isFunction as es_isFunction, omit as es_omit } from 'es-toolkit';
 import { isObject as es_isObject } from 'es-toolkit/compat';
-import { yd_crypto_md5 } from 'yidash/node';
 import { configure } from 'safe-stable-stringify';
 import { colors } from './colors.js';
 
@@ -157,7 +157,7 @@ export const fnApiCheck = (req) => {
 
         const fieldsSort = fieldsArray.sort().join('&');
 
-        const fieldsMd5 = yd_crypto_md5(fieldsSort);
+        const fieldsMd5 = fnCryptoMD5(fieldsSort);
 
         if (fieldsMd5 !== req.body.sign) {
             return reject({
@@ -374,4 +374,48 @@ export const fnSchema = (field) => {
     }
 
     return params;
+};
+
+// 自增ID
+export const fnIncrTimeID = () => {
+    const timestamp = Math.floor(Date.now() / 1000);
+    const random = randomInt(100000, 999999);
+    return Number(`${timestamp}${random}`);
+};
+
+export const fnCryptoMD5 = (data, encoding = 'hex') => {
+    const result = createHash('md5').update(data).digest(encoding);
+    return result;
+};
+
+export const fnCryptoHmacMD5 = (data, key, encoding = 'hex') => {
+    const result = createHmac('md5', key).update(data).digest(encoding);
+    return result;
+};
+
+// 两个数组是否至少有一个相同值
+export const fnArrayContain = (arr1, arr2) => {
+    return arr1.some((element) => arr2.includes(element));
+};
+
+// 数组的差集
+export const fnArrayDiffBoth = (arr1, arr2) => {
+    const set1 = new Set(arr1);
+    const set2 = new Set(arr2);
+
+    // 创建两个数组的对称差集
+    const uniqueElements = [];
+
+    for (const item of set1) {
+        if (!set2.has(item)) {
+            uniqueElements.push(item);
+        }
+    }
+    for (const item of set2) {
+        if (!set1.has(item)) {
+            uniqueElements.push(item);
+        }
+    }
+
+    return uniqueElements;
 };
