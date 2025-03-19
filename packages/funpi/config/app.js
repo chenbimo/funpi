@@ -1,6 +1,4 @@
 export const appConfig = {
-    // NODE模式
-    APP_MODE: process.env.APP_MODE,
     // 应用名称
     APP_NAME: process.env.APP_NAME,
     // 加密盐

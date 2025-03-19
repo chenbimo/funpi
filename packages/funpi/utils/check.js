@@ -22,12 +22,6 @@ export const initCheck = async () => {
         process.exit();
     }
 
-    // 检测环境变量
-    if (['development', 'production'].includes(process.env.APP_MODE) === false) {
-        console.log(`${log4state('warn')} 请正确设置 APP_MODE 环境变量`);
-        process.exit();
-    }
-
     // 确保关键目录存在 ==================================================
     if (existsSync(resolve(appDir, 'apis')) === false) {
         mkdirSync(resolve(appDir, 'apis'));

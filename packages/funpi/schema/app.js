@@ -2,11 +2,6 @@ export const appSchema = {
     title: '应用基本配置',
     type: 'object',
     properties: {
-        APP_MODE: {
-            title: '应用模式',
-            type: 'string',
-            enum: ['development', 'production']
-        },
         APP_NAME: {
             title: '应用名称',
             type: 'string',
@@ -182,8 +177,6 @@ export const appSchema = {
     },
     additionalProperties: false,
     required: [
-        // NODE模式
-        'APP_MODE',
         // 应用名称
         'APP_NAME',
         // 加密盐
