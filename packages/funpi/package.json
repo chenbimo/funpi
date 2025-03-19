@@ -19,6 +19,7 @@
     "files": [
         "apis/",
         "bootstrap/",
+        "config/",
         "plugins/",
         "schema/",
         "scripts/",
@@ -28,7 +29,6 @@
         ".npmrc",
         ".prettierignore",
         ".prettier",
-        "app.js",
         "funpi.js",
         "LICENSE",
         "package.json",
