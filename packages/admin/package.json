@@ -30,10 +30,11 @@
     "files": [
         "public/",
         "src/",
+        ".env.development",
+        ".env.production",
         ".gitignore",
         ".prettier",
         ".npmrc",
-        "eslint.config.js",
         "index.html",
         "jsconfig.json",
         "LICENSE",
