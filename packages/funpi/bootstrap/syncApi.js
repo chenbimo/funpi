@@ -14,9 +14,6 @@ import { appDir, funpiDir } from '../config/path.js';
 
 // 获取所有接口文件
 async function fnAllApiFiles(type) {
-    console.log('🔥[ resolve(funpiDir, "apis") ]-18', resolve(funpiDir, 'apis'));
-    console.log('🔥[ resolve(appDir, "apis") ]-21', resolve(appDir, 'apis'));
-
     const coreApiFiles = readdirSync(resolve(funpiDir, 'apis'), { recursive: true });
     const appApiFiles = readdirSync(resolve(appDir, 'apis'), { recursive: true });
 
