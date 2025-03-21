@@ -1,74 +1,62 @@
-export const menuConfig = {
-    '/admin': {
+export const menuConfig = [
+    {
+        path: '/admin',
         name: '管理数据',
-        sort: 1,
-        is_system: 1,
-        children: {
-            '/internal/admin': {
-                name: '管理员',
-                is_system: 1,
-                sort: 1
+        children: [
+            {
+                path: '/internal/admin',
+                name: '管理员'
             }
-        }
+        ]
     },
-    '/dict': {
+    {
+        path: '/dict',
         name: '字典管理',
-        sort: 2,
-        is_system: 1,
-        children: {
-            '/internal/dict-category': {
-                name: '字典分类',
-                is_system: 1,
-                sort: 1
+        children: [
+            {
+                path: '/internal/dict-category',
+                name: '字典分类'
             },
-            '/internal/dict': {
-                name: '字典列表',
-                is_system: 1,
-                sort: 2
+            {
+                path: '/internal/dict',
+                name: '字典列表'
             }
-        }
+        ]
     },
-    '/log': {
+    {
+        path: '/log',
         name: '日志数据',
-        sort: 2,
-        is_system: 1,
-        children: {
-            '/internal/admin-login-log': {
-                name: '登录日志',
-                is_system: 1,
-                sort: 1
+        children: [
+            {
+                path: '/internal/admin-login-log',
+                name: '登录日志'
             },
-            '/internal/admin-action-log': {
-                name: '操作日志',
-                is_system: 1,
-                sort: 2
+            {
+                path: '/internal/admin-action-log',
+                name: '操作日志'
             },
-            '/internal/mail-log': {
-                name: '邮件日志',
-                is_system: 1,
-                sort: 3
+            {
+                path: '/internal/mail-log',
+                name: '邮件日志'
             }
-        }
+        ]
     },
-    '/permission': {
+    {
+        path: '/permission',
         name: '权限数据',
-        sort: 4,
-        children: {
-            '/internal/menu': {
-                name: '菜单列表',
-                is_system: 1,
-                sort: 1
+        children: [
+            {
+                path: '/internal/menu',
+                name: '菜单列表'
             },
-            '/internal/api': {
-                name: '接口列表',
-                is_system: 1,
-                sort: 2
+            {
+                path: '/internal/api',
+                name: '接口列表'
             },
-            '/internal/role': {
-                name: '角色管理',
-                is_system: 1,
-                sort: 3
+            {
+                path: '/internal/role',
+                name: '角色管理'
             }
-        }
+        ]
     }
-};
+];

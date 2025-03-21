@@ -48,18 +48,5 @@
     "dependencies": {
         "funpi": "workspace:^"
     },
-    "devDependencies": {
-        "lint-staged": "^15.4.3",
-        "prettier": "^3.5.3",
-        "simple-git-hooks": "^2.11.1"
-    },
-    "simple-git-hooks": {
-        "pre-commit": "bun lint-staged"
-    },
-    "lint-staged": {
-        "*": [
-            "prettier --write --cache --ignore-unknown"
-        ]
-    },
     "gitHead": "1c28c0de7c0af8aa4582c45ab2d98e66c597c7a1"
 }

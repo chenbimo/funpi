@@ -1,4 +1,4 @@
-export const appConfig = {
+export const envConfig = {
     // 应用名称
     APP_NAME: process.env.APP_NAME,
     // 加密盐

@@ -7,10 +7,13 @@ import Ajv from 'ajv';
 // 内部模块
 
 // 配置文件
-import { appConfig } from '../config/app.js';
 import { appDir, funpiDir } from '../config/path.js';
-import { appSchema } from '../schema/app.js';
+
+import { envConfig } from '../config/env.js';
+import { menuConfig as internalMenuConfig } from '../config/menu.js';
 // 协议配置
+import { envSchema } from '../schema/env.js';
+import { menuSchema } from '../schema/menu.js';
 // 工具函数
 import { fnImport, log4state } from './index.js';
 import { ajvZh } from './ajvZh.js';
@@ -49,11 +52,41 @@ export const initCheck = async () => {
     });
 
     // 验证配置文件 ==================================================
-    const validResult = ajv.validate(appSchema, appConfig);
-    if (!validResult) {
+    const validEnvResult = ajv.validate(envSchema, envConfig);
+    if (!validEnvResult) {
         ajvZh(ajv.errors);
         console.log(log4state('error'), '[  环境变量错误 ] \n' + ajv.errorsText(ajv.errors, { separator: '\n' }));
         process.exit();
+    }
+
+    // 验证菜单配置
+    const { menuConfig: userMenuConfig } = await fnImport(resolve(appDir, 'config', 'menu.js'), 'menuConfig', {});
+    const allMenuConfig = [...userMenuConfig, ...internalMenuConfig];
+    const validMenuResult = ajv.validate(menuSchema, allMenuConfig);
+    if (!validMenuResult) {
+        ajvZh(ajv.errors);
+        console.log(log4state('error'), '[  菜单配置错误 ] \n' + ajv.errorsText(ajv.errors, { separator: '\n' }));
+        process.exit();
+    }
+
+    const menuPaths = new Set();
+
+    for (const menu of allMenuConfig) {
+        // 检查主菜单路径
+        if (menuPaths.has(menu.path)) {
+            console.log(log4state('error'), '[  重复的菜单路径 ] ' + menu.path);
+            process.exit();
+        }
+        menuPaths.add(menu.path);
+
+        // 检查子菜单路径
+        for (const child of menu.children) {
+            if (menuPaths.has(child.path)) {
+                console.log(log4state('error'), '[  重复的菜单路径 ] ' + child.path);
+                process.exit();
+            }
+            menuPaths.add(child.path);
+        }
     }
 
     // ==================================================

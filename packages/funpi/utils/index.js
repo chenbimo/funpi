@@ -419,3 +419,26 @@ export const fnArrayDiffBoth = (arr1, arr2) => {
 
     return uniqueElements;
 };
+
+// 添加一个辅助函数，用于验证全局路径唯一性
+export const fnCheckMenuConfig = (menuConfig) => {
+    const paths = new Set();
+
+    for (const menu of menuConfig) {
+        // 检查主菜单路径
+        if (paths.has(menu.path)) {
+            throw new Error(`重复的菜单路径: ${menu.path}`);
+        }
+        paths.add(menu.path);
+
+        // 检查子菜单路径
+        for (const child of menu.children) {
+            if (paths.has(child.path)) {
+                throw new Error(`重复的菜单路径: ${child.path}`);
+            }
+            paths.add(child.path);
+        }
+    }
+
+    return true;
+};

@@ -2,9 +2,10 @@
     <div class="page-menu page-full">
         <div class="page-action">
             <div class="left">
-                <a-space>
-                    <a-button type="primary" @click="$Method.onDataAction('insertData', { pid: 0 })">添加菜单</a-button>
-                </a-space>
+                <div class="common-badge">
+                    <div class="label">接口总数</div>
+                    <div class="value">{{ $Data.menuTotal }}个</div>
+                </div>
             </div>
             <div class="right">
                 <a-input placeholder="请输入搜索关键字" allow-clear></a-input>
@@ -21,30 +22,9 @@
                     <a-table-column title="排序" data-index="sort" :width="80" ellipsis tooltip></a-table-column>
                     <a-table-column title="创建时间" data-index="created_at2" :width="150" ellipsis tooltip></a-table-column>
                     <a-table-column title="更新时间" data-index="updated_at2" :width="150" ellipsis tooltip></a-table-column>
-                    <a-table-column title="操作" fixed="right" :width="100" align="right">
-                        <template #cell="{ record }">
-                            <a-dropdown position="br" @select="$Method.onDataAction($event, record)">
-                                <a-button>操作<icon-down /></a-button>
-                                <template #content>
-                                    <a-doption value="updateData"><icon-edit />编辑</a-doption>
-                                    <a-doption value="deleteData"> <icon-delete />删除</a-doption>
-                                </template>
-                            </a-dropdown>
-                        </template>
-                    </a-table-column>
                 </template>
             </a-table>
         </div>
-        <div class="page-page">
-            <div class="left"></div>
-            <div class="right"></div>
-        </div>
-
-        <!-- 编辑目录抽屉 -->
-        <editDataDrawer v-if="$Data.isShow.editDataDrawer" v-model="$Data.isShow.editDataDrawer" :actionType="$Data.actionType" :rowData="$Data.rowData" @success="$Method.fnFreshData"></editDataDrawer>
-
-        <!-- 编辑菜单抽屉 -->
-        <editMenuDrawer v-if="$Data.isShow.editMenuDrawer" v-model="$Data.isShow.editMenuDrawer" :actionType="$Data.actionType" :rowData="$Data.rowData" @success="$Method.fnFreshData"></editMenuDrawer>
     </div>
 </template>
 
@@ -54,7 +34,6 @@ import { yd_tree_array2Tree, yd_datetime_relativeTime } from 'yidash';
 import { sortBy as _sortBy } from 'es-toolkit';
 
 // 内部集
-import editDataDrawer from './components/editDataDrawer.vue';
 
 // 全局集
 const { $GlobalData, $GlobalComputed, $GlobalMethod } = useGlobal();
@@ -70,6 +49,7 @@ const $Data = $ref({
     actionType: 'insertData',
     tableData: [],
     rowData: {},
+    menuTotal: '',
     pagination: {
         page: 1,
         total: 0
@@ -91,31 +71,6 @@ const $Method = {
             $Data.isShow.editDataDrawer = true;
             return;
         }
-
-        // 编辑菜单
-        if ($Data.actionType === 'updateData') {
-            if ($Data.rowData.pid === 0) {
-                $Data.isShow.editDataDrawer = true;
-            } else {
-                $Data.isShow.editMenuDrawer = true;
-            }
-
-            return;
-        }
-
-        // 删除数据
-        if ($Data.actionType === 'deleteData') {
-            Modal.confirm({
-                title: '提示',
-                content: '请确认是否删除？',
-                modalClass: 'delete-modal-class',
-                alignCenter: true,
-                onOk() {
-                    $Method.apiDeleteData();
-                }
-            });
-            return;
-        }
     },
     // 刷新数据
     async fnFreshData() {
@@ -131,26 +86,8 @@ const $Method = {
                     limit: $GlobalData.pageLimit
                 }
             });
+            $Data.menuTotal = res.data.rows?.length || '';
             $Data.tableData = yd_tree_array2Tree(_sortBy(yd_datetime_relativeTime(res.data.rows), 'sort'));
-        } catch (err) {
-            Message.error({
-                content: err.msg || err
-            });
-        }
-    },
-    // 删除菜单
-    async apiDeleteData() {
-        try {
-            const res = await $Http({
-                url: '/admin/menuDelete',
-                data: {
-                    id: $Data.rowData.id
-                }
-            });
-            await $Method.apiSelectData();
-            Message.success({
-                content: res.msg
-            });
         } catch (err) {
             Message.error({
                 content: err.msg || err

@@ -1,46 +1,45 @@
-// 外部插件
+// 内部模块
+import { resolve } from 'path';
+// 外部模块
 import fp from 'fastify-plugin';
 import { omit as es_omit, uniq as es_uniq, keyBy as es_keyBy } from 'es-toolkit';
 // 工具函数
-import { fnIncrTimeID } from '../utils/index.js';
+import { fnIncrTimeID, fnImport } from '../utils/index.js';
 // 配置文件
-import { menuConfig } from '../config/menu.js';
+import { menuConfig as internalMenuConfig } from '../config/menu.js';
+import { appDir } from '../config/path.js';
 
 // 同步菜单目录
-async function syncMenuDir(fastify) {
+async function syncMenuDir(fastify, menuConfig) {
     try {
         // 准备好表
         const menuModel = fastify.mysql.table('sys_menu');
 
         // 第一次请求菜单数据，用于创建一级菜单
         const menuDirDb = await menuModel.clone().where({ pid: 0 }).selectAll();
-        const menuDirDbByValue = es_keyBy(menuDirDb, (item) => item.value);
+        const menuDirPaths = menuConfig.map((menu) => menu.path);
+        const menuDirValue = es_keyBy(menuDirDb, (item) => item.value);
 
         const insertMenuDb = [];
         const deleteMenuDb = [];
         const updateMenuDb = [];
-        let menuDbIndex = 1;
 
-        for (let keyDir in menuConfig) {
-            if (Object.prototype.hasOwnProperty.call(menuConfig, keyDir) === false) continue;
-            const itemDir = menuConfig[keyDir];
-            const menuDirData = menuDirDbByValue[keyDir];
+        for (let [index, item] of menuConfig.entries()) {
+            const menuDirData = menuDirValue[item.path];
             if (menuDirData?.id) {
                 updateMenuDb.push({
                     id: menuDirData.id,
-                    name: itemDir.name,
-                    value: keyDir,
-                    sort: itemDir.sort || menuDbIndex++,
-                    is_system: itemDir.is_system || 0
+                    name: item.name,
+                    value: item.path,
+                    pid: 0,
+                    sort: index
                 });
             } else {
                 const insertData = {
-                    name: itemDir.name,
-                    value: keyDir,
+                    name: item.name,
+                    value: item.path,
                     pid: 0,
-                    sort: itemDir.sort || menuDbIndex++,
-                    is_open: 0,
-                    is_system: itemDir.is_system || 0
+                    sort: index
                 };
                 if (process.env.TABLE_PRIMARY_KEY === 'time') {
                     insertData.id = fnIncrTimeID();
@@ -51,7 +50,7 @@ async function syncMenuDir(fastify) {
 
         // 获得删除数据
         menuDirDb.forEach((item) => {
-            if (!item.value || !menuConfig[item.value]) {
+            if (!item.value || !menuDirPaths.includes(item.value)) {
                 deleteMenuDb.push(item.id);
             }
         });
@@ -86,65 +85,57 @@ async function syncMenuDir(fastify) {
 // TODO: 需要进一步处理相同父级菜单下的同名子菜单去重问题
 
 // 同步菜单文件
-async function syncMenuFile(fastify) {
+async function syncMenuFile(fastify, menuConfig) {
     try {
         // 准备好表
         const menuModel = fastify.mysql.table('sys_menu');
 
         const menuDirDb = await menuModel.clone().where({ pid: 0 }).selectAll();
-        const menuDirDbByValue = es_keyBy(menuDirDb, (item) => item.value);
+        const menuDirValue = es_keyBy(menuDirDb, (item) => item.value);
 
         // 第二次请求菜单数据，用于创建二级菜单
         const menuFileDb = await menuModel.clone().where('pid', '<>', 0).selectAll();
-        const menuFileDbByValue = es_keyBy(menuFileDb, (item) => item.value);
+        const menuFileValue = es_keyBy(menuFileDb, (item) => item.value);
 
+        const menuFilePaths = [];
         const insertMenuDb = [];
         const updateMenuDb = [];
         const deleteMenuDb = [];
-        const menuConfigByFileValue = {};
 
-        for (let keyDir in menuConfig) {
-            if (Object.prototype.hasOwnProperty.call(menuConfig, keyDir) === false) continue;
-            const menuChildren = menuConfig[keyDir].children;
-            let menuDbIndex = 1;
-            for (let keyFile in menuChildren) {
-                if (Object.prototype.hasOwnProperty.call(menuChildren, keyFile) === false) continue;
-                // const itemDir = menuConfig[keyDir];
-                const itemFile = menuChildren[keyFile];
-                const menuFileData = menuFileDbByValue[keyFile];
-                const menuDirData = menuDirDbByValue[keyDir];
-                menuConfigByFileValue[keyFile] = menuChildren[keyFile];
+        for (let menu of menuConfig) {
+            const menuDirData = menuDirValue[menu.path];
+            if (!menuDirData?.id) {
+                continue;
+            }
+            for (let [index, item] of menu.children.entries()) {
+                const menuFileData = menuFileValue[item.path];
+                menuFilePaths.push(item.path);
                 if (menuFileData?.id) {
                     updateMenuDb.push({
                         id: menuFileData.id,
-                        name: itemFile.name,
-                        value: keyFile,
-                        pid: menuDirData.id,
-                        sort: itemFile.sort || menuDbIndex++,
-                        is_system: itemFile.is_system || 0
+                        name: item.name,
+                        value: item.path,
+                        sort: index,
+                        pid: menuDirData.id
                     });
                 } else {
-                    if (menuDirData) {
-                        const insertMenuData = {
-                            name: itemFile.name,
-                            value: keyFile,
-                            pid: menuDirData.id,
-                            sort: itemFile.sort || menuDbIndex++,
-                            is_open: 0,
-                            is_system: itemFile.is_system || 0
-                        };
-                        if (process.env.TABLE_PRIMARY_KEY === 'time') {
-                            insertMenuData.id = fnIncrTimeID();
-                        }
-                        insertMenuDb.push(insertMenuData);
+                    const insertMenuData = {
+                        name: item.name,
+                        value: item.path,
+                        sort: index,
+                        pid: menuDirData.id
+                    };
+                    if (process.env.TABLE_PRIMARY_KEY === 'time') {
+                        insertMenuData.id = fnIncrTimeID();
                     }
+                    insertMenuDb.push(insertMenuData);
                 }
             }
         }
 
         // 获得删除数据
         menuFileDb.forEach((item) => {
-            if (!item.value || !menuConfigByFileValue[item.value]) {
+            if (!item.value || !menuFilePaths.includes(item.value)) {
                 deleteMenuDb.push(item.id);
             }
         });
@@ -180,8 +171,10 @@ async function syncMenuFile(fastify) {
 
 async function plugin(fastify) {
     try {
-        await syncMenuDir(fastify);
-        await syncMenuFile(fastify);
+        const { menuConfig: userMenuConfig } = await fnImport(resolve(appDir, 'config', 'menu.js'), 'menuConfig', {});
+        const allMenuConfig = [...userMenuConfig, ...internalMenuConfig];
+        await syncMenuDir(fastify, allMenuConfig);
+        await syncMenuFile(fastify, allMenuConfig);
         await fastify.cacheMenuData();
     } catch (err) {
         fastify.log.error(err);

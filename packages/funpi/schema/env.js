@@ -1,5 +1,5 @@
-export const appSchema = {
-    title: '应用基本配置',
+export const envSchema = {
+    title: '环境变量配置',
     type: 'object',
     properties: {
         APP_NAME: {
@@ -23,7 +23,7 @@ export const appSchema = {
             title: '监听主机',
             type: 'string',
             minLength: 1,
-            maxLength: 30
+            maxLength: 300
         },
         DEV_PASSWORD: {
             title: '开发者密码',
@@ -33,7 +33,8 @@ export const appSchema = {
         },
         BODY_LIMIT: {
             title: '请求体大小限制',
-            type: 'integer'
+            type: 'integer',
+            minimum: 0
         },
         PARAMS_CHECK: {
             title: '接口参数验证',
@@ -55,92 +56,87 @@ export const appSchema = {
         },
         TIMEZONE: {
             title: '时区',
-            type: 'string',
-            default: 'Asia/Shanghai'
+            type: 'string'
         },
         // 数据库配置
         MYSQL_HOST: {
             title: '数据库地址',
-            type: 'string',
-            default: '127.0.0.1'
+            type: 'string'
         },
         MYSQL_PORT: {
             title: '数据库地址',
             type: 'integer',
-            default: 3306
+            minimum: 0
         },
         MYSQL_DB: {
             title: '数据库名称',
-            type: 'string',
-            default: 'funpi_demo'
+            type: 'string'
         },
         MYSQL_USERNAME: {
             title: '数据库用户名',
-            type: 'string',
-            default: 'root'
+            type: 'string'
         },
         MYSQL_PASSWORD: {
             title: '数据库密码',
-            type: 'string',
-            default: 'root'
+            type: 'string'
         },
         // Redis配置
         REDIS_HOST: {
             title: 'Redis地址',
-            type: 'string',
-            default: '127.0.0.1'
+            type: 'string'
         },
         REDIS_PORT: {
             title: 'Redis端口',
             type: 'integer',
-            default: 6379
+            minimum: 0
         },
         REDIS_USERNAME: {
             title: 'Redis用户名',
-            type: 'string',
-            default: ''
+            type: 'string'
         },
         REDIS_PASSWORD: {
             title: 'Redis密码',
-            type: 'string',
-            default: ''
+            type: 'string'
         },
         REDIS_DB: {
             title: 'Redis数据库',
             type: 'integer',
-            default: 0
+            minimum: 0
         },
         REDIS_KEY_PREFIX: {
             title: 'Redis键前缀',
             type: 'string',
-            default: 'funpi_demo:'
+            minLength: 1,
+            maxLength: 50
         },
         // JWT配置
         JWT_SECRET: {
             title: 'JWT密钥',
             type: 'string',
-            default: 'funpi123456'
+            minLength: 1,
+            maxLength: 500
         },
         JWT_EXPIRES_IN: {
             title: 'JWT过期时间',
             type: 'string',
-            default: '30d'
+            minLength: 1,
+            maxLength: 50
         },
         JWT_ALGORITHM: {
             title: 'JWT算法',
             type: 'string',
-            default: 'HS256'
+            minLength: 1,
+            maxLength: 50
         },
         // 邮件配置
         MAIL_HOST: {
             title: '邮件地址',
-            type: 'string',
-            default: ''
+            type: 'string'
         },
         MAIL_PORT: {
             title: '邮件端口',
             type: 'integer',
-            default: 465
+            minimum: 0
         },
         MAIL_POOL: {
             title: '邮件池',
@@ -156,23 +152,19 @@ export const appSchema = {
         },
         MAIL_USER: {
             title: '邮件用户',
-            type: 'string',
-            default: 'funpi_demo@qq.com'
+            type: 'string'
         },
         MAIL_PASS: {
             title: '邮件密码',
-            type: 'string',
-            default: ''
+            type: 'string'
         },
         MAIL_SENDER: {
             title: '发件人',
-            type: 'string',
-            default: ''
+            type: 'string'
         },
         MAIL_ADDRESS: {
             title: '发件地址',
-            type: 'string',
-            default: ''
+            type: 'string'
         }
     },
     additionalProperties: false,

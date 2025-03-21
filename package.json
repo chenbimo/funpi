@@ -21,9 +21,9 @@
     ],
     "devDependencies": {
         "lerna": "^8.2.1",
-        "lint-staged": "^15.4.3",
+        "lint-staged": "^15.5.0",
         "prettier": "^3.5.3",
-        "simple-git-hooks": "^2.11.1"
+        "simple-git-hooks": "^2.12.1"
     },
     "simple-git-hooks": {
         "pre-commit": "bun lint-staged"
