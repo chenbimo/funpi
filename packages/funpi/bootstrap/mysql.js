@@ -92,6 +92,7 @@ async function plugin(fastify) {
         Knex.QueryBuilder.extend('selectCount', function () {
             return this.count('id', { as: 'totalCount' }).first();
         });
+
         // 定义数据库链接
         const mysql = await new Knex({
             client: 'mysql2',
@@ -130,16 +131,24 @@ async function plugin(fastify) {
             }
         });
 
+        // 测试数据库连接
+        try {
+            await mysql.raw('SELECT 1');
+        } catch (err) {
+            fastify.log.error({ msg: '数据库连接失败', error: err.message });
+            process.exit(1);
+        }
+
         fastify.decorate('mysql', mysql).addHook('onClose', (instance, done) => {
-            if (instance.knex === mysql) {
-                instance.knex.destroy();
+            if (instance.mysql === mysql) {
+                instance.mysql.destroy();
             }
 
             done();
         });
     } catch (err) {
         fastify.log.error(err);
-        process.exit();
+        process.exit(1);
     }
 }
 
