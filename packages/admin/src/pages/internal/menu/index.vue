@@ -80,7 +80,7 @@ const $Method = {
     async apiSelectData() {
         try {
             const res = await $Http({
-                url: '/admin/menuSelectAll',
+                url: '/funpi/admin/menuSelectAll',
                 data: {
                     page: $Data.pagination.page,
                     limit: $GlobalData.pageLimit

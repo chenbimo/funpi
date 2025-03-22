@@ -25,21 +25,13 @@ async function plugin(fastify) {
             // 如果是收藏图标，则直接通过
             if (routePath === 'favicon.ico') return;
             if (routePath === '/') {
-                res.send({ code: 0, msg: `${process.env.APP_NAME} 接口程序已启动` });
+                res.send({
+                    code: 0,
+                    msg: `${process.env.APP_NAME} 接口程序已启动`
+                });
                 return;
             }
-            if (routePath.startsWith('/swagger/')) return;
-
-            /* --------------------------------- 接口禁用检测 --------------------------------- */
-            const dataApiBlackLists = await fastify.redisGet('cacheData_apiBlackLists');
-            const blackApis = dataApiBlackLists?.map((item) => item.value) || [];
-            const allBlackApis = es_uniq(blackApis);
-
-            const isMatchBlackApi = picomatch.isMatch(routePath, allBlackApis);
-            if (isMatchBlackApi === true) {
-                res.send(httpConfig.API_DISABLED);
-                return;
-            }
+            // if (routePath.startsWith('/swagger/')) return;
 
             /* --------------------------------- 请求资源判断 --------------------------------- */
             if (routePath.startsWith('/public')) {
@@ -77,11 +69,6 @@ async function plugin(fastify) {
                 });
             }
 
-            /* --------------------------------- 自由接口判断 --------------------------------- */
-            const isMatchFreeApi = picomatch.isMatch(routePath, ['/', '/favicon.*', '/public/**', '/api/admin/adminLogin']);
-            // 如果是自由通行的接口，则直接返回
-            if (isMatchFreeApi === true) return;
-
             /* --------------------------------- 接口存在性判断 -------------------------------- */
             const allApiNames = await fastify.redisGet('cacheData_apiNames');
 
@@ -90,11 +77,33 @@ async function plugin(fastify) {
                 return;
             }
 
+            /* --------------------------------- 接口禁用检测 --------------------------------- */
+            const dataApiBlackLists = await fastify.redisGet('cacheData_apiBlackLists');
+            const blackApis = dataApiBlackLists?.map((item) => item.value) || [];
+            const allBlackApis = es_uniq(blackApis);
+
+            const isMatchBlackApi = picomatch.isMatch(routePath, allBlackApis);
+            if (isMatchBlackApi === true) {
+                res.send(httpConfig.API_DISABLED);
+                return;
+            }
+
+            /* ---------------------------------- 白名单判断 --------------------------------- */
+            // 从缓存获取白名单接口
+            const dataApiWhiteLists = await fastify.redisGet('cacheData_apiWhiteLists');
+            const whiteApis = dataApiWhiteLists?.map((item) => item.value) || [];
+            const allWhiteApis = es_uniq(whiteApis);
+
+            // 是否匹配白名单
+            const isMatchWhiteApi = picomatch.isMatch(routePath, allWhiteApis);
+
+            if (isMatchWhiteApi === true) return;
+
             /* --------------------------------- 接口登录检测 --------------------------------- */
             if (isAuthFail === true) {
                 res.send({
                     ...httpConfig.NOT_LOGIN,
-                    detail: 'token 验证失败'
+                    detail: 'Token 验证失败'
                 });
                 return;
             }
@@ -110,17 +119,6 @@ async function plugin(fastify) {
                     return;
                 }
             }
-
-            /* ---------------------------------- 白名单判断 --------------------------------- */
-            // 从缓存获取白名单接口
-            const dataApiWhiteLists = await fastify.redisGet('cacheData_apiWhiteLists');
-            const whiteApis = dataApiWhiteLists?.map((item) => item.value) || [];
-            const allWhiteApis = es_uniq(whiteApis);
-
-            // 是否匹配白名单
-            const isMatchWhiteApi = picomatch.isMatch(routePath, allWhiteApis);
-
-            if (isMatchWhiteApi === true) return;
 
             /* ---------------------------------- 角色接口权限判断 --------------------------------- */
             // 如果接口不在白名单中，则判断用户是否有接口访问权限

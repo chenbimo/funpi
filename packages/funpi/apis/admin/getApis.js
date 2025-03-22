@@ -3,6 +3,8 @@ import { httpConfig } from '../../config/http.js';
 
 export default async (fastify) => {
     fnRoute(import.meta.url, fastify, {
+        // 接口名称
+        apiName: '查询角色接口',
         // 请求参数约束
         schemaRequest: {
             type: 'object',

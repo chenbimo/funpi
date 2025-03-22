@@ -3,6 +3,7 @@ import { tableData } from '../../tables/example.js';
 
 export default async (fastify) => {
     fnRoute(import.meta.url, fastify, {
+        apiName: '添加案例',
         // 请求参数约束
         schemaRequest: {
             type: 'object',

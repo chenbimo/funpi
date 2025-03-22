@@ -87,8 +87,8 @@ const $Method = {
     async apiEditData() {
         try {
             const url = {
-                insertData: '/dict/categoryInsert',
-                updateData: '/dict/categoryUpdate'
+                insertData: '/funpi/dict/categoryInsert',
+                updateData: '/funpi/dict/categoryUpdate'
             }[$Prop.actionType];
 
             const res = await $Http({

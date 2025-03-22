@@ -100,7 +100,7 @@ const $Method = {
     async apiSelectData() {
         try {
             const res = await $Http({
-                url: '/tableConfig/select',
+                url: '/funpi/tableConfig/select',
                 data: {
                     page: $Data.pagination.page,
                     limit: $GlobalData.pageLimit

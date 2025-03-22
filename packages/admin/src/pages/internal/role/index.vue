@@ -124,7 +124,7 @@ const $Method = {
     async apiSelectData() {
         try {
             const res = await $Http({
-                url: '/admin/roleSelectPage',
+                url: '/funpi/admin/roleSelectPage',
                 data: {
                     keyword: $Data.formData.keyword,
                     page: $Data.pagination.page,
@@ -143,7 +143,7 @@ const $Method = {
     async apiDeleteData() {
         try {
             const res = await $Http({
-                url: '/admin/roleDelete',
+                url: '/funpi/admin/roleDelete',
                 data: {
                     id: $Data.rowData.id
                 }

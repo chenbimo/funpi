@@ -4,6 +4,8 @@ import { httpConfig } from '../../config/http.js';
 
 export default async (fastify) => {
     fnRoute(import.meta.url, fastify, {
+        // 接口名称
+        apiName: '发送邮件',
         // 请求参数约束
         schemaRequest: {
             oneOf: [

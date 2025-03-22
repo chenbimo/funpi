@@ -98,7 +98,7 @@ const $Method = {
     async apiSelectAllRole() {
         try {
             const res = await $Http({
-                url: '/admin/roleSelectAll',
+                url: '/funpi/admin/roleSelectAll',
                 data: {}
             });
             $Data.roleAll = res.data.rows.filter((item) => item.code !== 'dev');
@@ -110,8 +110,8 @@ const $Method = {
     async apiEditData() {
         try {
             const url = {
-                insertData: '/admin/adminInsert?t1=d1&t2=d2',
-                updateData: '/admin/adminUpdate'
+                insertData: '/funpi/admin/adminInsert?t1=d1&t2=d2',
+                updateData: '/funpi/admin/adminUpdate'
             }[$Prop.actionType];
             const password = $Data.formData.password.trim();
 

@@ -123,7 +123,7 @@ const $Method = {
     async apiSelectCategory() {
         try {
             const res = await $Http({
-                url: '/dict/categorySelectAll',
+                url: '/funpi/dict/categorySelectAll',
                 data: {}
             });
             $Data.categoryAll = res.data.rows.map((item, index) => {
@@ -141,7 +141,7 @@ const $Method = {
     async apiSelectData() {
         try {
             const res = await $Http({
-                url: '/dict/dictSelectPage',
+                url: '/funpi/dict/dictSelectPage',
                 data: {
                     page: $Data.pagination.page,
                     limit: $GlobalData.pageLimit,
@@ -160,7 +160,7 @@ const $Method = {
     async apiDeleteData() {
         try {
             const res = await $Http({
-                url: '/dict/dictDelete',
+                url: '/funpi/dict/dictDelete',
                 data: {
                     id: $Data.rowData.id
                 }

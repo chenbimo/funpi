@@ -87,7 +87,7 @@ const $Method = {
                 formData.verify_name = $Data.formData.verify_name;
             }
             const res = await $Http({
-                url: '/tool/sendMail',
+                url: '/funpi/tool/sendMail',
                 data: formData
             });
             $Method.onClose();

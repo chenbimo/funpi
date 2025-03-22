@@ -7,7 +7,6 @@ import fp from 'fastify-plugin';
 import fastifyStatic from '@fastify/static';
 import Ajv from 'ajv';
 // 启动插件
-import swaggerPlugin from './plugins/swagger.js';
 import loggerPlugin from './plugins/logger.js';
 import jwtPlugin from './plugins/jwt.js';
 import xmlParsePlugin from './bootstrap/xmlParse.js';
@@ -107,10 +106,6 @@ fastify.register(fastifyStatic, {
     list: true
 });
 
-// 加载启动插件
-if (process.env.SWAGGER === '1') {
-    fastify.register(swaggerPlugin, {});
-}
 fastify.register(jwtPlugin, {});
 fastify.register(xmlParsePlugin, {});
 fastify.register(uploadPlugin, {});
@@ -141,7 +136,7 @@ fastify.register(autoLoad, {
     },
     ignorePattern: /^[_.]/,
     options: {
-        prefix: '/api'
+        prefix: '/api/funpi'
     }
 });
 
@@ -153,7 +148,7 @@ fastify.register(autoLoad, {
     },
     ignorePattern: /^[_.]/,
     options: {
-        prefix: '/api'
+        prefix: '/api/app'
     }
 });
 
@@ -161,7 +156,7 @@ fastify.register(autoLoad, {
 function initServer() {
     return new Promise(async (resolve) => {
         // 初始化检查
-        await initCheck();
+        await initCheck(fastify);
         // 启动服务！
         fastify.listen({ port: Number(process.env.APP_PORT), host: process.env.LISTEN_HOST }, async function (err, address) {
             if (err) {

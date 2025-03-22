@@ -37,22 +37,10 @@ export const tableData = {
         default: '',
         max: 500
     },
-    is_bool: {
-        name: '真假树',
-        type: 'tinyInt',
+    state: {
+        name: '状态 0 正常 1 白名单 2 黑名单',
+        type: 'int',
         default: 0,
-        enum: [0, 1]
-    },
-    is_open: {
-        name: '是否公开',
-        type: 'tinyInt',
-        default: 0,
-        enum: [0, 1]
-    },
-    is_system: {
-        name: '是否系统账号（不可删除）',
-        type: 'tinyInt',
-        default: 0,
-        enum: [0, 1]
+        enum: [0, 1, 2]
     }
 };

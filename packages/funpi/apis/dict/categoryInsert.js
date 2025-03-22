@@ -5,6 +5,8 @@ import { tableData } from '../../tables/dictCategory.js';
 
 export default async (fastify) => {
     fnRoute(import.meta.url, fastify, {
+        // 接口名称
+        apiName: '添加字典分类',
         // 请求参数约束
         schemaRequest: {
             type: 'object',

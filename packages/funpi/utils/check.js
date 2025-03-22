@@ -1,6 +1,6 @@
 // 内核模块
-import { resolve } from 'node:path';
-import { existsSync, mkdirSync } from 'node:fs';
+import { resolve, basename } from 'node:path';
+import { existsSync, mkdirSync, readdirSync } from 'node:fs';
 // 外部模块
 import Ajv from 'ajv';
 
@@ -15,10 +15,10 @@ import { menuConfig as internalMenuConfig } from '../config/menu.js';
 import { envSchema } from '../schema/env.js';
 import { menuSchema } from '../schema/menu.js';
 // 工具函数
-import { fnImport, log4state } from './index.js';
+import { fnImport, log4state, fnIsCamelCase, fnApiFiles } from './index.js';
 import { ajvZh } from './ajvZh.js';
 
-export const initCheck = async () => {
+export const initCheck = async (fastify) => {
     // 判断运行目录下是否有 funpi.js 文件
     if (existsSync(resolve(appDir, 'funpi.js')) === false) {
         console.log(`${log4state('warn')} 请在 funpi 项目根目录下运行`);

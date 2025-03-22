@@ -1,5 +1,6 @@
 import { fileURLToPath, pathToFileURL } from 'node:url';
-import { dirname, basename } from 'node:path';
+import { dirname, basename, resolve } from 'node:path';
+import { readdirSync } from 'node:fs';
 import { cwd, env, platform } from 'node:process';
 import { randomInt, createHash, createHmac } from 'node:crypto';
 
@@ -7,6 +8,7 @@ import { isString as es_isString, isFunction as es_isFunction, omit as es_omit }
 import { isObject as es_isObject } from 'es-toolkit/compat';
 import { configure } from 'safe-stable-stringify';
 import { colors } from './colors.js';
+import { appDir, funpiDir } from '../config/path.js';
 
 // 字段协议映射
 const tableFieldSchemaMap = {
@@ -226,15 +228,13 @@ export const fnRoute = async (metaUrl, fastify, options) => {
         process.exit();
     }
 
-    const { metaConfig } = await fnImport(dirname(metaUrl) + '/_meta.js', 'metaConfig', {});
-
-    if (!metaConfig?.dirName) {
-        console.log(`${log4state('error')} ${colors.blue(metaUrl)} 接口的 fnRoute 函数第三个参数必须为 _meta.js 文件元数据，请检查`);
+    if (es_isObject(options) === false) {
+        console.log(`${log4state('error')} ${colors.blue(metaUrl)} 接口的 fnRoute 函数第三个参数必须为 Object 对象，请检查`);
         process.exit();
     }
 
-    if (es_isObject(options) === false) {
-        console.log(`${log4state('error')} ${colors.blue(metaUrl)} 接口的 fnRoute 函数第四个参数必须为 Object 对象，请检查`);
+    if (es_isString(options.apiName) === false) {
+        console.log(`${log4state('error')} ${colors.blue(metaUrl)} 接口的 apiName 必须为一个字符串，请检查`);
         process.exit();
     }
 
@@ -255,14 +255,14 @@ export const fnRoute = async (metaUrl, fastify, options) => {
         process.exit();
     }
 
-    options.schemaRequest.title = metaConfig.apiNames[apiInfo.pureFileName];
+    options.schemaRequest.title = options.apiName;
 
     const routeParams = {
         method: method,
         url: `/${apiInfo.pureFileName}`,
         schema: {
-            summary: metaConfig.apiNames[apiInfo.pureFileName],
-            tags: [apiInfo.parentDirName + ' ' + metaConfig.dirName],
+            summary: options.apiName,
+            tags: [apiInfo.parentDirName],
             response: options.schemaResponse || {}
         },
         handler: options.apiHandler
@@ -274,6 +274,68 @@ export const fnRoute = async (metaUrl, fastify, options) => {
         routeParams.schema.body = options.schemaRequest;
     }
     fastify.route(routeParams);
+};
+
+export const fnIsCamelCase = (str) => {
+    if (!str || typeof str !== 'string') return false;
+
+    // 快速检查首字符 (避免正则开销)
+    if (str[0] < 'a' || str[0] > 'z') return false;
+
+    // 然后用简单正则检查整个字符串
+    return /^[a-z][a-zA-Z0-9]*$/.test(str);
+};
+export const fnApiFilter = (dirent) => {
+    const isFile = dirent.isFile();
+    const isJs = dirent.name.endsWith('.js');
+    const isFileCamelCase = fnIsCamelCase(dirent.name.replace('.js', ''));
+    const isDirCameCase = fnIsCamelCase(basename(dirent.parentPath));
+    const isApisDir = basename(dirname(dirent.parentPath)) === 'apis';
+    if (isFile) {
+        const fileColorPath = colors.blue(dirent.parentPath + '/' + dirent.name);
+        if (!isApisDir) {
+            console.log(`${log4state('error')} ${fileColorPath} 接口文件必须为 [目录/接口] 2个层级，请检查`);
+        }
+        if (!isJs) {
+            console.log(`${log4state('error')} ${fileColorPath} 接口文件必须为 .js 文件，请检查`);
+        }
+        if (!isDirCameCase) {
+            console.log(`${log4state('error')} ${fileColorPath} 接口目录必须为小驼峰格式，请检查`);
+        }
+        if (!isFileCamelCase) {
+            console.log(`${log4state('error')} ${fileColorPath} 接口文件必须为小驼峰格式，请检查`);
+        }
+    }
+    return isFile && isJs && isFileCamelCase && isApisDir && isDirCameCase;
+};
+export const fnApiFiles = async () => {
+    // 验证接口层级
+    const funpiApiFiles = readdirSync(resolve(funpiDir, 'apis'), { recursive: true, withFileTypes: true })
+        .filter((dirent) => fnApiFilter(dirent))
+        .map((file) => {
+            return {
+                where: 'funpi',
+                dirPath: file.parentPath,
+                filePath: file.name,
+                dirName: `/${basename(file.parentPath)}`,
+                fileName: `/funpi/${basename(file.parentPath)}/${file.name.replace('.js', '')}`
+            };
+        });
+
+    const appApiFiles = readdirSync(resolve(appDir, 'apis'), { recursive: true, withFileTypes: true })
+        .filter((dirent) => fnApiFilter(dirent))
+        .map((file) => {
+            return {
+                where: 'app',
+                dirPath: file.parentPath,
+                filePath: file.name,
+                dirName: `/${basename(file.parentPath)}`,
+                fileName: `/app/${basename(file.parentPath)}/${file.name.replace('.js', '')}`
+            };
+        });
+
+    const allApiFiles = [...funpiApiFiles, ...appApiFiles];
+    return allApiFiles;
 };
 
 export const fnSchema = (field) => {

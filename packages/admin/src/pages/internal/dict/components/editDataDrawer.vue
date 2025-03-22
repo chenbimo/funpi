@@ -123,8 +123,8 @@ const $Method = {
     async apiEditData() {
         try {
             const url = {
-                insertData: '/dict/dictInsert',
-                updateData: '/dict/dictUpdate'
+                insertData: '/funpi/dict/dictInsert',
+                updateData: '/funpi/dict/dictUpdate'
             }[$Prop.actionType];
 
             $Method.setCategoryCode();

@@ -2,6 +2,7 @@ import { fnRoute, fnSchema, httpConfig } from 'funpi';
 
 export default async (fastify) => {
     fnRoute(import.meta.url, fastify, {
+        apiName: '删除案例',
         // 请求参数约束
         schemaRequest: {
             type: 'object',

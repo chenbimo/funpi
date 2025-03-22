@@ -109,7 +109,7 @@ const $Method = {
     async apiSelectData() {
         try {
             const res = await $Http({
-                url: '/admin/adminSelectPage',
+                url: '/funpi/admin/adminSelectPage',
                 data: {
                     page: $Data.pagination.page,
                     limit: $GlobalData.pageLimit
@@ -127,7 +127,7 @@ const $Method = {
     async apiDeleteData() {
         try {
             const res = await $Http({
-                url: '/admin/adminDelete',
+                url: '/funpi/admin/adminDelete',
                 data: {
                     id: $Data.rowData.id
                 }

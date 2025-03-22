@@ -123,7 +123,7 @@ const $Method = {
     async apiSelectAllMenuData() {
         try {
             const res = await $Http({
-                url: '/admin/menuSelectAll',
+                url: '/funpi/admin/menuSelectAll',
                 data: {}
             });
             const data = res.data.rows.map((item) => {
@@ -143,7 +143,7 @@ const $Method = {
     async apiSelectAllApiData() {
         try {
             const res = await $Http({
-                url: '/admin/apiSelectAll',
+                url: '/funpi/admin/apiSelectAll',
                 data: {}
             });
             const data = res.data.rows.map((item) => {
@@ -163,8 +163,8 @@ const $Method = {
     async apiRoleBindPermission() {
         try {
             const url = {
-                insertData: '/admin/roleInsert',
-                updateData: '/admin/roleUpdate'
+                insertData: '/funpi/admin/roleInsert',
+                updateData: '/funpi/admin/roleUpdate'
             }[$Prop.actionType];
 
             const menuIds = [];

@@ -81,7 +81,7 @@ const $Method = {
     async apiSelectData() {
         try {
             const res = await $Http({
-                url: '/admin/adminLoginLogSelectPage',
+                url: '/funpi/admin/adminLoginLogSelectPage',
                 data: {
                     page: $Data.pagination.page,
                     limit: $GlobalData.pageLimit

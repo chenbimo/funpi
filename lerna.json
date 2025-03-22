@@ -1,18 +1,23 @@
 {
-    "version": "7.15.4",
-    "packages": ["packages/*"],
-    "npmClient": "bun",
-    "command": {
-        "version": {
-            "allowBranch": ["main", "master"],
-            "changelog": false,
-            "gitTagVersion": false,
-            "yes": true,
-            "forcePublish": true
-        },
-        "publish": {
-            "ignoreScripts": false,
-            "yes": true
-        }
+  "version": "7.16.0",
+  "packages": [
+    "packages/*"
+  ],
+  "npmClient": "bun",
+  "command": {
+    "version": {
+      "allowBranch": [
+        "main",
+        "master"
+      ],
+      "changelog": false,
+      "gitTagVersion": false,
+      "yes": true,
+      "forcePublish": true
+    },
+    "publish": {
+      "ignoreScripts": false,
+      "yes": true
     }
+  }
 }

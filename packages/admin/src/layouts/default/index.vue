@@ -97,7 +97,7 @@ const $Method = {
     async apiTokenCheck() {
         try {
             const res = await $Http({
-                url: '/tool/tokenCheck',
+                url: '/funpi/tool/tokenCheck',
                 data: {}
             });
             if (res.data.state === 'no') {
@@ -112,7 +112,7 @@ const $Method = {
     async apiGetAdminMenus() {
         try {
             const res = await $Http({
-                url: '/admin/getMenus',
+                url: '/funpi/admin/getMenus',
                 data: {}
             });
             console.log('🔥[ res ]-120', res);

@@ -1,9 +1,10 @@
 import { fnRoute, fnSchema, fnDataClear, fnRequestLog } from '../../utils/index.js';
 import { httpConfig } from '../../config/http.js';
 
-// 处理函数
 export default async (fastify) => {
     fnRoute(import.meta.url, fastify, {
+        // 接口名称
+        apiName: '删除字典',
         // 请求参数约束
         schemaRequest: {
             type: 'object',

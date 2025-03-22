@@ -4,6 +4,8 @@ import { tableData } from '../../tables/admin.js';
 
 export default async (fastify) => {
     fnRoute(import.meta.url, fastify, {
+        // 接口名称
+        apiName: '添加管理员',
         // 请求参数约束
         schemaRequest: {
             type: 'object',

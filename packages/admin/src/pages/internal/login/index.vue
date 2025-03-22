@@ -81,7 +81,7 @@ const $Method = {
         try {
             $Data.isShow.logining = true;
             const res = await $Http({
-                url: '/admin/adminLogin',
+                url: '/funpi/admin/adminLogin',
                 data: {
                     account: $Data.formData.account,
                     password: md5($Data.formData.password)
