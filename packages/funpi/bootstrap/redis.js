@@ -14,10 +14,10 @@ function plugin(fastify, opts, next) {
         try {
             client = new Redis({
                 host: process.env.REDIS_HOST,
-                port: process.env.REDIS_PORT,
+                port: Number(process.env.REDIS_PORT),
                 username: process.env.REDIS_USERNAME,
                 password: process.env.REDIS_PASSWORD,
-                db: process.env.REDIS_DB,
+                db: Number(process.env.REDIS_DB),
                 keyPrefix: process.env.REDIS_KEY_PREFIX
             });
         } catch (err) {
