@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // 内部模块
-import { basename, resolve } from 'node:path';
+import { basename, resolve } from 'pathe';
 import { readdirSync } from 'node:fs';
 import { randomInt } from 'node:crypto';
 // 外部模块

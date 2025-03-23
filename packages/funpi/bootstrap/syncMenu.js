@@ -1,5 +1,5 @@
 // 内部模块
-import { resolve } from 'path';
+import { resolve } from 'pathe';
 // 外部模块
 import fp from 'fastify-plugin';
 import { omit as es_omit, uniq as es_uniq, keyBy as es_keyBy } from 'es-toolkit';

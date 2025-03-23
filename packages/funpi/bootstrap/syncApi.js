@@ -1,5 +1,5 @@
 // 内部模块
-import { basename, dirname, resolve } from 'node:path';
+import { basename, dirname, resolve } from 'pathe';
 import { readdirSync } from 'node:fs';
 // 外部模块
 import fp from 'fastify-plugin';

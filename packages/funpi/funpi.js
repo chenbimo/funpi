@@ -1,5 +1,5 @@
 // 核心模块
-import { resolve, join } from 'node:path';
+import { resolve, join } from 'pathe';
 // 外部模块
 import Fastify from 'fastify';
 import autoLoad from '@fastify/autoload';
@@ -7,6 +7,7 @@ import fp from 'fastify-plugin';
 import fastifyStatic from '@fastify/static';
 import Ajv from 'ajv';
 // 启动插件
+import swaggerPlugin from './plugins/swagger.js';
 import loggerPlugin from './plugins/logger.js';
 import jwtPlugin from './plugins/jwt.js';
 import xmlParsePlugin from './bootstrap/xmlParse.js';
@@ -106,57 +107,88 @@ fastify.register(fastifyStatic, {
     list: true
 });
 
-fastify.register(jwtPlugin, {});
-fastify.register(xmlParsePlugin, {});
-fastify.register(uploadPlugin, {});
-fastify.register(redisPlugin, {});
-fastify.register(mysqlPlugin, {});
-fastify.register(toolPlugin, {});
-fastify.register(corsPlugin, {});
-fastify.register(authPlugin, {});
-fastify.register(mailPlugin, {});
-fastify.register(syncMenuPlugin, {});
-fastify.register(syncApiPlugin, {});
-fastify.register(syncDevPlugin, {});
-
-// 加载用户插件
-fastify.register(autoLoad, {
-    dir: join(appDir, 'plugins'),
-    matchFilter: (_path) => {
-        return _path.endsWith('.js') === true;
-    },
-    ignorePattern: /^[_.]/
-});
-
-// 加载系统接口
-fastify.register(autoLoad, {
-    dir: join(funpiDir, 'apis'),
-    matchFilter: (_path) => {
-        return _path.endsWith('.js') === true;
-    },
-    ignorePattern: /^[_.]/,
-    options: {
-        prefix: '/api/funpi'
-    }
-});
-
-// 加载用户接口
-fastify.register(autoLoad, {
-    dir: join(appDir, 'apis'),
-    matchFilter: (_path) => {
-        return _path.endsWith('.js') === true;
-    },
-    ignorePattern: /^[_.]/,
-    options: {
-        prefix: '/api/app'
-    }
-});
-
 // 初始化服务
 function initServer() {
     return new Promise(async (resolve) => {
         // 初始化检查
         await initCheck(fastify);
+        // 加载启动插件
+        if (process.env.SWAGGER === '1') {
+            fastify.register(swaggerPlugin, {});
+        }
+        fastify.register(jwtPlugin, {});
+        fastify.register(xmlParsePlugin, {});
+        fastify.register(uploadPlugin, {});
+        fastify.register(redisPlugin, {});
+        fastify.register(mysqlPlugin, {});
+        fastify.register(toolPlugin, {});
+        fastify.register(corsPlugin, {});
+        fastify.register(authPlugin, {});
+        fastify.register(mailPlugin, {});
+        fastify.register(syncMenuPlugin, {});
+        fastify.register(syncApiPlugin, {});
+        fastify.register(syncDevPlugin, {});
+
+        // 加载用户插件
+        fastify.register(autoLoad, {
+            dir: join(appDir, 'plugins'),
+            matchFilter: (_path) => {
+                return _path.endsWith('.js') === true;
+            },
+            ignorePattern: /^[_.]/
+        });
+
+        // 加载插件的插件
+        fastify.register(autoLoad, {
+            dir: join(appDir, 'addons'),
+            matchFilter: (_path) => {
+                const [_, plugins, dir, file] = _path.split('/');
+                return plugins === 'plugins' && file.endsWith('.js') === true;
+            },
+            ignorePattern: /^[_.]/
+        });
+
+        // 加载系统接口
+        fastify.register(autoLoad, {
+            dir: join(funpiDir, 'apis'),
+            matchFilter: (_path) => {
+                return _path.endsWith('.js') === true;
+            },
+            ignorePattern: /^[_.]/,
+            options: {
+                prefix: '/api/funpi'
+            }
+        });
+
+        // 加载用户接口
+        fastify.register(autoLoad, {
+            dir: join(appDir, 'apis'),
+            matchFilter: (_path) => {
+                return _path.endsWith('.js') === true;
+            },
+            ignorePattern: /^[_.]/,
+            options: {
+                prefix: '/api/app'
+            }
+        });
+
+        // 加载插件接口
+        fastify.register(autoLoad, {
+            dir: join(appDir, 'addons'),
+            matchFilter: (_path) => {
+                const [_, apis, dir, file] = _path.split('/').filter((v) => v);
+                const isPass = apis === 'apis' && file.endsWith('.js') === true;
+                return isPass;
+            },
+            ignorePattern: /^[_.]/,
+            options: {
+                prefix: '/api/addon'
+            },
+            dirNameRoutePrefix: function rewrite(folderParent, folderName) {
+                if (folderName === 'apis') return false;
+                return folderName;
+            }
+        });
         // 启动服务！
         fastify.listen({ port: Number(process.env.APP_PORT), host: process.env.LISTEN_HOST }, async function (err, address) {
             if (err) {

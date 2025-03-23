@@ -1,5 +1,5 @@
 import { fileURLToPath, pathToFileURL } from 'node:url';
-import { dirname, basename, resolve } from 'node:path';
+import { dirname, basename, resolve, normalize, relative, join } from 'pathe';
 import { readdirSync } from 'node:fs';
 import { cwd, env, platform } from 'node:process';
 import { randomInt, createHash, createHmac } from 'node:crypto';
@@ -247,7 +247,8 @@ export const fnRoute = async (metaUrl, fastify, options) => {
         process.exit();
     }
 
-    const apiInfo = fnApiInfo(metaUrl);
+    const apiFileName = basename(metaUrl, '.js');
+    const apiDirName = basename(dirname(metaUrl));
     const method = (options.method || 'post').toLowerCase();
 
     if (['get', 'post'].includes(method) === false) {
@@ -259,10 +260,10 @@ export const fnRoute = async (metaUrl, fastify, options) => {
 
     const routeParams = {
         method: method,
-        url: `/${apiInfo.pureFileName}`,
+        url: `/${apiFileName}`,
         schema: {
             summary: options.apiName,
-            tags: [apiInfo.parentDirName],
+            tags: [apiDirName],
             response: options.schemaResponse || {}
         },
         handler: options.apiHandler
@@ -285,14 +286,15 @@ export const fnIsCamelCase = (str) => {
     // 然后用简单正则检查整个字符串
     return /^[a-z][a-zA-Z0-9]*$/.test(str);
 };
-export const fnApiFilter = (dirent) => {
+
+const fnApiFilesFilter = (dirent) => {
     const isFile = dirent.isFile();
     const isJs = dirent.name.endsWith('.js');
     const isFileCamelCase = fnIsCamelCase(dirent.name.replace('.js', ''));
     const isDirCameCase = fnIsCamelCase(basename(dirent.parentPath));
     const isApisDir = basename(dirname(dirent.parentPath)) === 'apis';
     if (isFile) {
-        const fileColorPath = colors.blue(dirent.parentPath + '/' + dirent.name);
+        const fileColorPath = colors.blue(resolve(dirent.parentPath + '/' + dirent.name));
         if (!isApisDir) {
             console.log(`${log4state('error')} ${fileColorPath} 接口文件必须为 [目录/接口] 2个层级，请检查`);
         }
@@ -308,10 +310,120 @@ export const fnApiFilter = (dirent) => {
     }
     return isFile && isJs && isFileCamelCase && isApisDir && isDirCameCase;
 };
+
+export const fnApiFilesCheck = async () => {
+    let isAllPass = true;
+    const funpiApiFiles = readdirSync(resolve(funpiDir, 'apis'), { recursive: true, withFileTypes: true }).forEach((dirent) => {
+        if (dirent.isFile()) {
+            const parentDir = normalize(dirent.parentPath);
+            const apiPath = parentDir.replace(resolve(funpiDir, 'apis'), '');
+            const fileColorPath = colors.blue(resolve(parentDir, dirent.name));
+
+            const isLevel = apiPath.split('/').filter((v) => v).length === 1;
+            const isJs = dirent.name.endsWith('.js');
+            const isFileCamelCase = fnIsCamelCase(dirent.name.replace('.js', ''));
+            const isDirCameCase = fnIsCamelCase(basename(parentDir));
+            const isDirStartWith_ = basename(parentDir).startsWith('_');
+            const isFileStartWith_ = dirent.name.startsWith('_');
+
+            if (!isLevel) {
+                console.log(`${log4state('error')} ${fileColorPath} 接口文件必须为 [目录/接口] 2个层级，请检查`);
+                isAllPass = false;
+            }
+            if (!isJs) {
+                console.log(`${log4state('error')} ${fileColorPath} 接口文件必须为 .js 文件，请检查`);
+                isAllPass = false;
+            }
+            if (!isFileStartWith_ && !isFileCamelCase) {
+                console.log(`${log4state('error')} ${fileColorPath} 接口文件必须为小驼峰格式，请检查`);
+                isAllPass = false;
+            }
+            if (!isDirStartWith_ && !isDirCameCase) {
+                console.log(`${log4state('error')} ${fileColorPath} 接口目录必须为小驼峰格式，请检查`);
+                isAllPass = false;
+            }
+        }
+    });
+
+    const appApiFiles = readdirSync(resolve(appDir, 'apis'), { recursive: true, withFileTypes: true }).forEach((dirent) => {
+        if (dirent.isFile()) {
+            const parentDir = normalize(dirent.parentPath);
+            const apiPath = parentDir.replace(resolve(appDir, 'apis'), '');
+            const fileColorPath = colors.blue(resolve(parentDir, dirent.name));
+
+            const isLevel = apiPath.split('/').filter((v) => v).length === 1;
+            const isJs = dirent.name.endsWith('.js');
+            const isFileCamelCase = fnIsCamelCase(dirent.name.replace('.js', ''));
+            const isDirCameCase = fnIsCamelCase(basename(parentDir));
+            const isDirStartWith_ = basename(parentDir).startsWith('_');
+            const isFileStartWith_ = dirent.name.startsWith('_');
+
+            if (!isLevel) {
+                console.log(`${log4state('error')} ${fileColorPath} 接口文件必须为 [目录/接口] 2个层级，请检查`);
+                isAllPass = false;
+            }
+            if (!isJs) {
+                console.log(`${log4state('error')} ${fileColorPath} 接口文件必须为 .js 文件，请检查`);
+                isAllPass = false;
+            }
+            if (!isFileStartWith_ && !isFileCamelCase) {
+                console.log(`${log4state('error')} ${fileColorPath} 接口文件必须为小驼峰格式，请检查`);
+                isAllPass = false;
+            }
+            if (!isDirStartWith_ && !isDirCameCase) {
+                console.log(`${log4state('error')} ${fileColorPath} 接口目录必须为小驼峰格式，请检查`);
+                isAllPass = false;
+            }
+        }
+    });
+
+    const addonApiFiles = readdirSync(resolve(appDir, 'addons'), { recursive: true, withFileTypes: true }).forEach((dirent) => {
+        if (dirent.isFile()) {
+            const parentDir = normalize(dirent.parentPath);
+            const apiPath = parentDir.replace(resolve(appDir, 'addons'), '');
+            const fileColorPath = colors.blue(resolve(parentDir, dirent.name));
+            const [_, apis, dir, file] = apiPath.split('/').filter((v) => v);
+            const isLevel = apis === 'apis' && dir;
+            if (isLevel) {
+                if (file) {
+                    console.log(`${log4state('error')} ${fileColorPath} 接口文件必须为 [目录/接口] 2个层级，请检查`);
+                    isAllPass = false;
+                } else {
+                    const isJs = dirent.name.endsWith('.js');
+                    const isFileCamelCase = fnIsCamelCase(dirent.name.replace('.js', ''));
+                    const isDirCameCase = fnIsCamelCase(basename(parentDir));
+                    const isDirStartWith_ = basename(parentDir).startsWith('_');
+                    const isFileStartWith_ = dirent.name.startsWith('_');
+
+                    if (!isJs) {
+                        console.log(`${log4state('error')} ${fileColorPath} 接口文件必须为 .js 文件，请检查`);
+                        isAllPass = false;
+                    }
+                    if (!isFileStartWith_ && !isFileCamelCase) {
+                        console.log(`${log4state('error')} ${fileColorPath} 接口文件必须为小驼峰格式，请检查`);
+                        isAllPass = false;
+                    }
+                    if (!isDirStartWith_ && !isDirCameCase) {
+                        console.log(`${log4state('error')} ${fileColorPath} 接口目录必须为小驼峰格式，请检查`);
+                        isAllPass = false;
+                    }
+                }
+            }
+        }
+    });
+    if (isAllPass === false) process.exit();
+};
+
 export const fnApiFiles = async () => {
-    // 验证接口层级
     const funpiApiFiles = readdirSync(resolve(funpiDir, 'apis'), { recursive: true, withFileTypes: true })
-        .filter((dirent) => fnApiFilter(dirent))
+        .filter((dirent) => {
+            const parentDir = normalize(dirent.parentPath);
+            const isFile = dirent.isFile();
+            const isDirStartWith_ = basename(parentDir).startsWith('_');
+            const isFileStartWith_ = dirent.name.startsWith('_');
+
+            return isFile && !isDirStartWith_ && !isFileStartWith_;
+        })
         .map((file) => {
             return {
                 where: 'funpi',
@@ -323,7 +435,14 @@ export const fnApiFiles = async () => {
         });
 
     const appApiFiles = readdirSync(resolve(appDir, 'apis'), { recursive: true, withFileTypes: true })
-        .filter((dirent) => fnApiFilter(dirent))
+        .filter((dirent) => {
+            const parentDir = normalize(dirent.parentPath);
+            const isFile = dirent.isFile();
+            const isDirStartWith_ = basename(parentDir).startsWith('_');
+            const isFileStartWith_ = dirent.name.startsWith('_');
+
+            return isFile && !isDirStartWith_ && !isFileStartWith_;
+        })
         .map((file) => {
             return {
                 where: 'app',
@@ -334,7 +453,30 @@ export const fnApiFiles = async () => {
             };
         });
 
-    const allApiFiles = [...funpiApiFiles, ...appApiFiles];
+    const addonApiFiles = readdirSync(resolve(appDir, 'addons'), { recursive: true, withFileTypes: true })
+        .filter((dirent) => {
+            const parentDir = normalize(dirent.parentPath);
+            const apiPath = parentDir.replace(resolve(appDir, 'addons'), '');
+            const [_, apis, dir, file] = apiPath.split('/').filter((v) => v);
+
+            const isLevel = apis === 'apis' && dir;
+            const isFile = dirent.isFile();
+            const isDirStartWith_ = basename(parentDir).startsWith('_');
+            const isFileStartWith_ = dirent.name.startsWith('_');
+
+            return isFile && isLevel && !isDirStartWith_ && !isFileStartWith_;
+        })
+        .map((file) => {
+            return {
+                where: 'addon',
+                dirPath: file.parentPath,
+                filePath: file.name,
+                dirName: `/${basename(file.parentPath)}`,
+                fileName: `/addon/${basename(file.parentPath)}/${file.name.replace('.js', '')}`
+            };
+        });
+
+    const allApiFiles = [...funpiApiFiles, ...appApiFiles, ...addonApiFiles];
     return allApiFiles;
 };
 

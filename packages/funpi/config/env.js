@@ -13,6 +13,8 @@ export const envConfig = {
     BODY_LIMIT: Number(process.env.BODY_LIMIT),
     // 是否进行参数验证
     PARAMS_CHECK: process.env.PARAMS_CHECK,
+    // 是否显示接口文档
+    SWAGGER: process.env.SWAGGER,
     // 数据库表主键方案
     TABLE_PRIMARY_KEY: process.env.TABLE_PRIMARY_KEY,
     // 时区

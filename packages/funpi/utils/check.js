@@ -1,5 +1,5 @@
 // 内核模块
-import { resolve, basename } from 'node:path';
+import { resolve, basename } from 'pathe';
 import { existsSync, mkdirSync, readdirSync } from 'node:fs';
 // 外部模块
 import Ajv from 'ajv';
@@ -15,7 +15,7 @@ import { menuConfig as internalMenuConfig } from '../config/menu.js';
 import { envSchema } from '../schema/env.js';
 import { menuSchema } from '../schema/menu.js';
 // 工具函数
-import { fnImport, log4state, fnIsCamelCase, fnApiFiles } from './index.js';
+import { fnImport, log4state, fnIsCamelCase, fnApiFiles, fnApiFilesCheck } from './index.js';
 import { ajvZh } from './ajvZh.js';
 
 export const initCheck = async (fastify) => {
@@ -88,6 +88,9 @@ export const initCheck = async (fastify) => {
             menuPaths.add(child.path);
         }
     }
+
+    // 接口检测
+    await fnApiFilesCheck();
 
     // ==================================================
 

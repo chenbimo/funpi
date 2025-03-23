@@ -1,5 +1,5 @@
 // 核心模块
-import { resolve } from 'node:path';
+import { resolve } from 'pathe';
 // 外部模块
 import winston from 'winston';
 import 'winston-daily-rotate-file';

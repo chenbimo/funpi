@@ -1,3 +1,3 @@
-import { dirname, resolve } from 'path';
-export const appDir = process.cwd();
+import { dirname, resolve, normalize } from 'pathe';
+export const appDir = normalize(process.cwd());
 export const funpiDir = dirname(dirname(import.meta.filename));

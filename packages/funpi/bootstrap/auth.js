@@ -1,6 +1,6 @@
 // 内部模块
 import { existsSync } from 'node:fs';
-import { join } from 'node:path';
+import { join } from 'pathe';
 // 外部模块
 import fp from 'fastify-plugin';
 import picomatch from 'picomatch';
@@ -31,7 +31,8 @@ async function plugin(fastify) {
                 });
                 return;
             }
-            // if (routePath.startsWith('/swagger/')) return;
+
+            if (routePath.startsWith('/swagger/')) return;
 
             /* --------------------------------- 请求资源判断 --------------------------------- */
             if (routePath.startsWith('/public')) {
