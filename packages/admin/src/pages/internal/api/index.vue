@@ -14,10 +14,26 @@
             </div>
         </div>
         <div class="page-table no-page">
-            <a-table :data="$Data.tableData" :scroll="$GlobalData.tableScroll" :pagination="false" :bordered="$GlobalData.tableBordered" row-key="id" hide-expand-button-on-empty>
+            <a-table :data="$Data.tableData" :scroll="$GlobalData.tableScroll" :pagination="false" :bordered="$GlobalData.tableBordered" row-key="id" :expanded-keys="$Data.apiIds" hide-expand-button-on-empty>
                 <template #columns>
                     <a-table-column title="名称" data-index="name" :width="250" ellipsis tooltip></a-table-column>
                     <a-table-column title="路由" data-index="value" :width="300" ellipsis tooltip></a-table-column>
+                    <a-table-column title="状态" data-index="state" :width="100" ellipsis tooltip>
+                        <template #cell="{ record }">
+                            <template v-if="record.pid !== 0">
+                                <a-dropdown @select="$Method.onStateAction($event, record)">
+                                    <a-tag v-if="record.state === 0" color="blue">正常</a-tag>
+                                    <a-tag v-if="record.state === 1" color="#00b42a">白名单</a-tag>
+                                    <a-tag v-if="record.state === 2" color="#86909c">黑名单</a-tag>
+                                    <template #content>
+                                        <a-doption :value="0">正常</a-doption>
+                                        <a-doption :value="1">白名单</a-doption>
+                                        <a-doption :value="2">黑名单</a-doption>
+                                    </template>
+                                </a-dropdown>
+                            </template>
+                        </template>
+                    </a-table-column>
                     <a-table-column title="描述" data-index="describe" ellipsis tooltip></a-table-column>
                     <a-table-column title="排序" data-index="sort" :width="80" ellipsis tooltip></a-table-column>
                     <a-table-column title="ID" data-index="id" :width="180" ellipsis tooltip></a-table-column>
@@ -48,6 +64,7 @@ const $Data = $ref({
     },
     // 接口总数
     apiTotal: '',
+    apiIds: [],
     // 列表数据
     tableData: []
 });
@@ -55,6 +72,18 @@ const $Data = $ref({
 // 方法集
 const $Method = {
     async initData() {
+        await $Method.apiSelectData();
+    },
+    async onStateAction(actionType, rowData) {
+        $Data.actionType = actionType;
+        $Data.rowData = rowData;
+        const res = await $Http({
+            url: '/funpi/admin/apiUpdateState',
+            data: {
+                id: rowData.id,
+                state: actionType
+            }
+        });
         await $Method.apiSelectData();
     },
     // 查询用户数据
@@ -68,6 +97,7 @@ const $Method = {
                 }
             });
             $Data.apiTotal = res.data.rows?.length || '';
+            $Data.apiIds = res.data.rows?.map((item) => item.id) || [];
             $Data.tableData = yd_tree_array2Tree(_sortBy(yd_datetime_relativeTime(res.data.rows), 'sort'));
         } catch (err) {
             Message.error({

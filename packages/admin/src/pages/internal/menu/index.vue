@@ -14,7 +14,7 @@
             </div>
         </div>
         <div class="page-table">
-            <a-table :data="$Data.tableData" :scroll="$GlobalData.tableScroll" :pagination="false" :bordered="$GlobalData.tableBordered" row-key="id" hide-expand-button-on-empty>
+            <a-table :data="$Data.tableData" :scroll="$GlobalData.tableScroll" :pagination="false" :bordered="$GlobalData.tableBordered" row-key="id" :expanded-keys="$Data.menuIds" hide-expand-button-on-empty>
                 <template #columns>
                     <a-table-column title="名称" data-index="name" :width="250" ellipsis tooltip></a-table-column>
                     <a-table-column title="路由" data-index="value" :width="300" ellipsis tooltip></a-table-column>
@@ -50,6 +50,7 @@ const $Data = $ref({
     tableData: [],
     rowData: {},
     menuTotal: '',
+    menuIds: [],
     pagination: {
         page: 1,
         total: 0
@@ -87,6 +88,7 @@ const $Method = {
                 }
             });
             $Data.menuTotal = res.data.rows?.length || '';
+            $Data.menuIds = res.data.rows?.map((item) => item.id) || [];
             $Data.tableData = yd_tree_array2Tree(_sortBy(yd_datetime_relativeTime(res.data.rows), 'sort'));
         } catch (err) {
             Message.error(err.msg || err);
