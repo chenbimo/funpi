@@ -80,8 +80,7 @@ async function plugin(fastify) {
 
             /* --------------------------------- 接口禁用检测 --------------------------------- */
             const dataApiBlackLists = await fastify.redisGet('cacheData_apiBlackLists');
-            const blackApis = dataApiBlackLists?.map((item) => item.value) || [];
-            const allBlackApis = es_uniq(blackApis);
+            const allBlackApis = es_uniq(dataApiBlackLists || []);
 
             const isMatchBlackApi = picomatch.isMatch(routePath, allBlackApis);
             if (isMatchBlackApi === true) {
@@ -92,8 +91,7 @@ async function plugin(fastify) {
             /* ---------------------------------- 白名单判断 --------------------------------- */
             // 从缓存获取白名单接口
             const dataApiWhiteLists = await fastify.redisGet('cacheData_apiWhiteLists');
-            const whiteApis = dataApiWhiteLists?.map((item) => item.value) || [];
-            const allWhiteApis = es_uniq(whiteApis);
+            const allWhiteApis = es_uniq(dataApiWhiteLists || []);
 
             // 是否匹配白名单
             const isMatchWhiteApi = picomatch.isMatch(routePath, allWhiteApis);
