@@ -24,6 +24,7 @@ export const metaConfig = {
         roleSelectAll: '查询角色-全部',
         roleSelectPage: '查询角色-分页',
         roleUpdate: '更新角色',
-        mailSelectPage: '查询邮件日志-分页'
+        mailSelectPage: '查询邮件日志-分页',
+        apiUpdateState: '更新接口状态'
     }
 };

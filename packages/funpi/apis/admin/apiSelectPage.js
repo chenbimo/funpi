@@ -14,8 +14,7 @@ export default async (fastify) => {
         // 执行函数
         apiHandler: async (req) => {
             try {
-                const apiModel = fastify.mysql //
-                    .table('sys_api');
+                const apiModel = fastify.mysql.table('sys_api');
 
                 const { totalCount } = await apiModel.clone().selectCount();
 
