@@ -8,8 +8,7 @@ async function plugin(fastify) {
         swagger: {
             info: {
                 title: `${process.env.APP_NAME}接口文档`,
-                description: `${process.env.APP_NAME}接口文档`,
-                version: '1.0.0'
+                description: `${process.env.APP_NAME}接口文档`
             },
             host: '127.0.0.1',
             schemes: ['http'],

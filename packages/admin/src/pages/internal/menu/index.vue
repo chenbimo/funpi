@@ -89,9 +89,7 @@ const $Method = {
             $Data.menuTotal = res.data.rows?.length || '';
             $Data.tableData = yd_tree_array2Tree(_sortBy(yd_datetime_relativeTime(res.data.rows), 'sort'));
         } catch (err) {
-            Message.error({
-                content: err.msg || err
-            });
+            Message.error(err.msg || err);
         }
     }
 };

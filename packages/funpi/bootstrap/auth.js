@@ -31,7 +31,7 @@ async function plugin(fastify) {
                 });
                 return;
             }
-
+            if (routePath.startsWith('/api/funpi/admin/adminLogin')) return;
             if (routePath.startsWith('/swagger/')) return;
 
             /* --------------------------------- 请求资源判断 --------------------------------- */

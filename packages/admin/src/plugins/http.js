@@ -46,7 +46,6 @@ $Http.interceptors.response.use(
         if (res.data.symbol === 'NOT_LOGIN') {
             location.href = location.origin + '/#/internal/login';
         }
-        Message.warning(res.data.msg);
         return Promise.reject(res.data);
     },
     function (err) {

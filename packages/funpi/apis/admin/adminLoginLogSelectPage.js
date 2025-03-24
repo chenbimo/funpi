@@ -4,8 +4,6 @@ import { tableData } from '../../tables/adminLoginLog.js';
 
 export default async (fastify) => {
     fnRoute(import.meta.url, fastify, {
-        // 接口名称
-        apiName: '管理员登录日志-分页',
         // 请求参数约束
         schemaRequest: {
             type: 'object',

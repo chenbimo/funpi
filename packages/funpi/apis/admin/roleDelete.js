@@ -14,16 +14,26 @@ export default async (fastify) => {
         // 执行函数
         apiHandler: async (req) => {
             try {
-                const dictModel = fastify.mysql.table('sys_dict').where({ id: req.body.id });
+                const roleModel = fastify.mysql.table('sys_role').where('id', req.body.id);
                 const adminActionLogModel = fastify.mysql.table('sys_admin_action_log');
 
-                const dictData = await dictModel.clone().selectOne(['id']);
-                if (!dictData?.id) {
+                const roleData = await roleModel.clone().selectOne(['id', 'is_system']);
+                if (!roleData?.id) {
                     return httpConfig.NO_DATA;
                 }
 
-                const result = await dictModel.clone().deleteData();
+                if (roleData.is_system === 1) {
+                    return {
+                        ...httpConfig.DELETE_FAIL,
+                        msg: '系统角色，无法删除'
+                    };
+                }
+
+                const result = await roleModel.clone().deleteData();
                 await adminActionLogModel.clone().insertData(fnDataClear(fnRequestLog(req)));
+
+                // 生成新的权限
+                await fastify.cacheRoleData();
 
                 return {
                     ...httpConfig.DELETE_SUCCESS,

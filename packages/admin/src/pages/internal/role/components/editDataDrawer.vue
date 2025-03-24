@@ -173,6 +173,9 @@ const $Method = {
                 yd_tree_traverse(item, (item2, index, parent) => {
                     if (item2.checked) {
                         menuIds.push(item2.id);
+                        if (item2.pid && !menuIds.includes(item2.pid)) {
+                            menuIds.push(item2.pid);
+                        }
                     }
                 });
             });

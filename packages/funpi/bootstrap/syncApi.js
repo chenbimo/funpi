@@ -20,8 +20,7 @@ async function syncApi(fastify) {
 
         // 本地的数据
         const allApiFiles = await fnApiFiles();
-        const allDirPaths = es_uniqBy(allApiFiles, (item) => item.dirName).map((item) => item.dirName);
-        const allFilePaths = allApiFiles.map((item) => item.fileName);
+        const allDirPaths = es_uniqBy(allApiFiles, (item) => item.dirName);
 
         // 数据库的数据
         const apis1 = await apiModel.clone().selectAll();
@@ -34,21 +33,22 @@ async function syncApi(fastify) {
 
         // 找出所有需要删除的接口目录
         apiDirDb1.forEach((item) => {
-            if (allDirPaths.includes(item.value) === false) {
+            if (!allDirPaths.find((item2) => item.value === item2.dirName)) {
                 deleteDirData.push(item.id);
             }
         });
 
-        for (let dirPath of allDirPaths) {
-            const apiDirData = apiDirValue1[dirPath];
+        for (let item of allDirPaths) {
+            const { metaConfig } = await fnImport(resolve(item.dirPath, '_meta.js'), 'metaConfig', {});
+            const apiDirData = apiDirValue1[item.dirName];
             const apiParams = {
-                value: dirPath,
+                name: metaConfig.dirName,
+                value: item.dirName,
                 pid: 0,
                 pids: '0'
             };
 
             if (apiDirData?.id) {
-                // 如果数据库中已有此目录，则更新目录
                 apiParams.id = apiDirData.id;
                 updateDirData.push(apiParams);
             } else {
@@ -56,7 +56,7 @@ async function syncApi(fastify) {
                 if (process.env.TABLE_PRIMARY_KEY === 'time') {
                     apiParams.id = fnIncrTimeID();
                 }
-                apiParams.name = dirPath;
+                apiParams.name = item.dirName;
                 insertDirData.push(apiParams);
             }
         }
@@ -97,20 +97,22 @@ async function syncApi(fastify) {
 
         // 找出所有需要删除的接口文件
         apiFileDb2.forEach((item) => {
-            if (allFilePaths.includes(item.value) === false) {
+            if (!allApiFiles.find((item2) => item.value === item2.fileName)) {
                 deleteFileData.push(item.id);
             }
         });
 
         // 遍历项目接口文件
-        for (let filePath of allFilePaths) {
-            const apiDirData = apiDirValue2['/' + filePath.split('/').filter((v) => v)[1]];
-            const apiFileData = apiFileValue2[filePath];
+        for (let item of allApiFiles) {
+            const { metaConfig } = await fnImport(resolve(item.dirPath, '_meta.js'), 'metaConfig', {});
+            const apiDirData = apiDirValue2['/' + item.fileName.split('/').filter((v) => v)[1]];
+            const apiFileData = apiFileValue2[item.fileName];
 
             const apiParams = {
+                name: metaConfig.apiNames[basename(item.filePath, '.js')],
                 pid: apiDirData.id,
                 pids: `0,${apiDirData.id}`,
-                value: filePath
+                value: item.fileName
             };
 
             if (apiFileData?.id) {
@@ -120,7 +122,7 @@ async function syncApi(fastify) {
                 if (process.env.TABLE_PRIMARY_KEY === 'time') {
                     apiParams.id = fnIncrTimeID();
                 }
-                apiParams.name = filePath;
+                apiParams.name = item.fileName;
                 insertFileData.push(apiParams);
             }
         }
