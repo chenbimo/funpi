@@ -97,7 +97,7 @@ const $Method = {
     async apiTokenCheck() {
         try {
             const res = await $Http({
-                url: '/funpi/tool/tokenCheck?a=1&b=2',
+                url: '/funpi/tool/tokenCheck',
                 data: {}
             });
             if (res.data.state === 'no') {
