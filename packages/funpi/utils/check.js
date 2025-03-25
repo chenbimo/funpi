@@ -26,6 +26,9 @@ export const initCheck = async (fastify) => {
     }
 
     // 确保关键目录存在 ==================================================
+    if (existsSync(resolve(appDir, 'addons')) === false) {
+        mkdirSync(resolve(appDir, 'addons'));
+    }
     if (existsSync(resolve(appDir, 'apis')) === false) {
         mkdirSync(resolve(appDir, 'apis'));
     }
