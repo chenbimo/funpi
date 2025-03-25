@@ -61,6 +61,7 @@
         "knex": "^3.1.0",
         "mysql2": "^3.13.0",
         "nodemailer": "^6.10.0",
+        "pathe": "^2.0.3",
         "picomatch": "^4.0.2",
         "safe-stable-stringify": "^2.5.0",
         "winston": "^3.17.0",
