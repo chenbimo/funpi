@@ -107,7 +107,7 @@ async function plugin(fastify) {
         await redisSet('cacheData_apiNames', []);
         await redisSet(
             'cacheData_apiNames',
-            dataApi.filter((item) => item.pid !== 0).map((item) => `/api${item.value}`)
+            dataApi.filter((item) => item.pid !== 0).map((item) => `${item.value}`)
         );
 
         // 白名单接口数据

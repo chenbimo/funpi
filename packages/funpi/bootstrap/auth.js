@@ -20,23 +20,21 @@ async function plugin(fastify) {
     });
     fastify.addHook('preHandler', async (req, res) => {
         try {
-            const urls = new URL(req.url, 'http://127.0.0.1');
-            const routePath = urls.pathname;
             // 如果是收藏图标，则直接通过
-            if (routePath === 'favicon.ico') return;
-            if (routePath === '/') {
+            if (req.url === 'favicon.ico') return;
+            if (req.url === '/') {
                 res.send({
                     code: 0,
                     msg: `${process.env.APP_NAME} 接口程序已启动`
                 });
                 return;
             }
-            if (routePath.startsWith('/api/funpi/admin/adminLogin')) return;
-            if (routePath.startsWith('/swagger/')) return;
+            if (req.routeOptions.url === '/api/funpi/admin/adminLogin') return;
+            if (req.routeOptions.url.startsWith('/swagger/')) return;
 
             /* --------------------------------- 请求资源判断 --------------------------------- */
-            if (routePath.startsWith('/public')) {
-                const filePath = join(appDir, routePath);
+            if (req.url.startsWith('/public')) {
+                const filePath = join(appDir, req.url);
                 if (existsSync(filePath) === true) {
                     return;
                 } else {
@@ -45,6 +43,8 @@ async function plugin(fastify) {
                     return;
                 }
             }
+
+            const routePath = req.routeOptions.url.slice(4);
 
             /* --------------------------------- 解析用户登录参数 --------------------------------- */
             let isAuthFail = false;
@@ -122,7 +122,7 @@ async function plugin(fastify) {
             /* ---------------------------------- 角色接口权限判断 --------------------------------- */
             // 如果接口不在白名单中，则判断用户是否有接口访问权限
             const userApis = await fastify.getUserApis(req.session);
-            const hasApi = es_find(userApis, ['value', routePath.replace('/api/', '/')]);
+            const hasApi = es_find(userApis, ['value', routePath]);
 
             if (!hasApi) {
                 res.send({
