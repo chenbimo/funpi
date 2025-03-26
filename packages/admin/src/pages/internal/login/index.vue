@@ -12,7 +12,7 @@
                         <div class="site-logo">
                             <img class="img" :src="utilInternalAssets('logo.png')" />
                         </div>
-                        <div class="site-title">易管理</div>
+                        <div class="site-title">{{ $AppConfig.appName }}</div>
                         <div class="form-panel">
                             <a-space direction="vertical">
                                 <a-input v-model="$Data.formData.account" placeholder="请输入账号">

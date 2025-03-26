@@ -3,7 +3,7 @@
         <a-layout-sider class="layout-sider" :collapsed="$Data.collapsed" :width="240" collapsible hide-trigger>
             <div class="info-area" @click="$Router.push('/')">
                 <div class="logo bg-contain" :style="{ backgroundImage: 'url(' + utilInternalAssets('logo.png') + ')' }"></div>
-                <div class="name">易管理</div>
+                <div class="name">{{ $AppConfig.appName }}</div>
             </div>
             <div class="menu-area">
                 <sideMenu v-if="$Data.isShow.sideMenu === true" :openMenuId="$Data.openMenuId" :selectedItemId="$Data.selectedItemId" :menuObject="$Data.menuObject" :menuTree="$Data.menuTree"></sideMenu>
