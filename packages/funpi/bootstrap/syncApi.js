@@ -97,7 +97,7 @@ async function syncApi(fastify) {
 
         // 找出所有需要删除的接口文件
         apiFileDb2.forEach((item) => {
-            if (!allApiFiles.find((item2) => item.value === item2.fileName)) {
+            if (!allApiFiles.find((item2) => item.value === item2.apiPath)) {
                 deleteFileData.push(item.id);
             }
         });
@@ -105,14 +105,15 @@ async function syncApi(fastify) {
         // 遍历项目接口文件
         for (let item of allApiFiles) {
             const { metaConfig } = await fnImport(resolve(item.dirPath, '_meta.js'), 'metaConfig', {});
-            const apiDirData = apiDirValue2['/' + item.fileName.split('/').filter((v) => v)[1]];
-            const apiFileData = apiFileValue2[item.fileName];
+            const apiDirPath = '/' + item.apiPath.split('/').filter((v) => v)[2];
+            const apiDirData = apiDirValue2[apiDirPath];
+            const apiFileData = apiFileValue2[item.apiPath];
 
             const apiParams = {
-                name: metaConfig.apiNames[basename(item.filePath, '.js')],
+                name: metaConfig.apiNames[item.fileName],
                 pid: apiDirData.id,
                 pids: `0,${apiDirData.id}`,
-                value: item.fileName
+                value: item.apiPath
             };
 
             if (apiFileData?.id) {

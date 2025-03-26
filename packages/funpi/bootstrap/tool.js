@@ -95,9 +95,9 @@ async function plugin(fastify) {
         const dataApi = await fastify.mysql.table('sys_api').selectAll();
 
         // 白名单接口
-        const apiWhiteLists = dataApi.filter((item) => item.state === 1).map((item) => item.value);
+        const apiWhiteLists = dataApi.filter((item) => item.state === 1).map((item) => `${item.value}`);
         // 黑名单接口
-        const apiBlackLists = dataApi.filter((item) => item.state === 2).map((item) => item.value);
+        const apiBlackLists = dataApi.filter((item) => item.state === 2).map((item) => `${item.value}`);
 
         // 接口树数据
         await redisSet('cacheData_api', []);
@@ -107,7 +107,7 @@ async function plugin(fastify) {
         await redisSet('cacheData_apiNames', []);
         await redisSet(
             'cacheData_apiNames',
-            dataApi.filter((item) => item.pid !== 0).map((item) => `/api${item.value}`)
+            dataApi.filter((item) => item.pid !== 0).map((item) => `${item.value}`)
         );
 
         // 白名单接口数据

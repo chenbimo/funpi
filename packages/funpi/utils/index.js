@@ -404,9 +404,9 @@ export const fnApiFiles = async () => {
             return {
                 where: 'funpi',
                 dirPath: normalize(file.parentPath),
-                filePath: file.name,
+                fileName: basename(file.name, '.js'),
                 dirName: `/${basename(file.parentPath)}`,
-                fileName: `/funpi/${basename(file.parentPath)}/${file.name.replace('.js', '')}`
+                apiPath: `/api/funpi/${basename(file.parentPath)}/${file.name.replace('.js', '')}`
             };
         });
 
@@ -423,9 +423,9 @@ export const fnApiFiles = async () => {
             return {
                 where: 'app',
                 dirPath: normalize(file.parentPath),
-                filePath: file.name,
+                fileName: basename(file.name, '.js'),
                 dirName: `/${basename(file.parentPath)}`,
-                fileName: `/app/${basename(file.parentPath)}/${file.name.replace('.js', '')}`
+                apiPath: `/api/app/${basename(file.parentPath)}/${file.name.replace('.js', '')}`
             };
         });
 
@@ -446,9 +446,9 @@ export const fnApiFiles = async () => {
             return {
                 where: 'addon',
                 dirPath: normalize(file.parentPath),
-                filePath: file.name,
+                fileName: basename(file.name, '.js'),
                 dirName: `/${basename(file.parentPath)}`,
-                fileName: `/addon/${basename(file.parentPath)}/${file.name.replace('.js', '')}`
+                apiPath: `/api/addon/${basename(file.parentPath)}/${file.name.replace('.js', '')}`
             };
         });
 

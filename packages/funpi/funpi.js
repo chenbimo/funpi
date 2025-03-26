@@ -190,7 +190,7 @@ function initServer() {
             }
         });
         // 启动服务！
-        fastify.listen({ port: Number(process.env.APP_PORT), host: process.env.LISTEN_HOST }, async function (err, address) {
+        fastify.listen({ port: Number(process.env.APP_PORT), host: process.env.LISTEN_HOST }, function (err, address) {
             if (err) {
                 fastify.log.error(err);
                 process.exit();

@@ -44,8 +44,6 @@ async function plugin(fastify) {
                 }
             }
 
-            const routePath = req.routeOptions.url.slice(4);
-
             /* --------------------------------- 解析用户登录参数 --------------------------------- */
             let isAuthFail = false;
             try {
@@ -73,7 +71,7 @@ async function plugin(fastify) {
             /* --------------------------------- 接口存在性判断 -------------------------------- */
             const allApiNames = await fastify.redisGet('cacheData_apiNames');
 
-            if (allApiNames.includes(routePath) === false) {
+            if (allApiNames.includes(req.routeOptions.url) === false) {
                 res.send(httpConfig.NO_API);
                 return;
             }
@@ -82,7 +80,7 @@ async function plugin(fastify) {
             const dataApiBlackLists = await fastify.redisGet('cacheData_apiBlackLists');
             const allBlackApis = es_uniq(dataApiBlackLists || []);
 
-            const isMatchBlackApi = picomatch.isMatch(routePath, allBlackApis);
+            const isMatchBlackApi = picomatch.isMatch(req.routeOptions.url, allBlackApis);
             if (isMatchBlackApi === true) {
                 res.send(httpConfig.API_DISABLED);
                 return;
@@ -94,7 +92,7 @@ async function plugin(fastify) {
             const allWhiteApis = es_uniq(dataApiWhiteLists || []);
 
             // 是否匹配白名单
-            const isMatchWhiteApi = picomatch.isMatch(routePath, allWhiteApis);
+            const isMatchWhiteApi = picomatch.isMatch(req.routeOptions.url, allWhiteApis);
 
             if (isMatchWhiteApi === true) return;
 
@@ -122,12 +120,13 @@ async function plugin(fastify) {
             /* ---------------------------------- 角色接口权限判断 --------------------------------- */
             // 如果接口不在白名单中，则判断用户是否有接口访问权限
             const userApis = await fastify.getUserApis(req.session);
-            const hasApi = es_find(userApis, ['value', routePath]);
+
+            const hasApi = es_find(userApis, ['value', req.routeOptions.url]);
 
             if (!hasApi) {
                 res.send({
                     ...httpConfig.FAIL,
-                    msg: `您没有 [ ${req?.routeOptions?.schema?.summary || routePath} ] 接口的操作权限`
+                    msg: `您没有 [ ${req?.routeOptions?.schema?.summary || req.routeOptions.url} ] 接口的操作权限`
                 });
                 return;
             }
