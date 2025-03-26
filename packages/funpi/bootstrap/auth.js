@@ -29,8 +29,7 @@ async function plugin(fastify) {
                 });
                 return;
             }
-            if (req.routeOptions.url === '/api/funpi/admin/adminLogin') return;
-            if (req.routeOptions.url.startsWith('/swagger/')) return;
+            if (req.url.startsWith('/swagger/')) return;
 
             /* --------------------------------- 请求资源判断 --------------------------------- */
             if (req.url.startsWith('/public')) {
@@ -43,6 +42,13 @@ async function plugin(fastify) {
                     return;
                 }
             }
+
+            if (!req.routeOptions?.url || !req.routeOptions?.url?.startsWith('/api/')) {
+                res.send(httpConfig.NO_API);
+                return;
+            }
+
+            if (req.routeOptions.url === '/api/funpi/admin/adminLogin') return;
 
             /* --------------------------------- 解析用户登录参数 --------------------------------- */
             let isAuthFail = false;
