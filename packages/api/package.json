@@ -46,8 +46,7 @@
         "url": "https://github.com/chenbimo/yicode.git"
     },
     "dependencies": {
-        "funpi": "workspace:^",
-        "pathe": "^2.0.3"
+        "funpi": "workspace:^"
     },
     "gitHead": "1c28c0de7c0af8aa4582c45ab2d98e66c597c7a1"
 }

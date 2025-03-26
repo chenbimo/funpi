@@ -14,16 +14,16 @@
       "name": "@funpi/admin",
       "version": "7.0.0",
       "dependencies": {
-        "@arco-design/web-vue": "^2.56.3",
+        "@arco-design/web-vue": "^2.57.0",
         "@arco-plugins/vite-vue": "^1.4.5",
-        "@iconify/json": "^2.2.314",
-        "axios": "^1.8.2",
+        "@iconify/json": "^2.2.320",
+        "axios": "^1.8.4",
         "date-fns": "^4.1.0",
         "es-toolkit": "^1.33.0",
         "js-md5": "^0.8.3",
         "store2": "^2.14.4",
         "yidash": "^1.12.1",
-        "yite-cli": "^4.5.0",
+        "yite-cli": "^4.5.2",
       },
     },
     "packages/api": {
@@ -31,7 +31,6 @@
       "version": "7.0.0",
       "dependencies": {
         "funpi": "workspace:^",
-        "pathe": "^2.0.3",
       },
     },
     "packages/cli": {
