@@ -2,6 +2,11 @@ export const envSchema = {
     title: '环境变量配置',
     type: 'object',
     properties: {
+        NODE_ENV: {
+            title: '项目模式',
+            type: 'string',
+            enum: ['development', 'production']
+        },
         APP_NAME: {
             title: '应用名称',
             type: 'string',

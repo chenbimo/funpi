@@ -1,4 +1,6 @@
 export const envConfig = {
+    // 项目模式
+    NODE_ENV: process.env.NODE_ENV,
     // 应用名称
     APP_NAME: process.env.APP_NAME,
     // 加密盐
