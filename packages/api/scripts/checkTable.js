@@ -1,2 +1,2 @@
-import { checkTable } from 'funpi';
+import { checkTable } from 'funpi/scripts/checkTable';
 checkTable();

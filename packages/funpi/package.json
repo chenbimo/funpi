@@ -9,7 +9,8 @@
         "registry": "https://registry.npmjs.org"
     },
     "exports": {
-        ".": "./funpi.js"
+        ".": "./funpi.js",
+        "./scripts/*": "./scripts/*.js"
     },
     "keywords": [
         "fastify",

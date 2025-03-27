@@ -1,2 +1,2 @@
-import { syncMysql } from 'funpi';
+import { syncMysql } from 'funpi/scripts/syncMysql';
 syncMysql();

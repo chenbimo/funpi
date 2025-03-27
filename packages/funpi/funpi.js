@@ -34,184 +34,170 @@ import { tableData as roleTable } from './tables/role.js';
 
 // 脚本列表
 import { initCheck } from './utils/check.js';
-import { syncMysql } from './scripts/syncMysql.js';
-import { checkTable } from './scripts/checkTable.js';
 
 // 配置信息
 import { appDir, funpiDir } from './config/path.js';
 import { httpConfig } from './config/http.js';
 
-// 初始化项目实例
-const fastify = Fastify({
-    loggerInstance: loggerPlugin,
-    pluginTimeout: 0,
-    bodyLimit: Number(process.env.BODY_LIMIT) * 1048576,
-    ajv: {
-        customOptions: {
-            allErrors: true,
-            verbose: true
+// 初始化服务
+const initServer = async () => {
+    // 初始化项目实例
+    const fastify = Fastify({
+        loggerInstance: loggerPlugin,
+        pluginTimeout: 0,
+        bodyLimit: Number(process.env.BODY_LIMIT) * 1048576,
+        ajv: {
+            customOptions: {
+                allErrors: true,
+                verbose: true
+            }
         }
-    }
-});
+    });
 
-// 处理全局错误
-fastify.setErrorHandler(function (err, req, res) {
-    if (err.validation) {
-        ajvZh(err.validation);
-        const msg = err.validation
-            .map((error) => {
-                return (error.parentSchema.title + ' ' + error.message).trim();
-            })
-            .join(',');
+    // 处理全局错误
+    fastify.setErrorHandler(function (err, req, res) {
+        if (err.validation) {
+            ajvZh(err.validation);
+            const msg = err.validation
+                .map((error) => {
+                    return (error.parentSchema.title + ' ' + error.message).trim();
+                })
+                .join(',');
+            res.status(200).send({
+                code: 1,
+                msg: msg,
+                symbol: 'GLOBAL_ERROR'
+            });
+            return;
+        }
+
+        if (err.statusCode >= 500) {
+            fastify.log.error(err);
+            // 发送错误响应
+        } else if (err.statusCode === 429) {
+            err.message = '请求过快，请降低请求频率。';
+        } else if (err.statusCode >= 400) {
+            fastify.log.warn(err);
+        } else {
+            fastify.log.warn(err);
+        }
+
+        // 发送错误响应
         res.status(200).send({
             code: 1,
-            msg: msg,
+            msg: err.message,
             symbol: 'GLOBAL_ERROR'
         });
-        return;
-    }
+    });
 
-    if (err.statusCode >= 500) {
-        fastify.log.error(err);
+    // 处理未找到路由
+    fastify.setNotFoundHandler(function (req, res) {
         // 发送错误响应
-    } else if (err.statusCode === 429) {
-        err.message = '请求过快，请降低请求频率。';
-    } else if (err.statusCode >= 400) {
-        fastify.log.warn(err);
-    } else {
-        fastify.log.warn(err);
+        res.status(200).send({
+            code: 1,
+            msg: '未知路由',
+            data: req.url
+        });
+    });
+
+    // 静态资源托管
+    fastify.register(fastifyStatic, {
+        root: resolve(appDir, 'public'),
+        prefix: '/public/',
+        list: true
+    });
+    // 初始化检查
+    await initCheck(fastify);
+    // 加载启动插件
+    if (process.env.SWAGGER === '1') {
+        fastify.register(swaggerPlugin, {});
     }
+    fastify.register(jwtPlugin, {});
+    fastify.register(xmlParsePlugin, {});
+    fastify.register(uploadPlugin, {});
+    fastify.register(redisPlugin, {});
+    fastify.register(mysqlPlugin, {});
+    fastify.register(toolPlugin, {});
+    fastify.register(corsPlugin, {});
+    fastify.register(authPlugin, {});
+    fastify.register(mailPlugin, {});
+    fastify.register(syncMenuPlugin, {});
+    fastify.register(syncApiPlugin, {});
+    fastify.register(syncDevPlugin, {});
 
-    // 发送错误响应
-    res.status(200).send({
-        code: 1,
-        msg: err.message,
-        symbol: 'GLOBAL_ERROR'
+    // 加载用户插件
+    fastify.register(autoLoad, {
+        dir: join(appDir, 'plugins'),
+        matchFilter: (_path) => {
+            return _path.endsWith('.js') === true;
+        },
+        ignorePattern: /^[_.]/
     });
-});
 
-// 处理未找到路由
-fastify.setNotFoundHandler(function (req, res) {
-    // 发送错误响应
-    res.status(200).send({
-        code: 1,
-        msg: '未知路由',
-        data: req.url
+    // 加载插件的插件
+    fastify.register(autoLoad, {
+        dir: join(appDir, 'addons'),
+        matchFilter: (_path) => {
+            const [_, plugins, dir, file] = _path.split('/');
+            return plugins === 'plugins' && file.endsWith('.js') === true;
+        },
+        ignorePattern: /^[_.]/
     });
-});
 
-// 静态资源托管
-fastify.register(fastifyStatic, {
-    root: resolve(appDir, 'public'),
-    prefix: '/public/',
-    list: true
-});
-
-// 初始化服务
-function initServer() {
-    return new Promise(async (resolve) => {
-        // 初始化检查
-        await initCheck(fastify);
-        // 加载启动插件
-        if (process.env.SWAGGER === '1') {
-            fastify.register(swaggerPlugin, {});
+    // 加载系统接口
+    fastify.register(autoLoad, {
+        dir: join(funpiDir, 'apis'),
+        matchFilter: (_path) => {
+            return _path.endsWith('.js') === true;
+        },
+        ignorePattern: /^[_.]/,
+        options: {
+            prefix: '/api/funpi'
         }
-        fastify.register(jwtPlugin, {});
-        fastify.register(xmlParsePlugin, {});
-        fastify.register(uploadPlugin, {});
-        fastify.register(redisPlugin, {});
-        fastify.register(mysqlPlugin, {});
-        fastify.register(toolPlugin, {});
-        fastify.register(corsPlugin, {});
-        fastify.register(authPlugin, {});
-        fastify.register(mailPlugin, {});
-        fastify.register(syncMenuPlugin, {});
-        fastify.register(syncApiPlugin, {});
-        fastify.register(syncDevPlugin, {});
-
-        // 加载用户插件
-        fastify.register(autoLoad, {
-            dir: join(appDir, 'plugins'),
-            matchFilter: (_path) => {
-                return _path.endsWith('.js') === true;
-            },
-            ignorePattern: /^[_.]/
-        });
-
-        // 加载插件的插件
-        fastify.register(autoLoad, {
-            dir: join(appDir, 'addons'),
-            matchFilter: (_path) => {
-                const [_, plugins, dir, file] = _path.split('/');
-                return plugins === 'plugins' && file.endsWith('.js') === true;
-            },
-            ignorePattern: /^[_.]/
-        });
-
-        // 加载系统接口
-        fastify.register(autoLoad, {
-            dir: join(funpiDir, 'apis'),
-            matchFilter: (_path) => {
-                return _path.endsWith('.js') === true;
-            },
-            ignorePattern: /^[_.]/,
-            options: {
-                prefix: '/api/funpi'
-            }
-        });
-
-        // 加载用户接口
-        fastify.register(autoLoad, {
-            dir: join(appDir, 'apis'),
-            matchFilter: (_path) => {
-                return _path.endsWith('.js') === true;
-            },
-            ignorePattern: /^[_.]/,
-            options: {
-                prefix: '/api/app'
-            }
-        });
-
-        // 加载插件接口
-        fastify.register(autoLoad, {
-            dir: join(appDir, 'addons'),
-            matchFilter: (_path) => {
-                const [_, apis, dir, file] = _path.split('/').filter((v) => v);
-                const isPass = apis === 'apis' && file.endsWith('.js') === true;
-                return isPass;
-            },
-            ignorePattern: /^[_.]/,
-            options: {
-                prefix: '/api/addon'
-            },
-            dirNameRoutePrefix: function rewrite(folderParent, folderName) {
-                if (folderName === 'apis') return false;
-                return folderName;
-            }
-        });
-        // 启动服务！
-        fastify.listen({ port: Number(process.env.APP_PORT), host: process.env.LISTEN_HOST }, function (err, address) {
-            if (err) {
-                fastify.log.error(err);
-                process.exit();
-            }
-            fastify.log.warn(`${process.env.APP_NAME} 接口服务已启动： ${address}`);
-            console.log(`${process.env.APP_NAME} 接口服务已启动： ${address}`);
-        });
-
-        fastify.ready((err) => {
-            if (err) {
-                throw err;
-            } else {
-                return resolve(fastify);
-            }
-        });
     });
-}
+
+    // 加载用户接口
+    fastify.register(autoLoad, {
+        dir: join(appDir, 'apis'),
+        matchFilter: (_path) => {
+            return _path.endsWith('.js') === true;
+        },
+        ignorePattern: /^[_.]/,
+        options: {
+            prefix: '/api/app'
+        }
+    });
+
+    // 加载插件接口
+    fastify.register(autoLoad, {
+        dir: join(appDir, 'addons'),
+        matchFilter: (_path) => {
+            const [_, apis, dir, file] = _path.split('/').filter((v) => v);
+            const isPass = apis === 'apis' && file.endsWith('.js') === true;
+            return isPass;
+        },
+        ignorePattern: /^[_.]/,
+        options: {
+            prefix: '/api/addon'
+        },
+        dirNameRoutePrefix: function rewrite(folderParent, folderName) {
+            if (folderName === 'apis') return false;
+            return folderName;
+        }
+    });
+    // 启动服务！
+    fastify.listen({ port: Number(process.env.APP_PORT), host: process.env.LISTEN_HOST }, function (err, address) {
+        if (err) {
+            fastify.log.error(err);
+            process.exit();
+        }
+        fastify.log.warn(`${process.env.APP_NAME} 接口服务已启动： ${address}`);
+        console.log(`${process.env.APP_NAME} 接口服务已启动： ${address}`);
+    });
+};
 
 export {
     //
-    fastify,
     fp,
     initServer,
     Ajv,
@@ -226,9 +212,6 @@ export {
     fnIncrTimeID,
     // 配置数据
     httpConfig,
-    // 脚本工具
-    syncMysql,
-    checkTable,
     // 数据库表
     adminTable,
     apiTable,

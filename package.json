@@ -32,5 +32,8 @@
         "*": [
             "prettier --write --cache --ignore-unknown"
         ]
+    },
+    "dependencies": {
+        "dotenv": "^16.4.7"
     }
 }
