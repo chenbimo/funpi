@@ -46,6 +46,7 @@
         "url": "https://github.com/chenbimo/yicode.git"
     },
     "dependencies": {
+        "dotenv": "^16.4.7",
         "funpi": "workspace:^"
     },
     "gitHead": "1c28c0de7c0af8aa4582c45ab2d98e66c597c7a1"

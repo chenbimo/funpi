@@ -1,4 +1,7 @@
-const fs = require('node:fs');
+const fs = require('fs');
+const dotenv = require('dotenv');
+const envConfig = dotenv.parse(fs.readFileSync('./.env.production'));
+
 module.exports = {
     apps: [
         {
@@ -9,8 +12,8 @@ module.exports = {
             watch: false,
             autorestart: true,
             interpreter: 'bun',
-            node_args: '--env-file=./.env.production',
-            ignore_watch: ['node_modules', 'logs', 'data']
+            ignore_watch: ['node_modules', 'logs', 'data'],
+            env: envConfig
         }
     ]
 };
