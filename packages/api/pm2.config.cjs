@@ -13,7 +13,11 @@ module.exports = {
             autorestart: true,
             interpreter: 'bun',
             ignore_watch: ['node_modules', 'logs', 'data'],
-            env: envConfig
+            env: envConfig,
+            log_file: './logs/funpi.log',
+            error_file: './logs/funpi-error.log',
+            out_file: './logs/funpi-out.log',
+            max_memory_restart: '200M'
         }
     ]
 };
