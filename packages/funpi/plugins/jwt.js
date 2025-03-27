@@ -4,17 +4,17 @@ import fastifyJwt from '@fastify/jwt';
 
 async function plugin(fastify) {
     await fastify.register(fastifyJwt, {
-        secret: process.env.JWT_SECRET,
+        secret: Bun.env.JWT_SECRET,
         decoratorName: 'session',
         decode: {
             complete: true
         },
         sign: {
-            algorithm: process.env.JWT_ALGORITHM,
-            expiresIn: process.env.JWT_EXPIRES_IN
+            algorithm: Bun.env.JWT_ALGORITHM,
+            expiresIn: Bun.env.JWT_EXPIRES_IN
         },
         verify: {
-            algorithms: [process.env.JWT_ALGORITHM]
+            algorithms: [Bun.env.JWT_ALGORITHM]
         }
     });
 }

@@ -191,7 +191,7 @@ export const checkTable = async (trx) => {
             await trx.rollback();
             await trx.destroy();
         }
-        console.log(`${log4state('error')} ${process.env.MYSQL_DB} 数据库表定义错误`);
+        console.log(`${log4state('error')} ${Bun.env.MYSQL_DB} 数据库表定义错误`);
         process.exit();
     }
 };

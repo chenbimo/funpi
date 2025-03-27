@@ -15,9 +15,9 @@ const dbInsert = (obj) => {
     }
     newObj.created_at = Date.now();
     newObj.updated_at = Date.now();
-    if (process.env.TABLE_PRIMARY_KEY !== 'default') {
+    if (Bun.env.TABLE_PRIMARY_KEY !== 'default') {
         // 当主键为 time 模式时，更改 id 字段的值
-        if (process.env.TABLE_PRIMARY_KEY === 'time') {
+        if (Bun.env.TABLE_PRIMARY_KEY === 'time') {
             newObj.id = fnIncrTimeID();
         }
     }
@@ -97,11 +97,11 @@ async function plugin(fastify) {
         const mysql = await new Knex({
             client: 'mysql2',
             connection: {
-                host: process.env.MYSQL_HOST,
-                port: Number(process.env.MYSQL_PORT),
-                user: process.env.MYSQL_USERNAME,
-                password: process.env.MYSQL_PASSWORD,
-                database: process.env.MYSQL_DB
+                host: Bun.env.MYSQL_HOST,
+                port: Number(Bun.env.MYSQL_PORT),
+                user: Bun.env.MYSQL_USERNAME,
+                password: Bun.env.MYSQL_PASSWORD,
+                database: Bun.env.MYSQL_DB
             },
             acquireConnectionTimeout: 30000,
             asyncStackTraces: true,

@@ -41,11 +41,11 @@ export const syncMysql = async () => {
     const mysql = await new Knex({
         client: 'mysql2',
         connection: {
-            host: process.env.MYSQL_HOST,
-            port: process.env.MYSQL_PORT,
-            user: process.env.MYSQL_USERNAME,
-            password: process.env.MYSQL_PASSWORD,
-            database: process.env.MYSQL_DB
+            host: Bun.env.MYSQL_HOST,
+            port: Bun.env.MYSQL_PORT,
+            user: Bun.env.MYSQL_USERNAME,
+            password: Bun.env.MYSQL_PASSWORD,
+            database: Bun.env.MYSQL_DB
         },
         acquireConnectionTimeout: 30000,
         asyncStackTraces: true,
@@ -106,10 +106,10 @@ export const syncMysql = async () => {
                 // 设置表名称
                 table.comment(tableItem.tableName);
                 // 默认每个表的 ID 为自增流水号
-                if (process.env.TABLE_PRIMARY_KEY === 'default') {
+                if (Bun.env.TABLE_PRIMARY_KEY === 'default') {
                     table.increments('id');
                 }
-                if (process.env.TABLE_PRIMARY_KEY === 'time') {
+                if (Bun.env.TABLE_PRIMARY_KEY === 'time') {
                     table.bigint('id').primary().notNullable().unsigned().comment('主键 ID');
                 }
                 // 设置时间
@@ -200,13 +200,13 @@ export const syncMysql = async () => {
         }
         await trx.commit();
         await trx.destroy();
-        console.log(`${log4state('success')} ${process.env.MYSQL_DB} 数据库表同步成功`);
+        console.log(`${log4state('success')} ${Bun.env.MYSQL_DB} 数据库表同步成功`);
         process.exit();
     } catch (err) {
         console.log('🚀 ~ syncMysql ~ err:', err);
         await trx.rollback();
         await trx.destroy();
-        console.log(`${log4state('error')} ${process.env.MYSQL_DB} 数据库表同步失败`);
+        console.log(`${log4state('error')} ${Bun.env.MYSQL_DB} 数据库表同步失败`);
         process.exit();
     }
 };

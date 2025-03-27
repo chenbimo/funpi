@@ -1,48 +1,48 @@
 export const envConfig = {
     // 应用名称
-    APP_NAME: process.env.APP_NAME,
+    APP_NAME: Bun.env.APP_NAME,
     // 加密盐
-    MD5_SALT: process.env.MD5_SALT,
+    MD5_SALT: Bun.env.MD5_SALT,
     // 监听端口
-    APP_PORT: Number(process.env.APP_PORT),
+    APP_PORT: Number(Bun.env.APP_PORT),
     // 监听主机
-    LISTEN_HOST: process.env.LISTEN_HOST,
+    LISTEN_HOST: Bun.env.LISTEN_HOST,
     // 超级管理员密码
-    DEV_PASSWORD: process.env.DEV_PASSWORD,
+    DEV_PASSWORD: Bun.env.DEV_PASSWORD,
     // 请求体大小 10M
-    BODY_LIMIT: Number(process.env.BODY_LIMIT),
+    BODY_LIMIT: Number(Bun.env.BODY_LIMIT),
     // 是否进行参数验证
-    PARAMS_CHECK: process.env.PARAMS_CHECK,
+    PARAMS_CHECK: Bun.env.PARAMS_CHECK,
     // 是否显示接口文档
-    SWAGGER: process.env.SWAGGER,
+    SWAGGER: Bun.env.SWAGGER,
     // 数据库表主键方案
-    TABLE_PRIMARY_KEY: process.env.TABLE_PRIMARY_KEY,
+    TABLE_PRIMARY_KEY: Bun.env.TABLE_PRIMARY_KEY,
     // 时区
-    TIMEZONE: process.env.TIMEZONE,
+    TIMEZONE: Bun.env.TIMEZONE,
     // 数据库配置
-    MYSQL_HOST: process.env.MYSQL_HOST,
-    MYSQL_PORT: Number(process.env.MYSQL_PORT),
-    MYSQL_DB: process.env.MYSQL_DB,
-    MYSQL_USERNAME: process.env.MYSQL_USERNAME,
-    MYSQL_PASSWORD: process.env.MYSQL_PASSWORD,
+    MYSQL_HOST: Bun.env.MYSQL_HOST,
+    MYSQL_PORT: Number(Bun.env.MYSQL_PORT),
+    MYSQL_DB: Bun.env.MYSQL_DB,
+    MYSQL_USERNAME: Bun.env.MYSQL_USERNAME,
+    MYSQL_PASSWORD: Bun.env.MYSQL_PASSWORD,
     // Redis配置
-    REDIS_HOST: process.env.REDIS_HOST,
-    REDIS_PORT: Number(process.env.REDIS_PORT),
-    REDIS_USERNAME: process.env.REDIS_USERNAME,
-    REDIS_PASSWORD: process.env.REDIS_PASSWORD,
-    REDIS_DB: Number(process.env.REDIS_DB),
-    REDIS_KEY_PREFIX: process.env.REDIS_KEY_PREFIX,
+    REDIS_HOST: Bun.env.REDIS_HOST,
+    REDIS_PORT: Number(Bun.env.REDIS_PORT),
+    REDIS_USERNAME: Bun.env.REDIS_USERNAME,
+    REDIS_PASSWORD: Bun.env.REDIS_PASSWORD,
+    REDIS_DB: Number(Bun.env.REDIS_DB),
+    REDIS_KEY_PREFIX: Bun.env.REDIS_KEY_PREFIX,
     // JWT配置
-    JWT_SECRET: process.env.JWT_SECRET,
-    JWT_EXPIRES_IN: process.env.JWT_EXPIRES_IN,
-    JWT_ALGORITHM: process.env.JWT_ALGORITHM,
+    JWT_SECRET: Bun.env.JWT_SECRET,
+    JWT_EXPIRES_IN: Bun.env.JWT_EXPIRES_IN,
+    JWT_ALGORITHM: Bun.env.JWT_ALGORITHM,
     // 邮件配置
-    MAIL_HOST: process.env.MAIL_HOST,
-    MAIL_PORT: Number(process.env.MAIL_PORT),
-    MAIL_POOL: process.env.MAIL_POOL,
-    MAIL_SECURE: process.env.MAIL_SECURE,
-    MAIL_USER: process.env.MAIL_USER,
-    MAIL_PASS: process.env.MAIL_PASS,
-    MAIL_SENDER: process.env.MAIL_SENDER,
-    MAIL_ADDRESS: process.env.MAIL_ADDRESS
+    MAIL_HOST: Bun.env.MAIL_HOST,
+    MAIL_PORT: Number(Bun.env.MAIL_PORT),
+    MAIL_POOL: Bun.env.MAIL_POOL,
+    MAIL_SECURE: Bun.env.MAIL_SECURE,
+    MAIL_USER: Bun.env.MAIL_USER,
+    MAIL_PASS: Bun.env.MAIL_PASS,
+    MAIL_SENDER: Bun.env.MAIL_SENDER,
+    MAIL_ADDRESS: Bun.env.MAIL_ADDRESS
 };

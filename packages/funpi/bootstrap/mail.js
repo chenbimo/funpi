@@ -3,13 +3,13 @@ import nodemailer from 'nodemailer';
 
 async function plugin(fastify) {
     const mailTransport = await nodemailer.createTransport({
-        host: process.env.MAIL_HOST,
-        port: process.env.MAIL_PORT,
-        pool: process.env.MAIL_POOL === '1' ? true : false,
-        secure: process.env.MAIL_SECURE === '1' ? true : false,
+        host: Bun.env.MAIL_HOST,
+        port: Bun.env.MAIL_PORT,
+        pool: Bun.env.MAIL_POOL === '1' ? true : false,
+        secure: Bun.env.MAIL_SECURE === '1' ? true : false,
         auth: {
-            user: process.env.MAIL_USER,
-            pass: process.env.MAIL_PASS
+            user: Bun.env.MAIL_USER,
+            pass: Bun.env.MAIL_PASS
         }
     });
 
@@ -19,8 +19,8 @@ async function plugin(fastify) {
             try {
                 const result = mailTransport.sendMail({
                     from: {
-                        name: process.env.MAIL_FROM_NAME,
-                        address: process.env.MAIL_FROM_EMAIL
+                        name: Bun.env.MAIL_FROM_NAME,
+                        address: Bun.env.MAIL_FROM_EMAIL
                     },
                     ...params
                 });
