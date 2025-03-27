@@ -30,7 +30,7 @@ const configParams = {
         winston.format.timestamp({
             format: () => {
                 return new Date().toLocaleString('zh-CN', {
-                    timeZone: Bun.env.TIMEZONE,
+                    timeZone: process.env.TIMEZONE,
                     hour12: false,
                     year: 'numeric',
                     month: '2-digit',
@@ -49,7 +49,7 @@ const configParams = {
 
 // 如果是产品环境，则将日志写到文件中
 // 如果是开发环境，则直接打印日志
-if (Bun.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === 'production') {
     configParams.transports = [fileTransport];
 } else {
     configParams.transports = [new winston.transports.Console()];

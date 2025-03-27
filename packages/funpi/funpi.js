@@ -45,7 +45,7 @@ import { httpConfig } from './config/http.js';
 const fastify = Fastify({
     loggerInstance: loggerPlugin,
     pluginTimeout: 0,
-    bodyLimit: Number(Bun.env.BODY_LIMIT) * 1048576,
+    bodyLimit: Number(process.env.BODY_LIMIT) * 1048576,
     ajv: {
         customOptions: {
             allErrors: true,
@@ -113,7 +113,7 @@ function initServer() {
         // 初始化检查
         await initCheck(fastify);
         // 加载启动插件
-        if (Bun.env.SWAGGER === '1') {
+        if (process.env.SWAGGER === '1') {
             fastify.register(swaggerPlugin, {});
         }
         fastify.register(jwtPlugin, {});
@@ -190,13 +190,13 @@ function initServer() {
             }
         });
         // 启动服务！
-        fastify.listen({ port: Number(Bun.env.APP_PORT), host: Bun.env.LISTEN_HOST }, function (err, address) {
+        fastify.listen({ port: Number(process.env.APP_PORT), host: process.env.LISTEN_HOST }, function (err, address) {
             if (err) {
                 fastify.log.error(err);
                 process.exit();
             }
-            fastify.log.warn(`${Bun.env.APP_NAME} 接口服务已启动： ${address}`);
-            console.log(`${Bun.env.APP_NAME} 接口服务已启动： ${address}`);
+            fastify.log.warn(`${process.env.APP_NAME} 接口服务已启动： ${address}`);
+            console.log(`${process.env.APP_NAME} 接口服务已启动： ${address}`);
         });
 
         fastify.ready((err) => {

@@ -36,7 +36,7 @@ export default async (fastify) => {
                 }
 
                 // 判断密码
-                if (fnCryptoHmacMD5(req.body.password, Bun.env.MD5_SALT) !== adminData.password) {
+                if (fnCryptoHmacMD5(req.body.password, process.env.MD5_SALT) !== adminData.password) {
                     return {
                         ...httpConfig.FAIL,
                         msg: '密码错误'

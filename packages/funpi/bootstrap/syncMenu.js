@@ -41,7 +41,7 @@ async function syncMenuDir(fastify, menuConfig) {
                     pid: 0,
                     sort: index
                 };
-                if (Bun.env.TABLE_PRIMARY_KEY === 'time') {
+                if (process.env.TABLE_PRIMARY_KEY === 'time') {
                     insertData.id = fnIncrTimeID();
                 }
                 insertMenuDb.push(insertData);
@@ -55,7 +55,7 @@ async function syncMenuDir(fastify, menuConfig) {
             }
         });
 
-        if (!Bun.env.NODE_APP_INSTANCE || Bun.env.NODE_APP_INSTANCE === '0') {
+        if (!process.env.NODE_APP_INSTANCE || process.env.NODE_APP_INSTANCE === '0') {
             // 删除菜单目录
             if (deleteMenuDb.length > 0) {
                 await menuModel.clone().whereIn('id', es_uniq(deleteMenuDb)).deleteData();
@@ -125,7 +125,7 @@ async function syncMenuFile(fastify, menuConfig) {
                         sort: index,
                         pid: menuDirData.id
                     };
-                    if (Bun.env.TABLE_PRIMARY_KEY === 'time') {
+                    if (process.env.TABLE_PRIMARY_KEY === 'time') {
                         insertMenuData.id = fnIncrTimeID();
                     }
                     insertMenuDb.push(insertMenuData);
@@ -141,7 +141,7 @@ async function syncMenuFile(fastify, menuConfig) {
         });
 
         // 数据的同步只在主进程中操作
-        if (!Bun.env.NODE_APP_INSTANCE || Bun.env.NODE_APP_INSTANCE === '0') {
+        if (!process.env.NODE_APP_INSTANCE || process.env.NODE_APP_INSTANCE === '0') {
             if (deleteMenuDb.length > 0) {
                 await menuModel.clone().whereIn('id', es_uniq(deleteMenuDb)).deleteData();
             }

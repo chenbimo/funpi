@@ -98,15 +98,15 @@ export const initCheck = async (fastify) => {
     // ==================================================
 
     // 启动前验证
-    if (Bun.env.MD5_SALT === 'funpi123456') {
+    if (process.env.MD5_SALT === 'funpi123456') {
         console.log(`${log4state('warn')} 请修改默认加密盐值！环境变量：MD5_SALT`);
     }
 
-    if (Bun.env.DEV_PASSWORD === 'funpi123456') {
+    if (process.env.DEV_PASSWORD === 'funpi123456') {
         console.log(`${log4state('warn')} 请修改开发管理员密码！环境变量：DEV_PASSWORD`);
     }
 
-    if (Bun.env.JWT_SECRET === 'funpi123456') {
+    if (process.env.JWT_SECRET === 'funpi123456') {
         console.log(`${log4state('warn')} 请修改 JWT 密钥！环境变量：JWT_SECRET`);
     }
 };

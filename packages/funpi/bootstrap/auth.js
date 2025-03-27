@@ -25,7 +25,7 @@ async function plugin(fastify) {
             if (req.url === '/') {
                 res.send({
                     code: 0,
-                    msg: `${Bun.env.APP_NAME} 接口程序已启动`
+                    msg: `${process.env.APP_NAME} 接口程序已启动`
                 });
                 return;
             }
@@ -112,7 +112,7 @@ async function plugin(fastify) {
             }
 
             /* --------------------------------- 上传参数检测 --------------------------------- */
-            if (Bun.env.PARAMS_CHECK === '1') {
+            if (process.env.PARAMS_CHECK === '1') {
                 const result = await fnApiCheck(req);
                 if (result.code !== 0) {
                     res.send({

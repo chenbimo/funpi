@@ -13,12 +13,12 @@ function plugin(fastify, opts, next) {
     } else {
         try {
             client = new Redis({
-                host: Bun.env.REDIS_HOST,
-                port: Number(Bun.env.REDIS_PORT),
-                username: Bun.env.REDIS_USERNAME,
-                password: Bun.env.REDIS_PASSWORD,
-                db: Number(Bun.env.REDIS_DB),
-                keyPrefix: Bun.env.REDIS_KEY_PREFIX
+                host: process.env.REDIS_HOST,
+                port: Number(process.env.REDIS_PORT),
+                username: process.env.REDIS_USERNAME,
+                password: process.env.REDIS_PASSWORD,
+                db: Number(process.env.REDIS_DB),
+                keyPrefix: process.env.REDIS_KEY_PREFIX
             });
         } catch (err) {
             return next(err);

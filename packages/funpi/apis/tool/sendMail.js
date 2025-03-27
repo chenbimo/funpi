@@ -41,9 +41,9 @@ export default async (fastify) => {
                         text: req.body.content
                     });
                     await mailLogModel.clone().insertData({
-                        login_email: Bun.env.MAIL_USER,
-                        from_name: Bun.env.MAIL_FROM_NAME,
-                        from_email: Bun.env.MAIL_FROM_EMAIL,
+                        login_email: process.env.MAIL_USER,
+                        from_name: process.env.MAIL_FROM_NAME,
+                        from_email: process.env.MAIL_FROM_EMAIL,
                         to_email: req.body.to_email,
                         email_type: 'common',
                         text_content: req.body.content
@@ -76,9 +76,9 @@ export default async (fastify) => {
                         text: req.body.subject + '：' + cacheVerifyCode
                     });
                     await mailLogModel.clone().insertData({
-                        login_email: Bun.env.MAIL_USER,
-                        from_name: Bun.env.MAIL_FROM_NAME,
-                        from_email: Bun.env.MAIL_FROM_EMAIL,
+                        login_email: process.env.MAIL_USER,
+                        from_name: process.env.MAIL_FROM_NAME,
+                        from_email: process.env.MAIL_FROM_EMAIL,
                         to_email: req.body.to_email,
                         email_type: 'verify',
                         text_content: '******'

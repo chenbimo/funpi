@@ -53,7 +53,7 @@ async function plugin(fastify) {
                     is_system: is_system
                 };
                 // 角色不存在，则添加
-                if (Bun.env.TABLE_PRIMARY_KEY === 'time') {
+                if (process.env.TABLE_PRIMARY_KEY === 'time') {
                     params.id = fnIncrTimeID();
                 }
 
@@ -69,7 +69,7 @@ async function plugin(fastify) {
         }
 
         // 只有主进程才操作一次
-        if (!Bun.env.NODE_APP_INSTANCE || Bun.env.NODE_APP_INSTANCE === '0') {
+        if (!process.env.NODE_APP_INSTANCE || process.env.NODE_APP_INSTANCE === '0') {
             if (insertRoleData.length > 0) {
                 await roleModel.clone().insertData(insertRoleData);
             }
@@ -99,11 +99,11 @@ async function plugin(fastify) {
                 api_ids: apiIds.join(','),
                 is_system: 1
             };
-            if (Bun.env.TABLE_PRIMARY_KEY === 'time') {
+            if (process.env.TABLE_PRIMARY_KEY === 'time') {
                 insertData.id = fnIncrTimeID();
             }
             // 只有主进程才操作一次
-            if (!Bun.env.NODE_APP_INSTANCE || Bun.env.NODE_APP_INSTANCE === '0') {
+            if (!process.env.NODE_APP_INSTANCE || process.env.NODE_APP_INSTANCE === '0') {
                 await roleModel.clone().insertData(insertData);
             }
         } else {
@@ -115,7 +115,7 @@ async function plugin(fastify) {
                 is_system: 1
             };
             // 只有主进程才操作一次
-            if (!Bun.env.NODE_APP_INSTANCE || Bun.env.NODE_APP_INSTANCE === '0') {
+            if (!process.env.NODE_APP_INSTANCE || process.env.NODE_APP_INSTANCE === '0') {
                 await roleModel.clone().where('code', 'dev').updateData(updateData);
             }
         }
@@ -127,13 +127,13 @@ async function plugin(fastify) {
                 nickname: '开发管理员',
                 role: 'dev',
                 is_system: 1,
-                password: fnCryptoHmacMD5(fnCryptoMD5(Bun.env.DEV_PASSWORD), Bun.env.MD5_SALT)
+                password: fnCryptoHmacMD5(fnCryptoMD5(process.env.DEV_PASSWORD), process.env.MD5_SALT)
             };
-            if (Bun.env.TABLE_PRIMARY_KEY === 'time') {
+            if (process.env.TABLE_PRIMARY_KEY === 'time') {
                 insertData.id = fnIncrTimeID();
             }
             // 只有主进程才操作一次
-            if (!Bun.env.NODE_APP_INSTANCE || Bun.env.NODE_APP_INSTANCE === '0') {
+            if (!process.env.NODE_APP_INSTANCE || process.env.NODE_APP_INSTANCE === '0') {
                 await adminModel.clone().insertData(insertData);
             }
         } else {
@@ -141,10 +141,10 @@ async function plugin(fastify) {
                 nickname: '开发管理员',
                 role: 'dev',
                 is_system: 1,
-                password: fnCryptoHmacMD5(fnCryptoMD5(Bun.env.DEV_PASSWORD), Bun.env.MD5_SALT)
+                password: fnCryptoHmacMD5(fnCryptoMD5(process.env.DEV_PASSWORD), process.env.MD5_SALT)
             };
             // 只有主进程才操作一次
-            if (!Bun.env.NODE_APP_INSTANCE || Bun.env.NODE_APP_INSTANCE === '0') {
+            if (!process.env.NODE_APP_INSTANCE || process.env.NODE_APP_INSTANCE === '0') {
                 await adminModel.clone().where('username', 'dev').updateData(updateData);
             }
         }
