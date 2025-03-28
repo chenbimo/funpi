@@ -55,6 +55,13 @@ async function plugin(fastify) {
             try {
                 await req.jwtVerify();
             } catch (err) {
+                req.session = {
+                    id: 0,
+                    username: 'guest',
+                    nickname: '游客',
+                    role_type: 'user',
+                    role: 'guest'
+                };
                 isAuthFail = true;
             }
 
