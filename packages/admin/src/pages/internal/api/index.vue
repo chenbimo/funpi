@@ -34,10 +34,9 @@
                             </template>
                         </template>
                     </a-table-column>
-                    <a-table-column title="描述" data-index="describe" ellipsis tooltip></a-table-column>
                     <a-table-column title="排序" data-index="sort" :width="80" ellipsis tooltip></a-table-column>
                     <a-table-column title="ID" data-index="id" :width="180" ellipsis tooltip></a-table-column>
-                    <a-table-column title="上级" data-index="pid" :width="100" ellipsis tooltip></a-table-column>
+                    <a-table-column title="描述" data-index="describe" ellipsis tooltip></a-table-column>
                     <a-table-column title="创建时间" data-index="created_at2" :width="150"></a-table-column>
                     <a-table-column title="更新时间" data-index="updated_at2" :width="150"></a-table-column>
                 </template>
