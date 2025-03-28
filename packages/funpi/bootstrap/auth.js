@@ -89,26 +89,6 @@ async function plugin(fastify) {
                 return;
             }
 
-            /* --------------------------------- 接口禁用检测 --------------------------------- */
-            const dataApiBlackLists = await fastify.redisGet('cacheData_apiBlackLists');
-            const allBlackApis = es_uniq(dataApiBlackLists || []);
-
-            const isMatchBlackApi = picomatch.isMatch(req.routeOptions.url, allBlackApis);
-            if (isMatchBlackApi === true) {
-                res.send(httpConfig.API_DISABLED);
-                return;
-            }
-
-            /* ---------------------------------- 白名单判断 --------------------------------- */
-            // 从缓存获取白名单接口
-            const dataApiWhiteLists = await fastify.redisGet('cacheData_apiWhiteLists');
-            const allWhiteApis = es_uniq(dataApiWhiteLists || []);
-
-            // 是否匹配白名单
-            const isMatchWhiteApi = picomatch.isMatch(req.routeOptions.url, allWhiteApis);
-
-            if (isMatchWhiteApi === true) return;
-
             /* --------------------------------- 接口登录检测 --------------------------------- */
             if (isAuthFail === true) {
                 res.send({
