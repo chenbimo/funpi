@@ -72,7 +72,7 @@ export const log4state = (state) => {
 };
 
 // 数据清洗
-export const fnDataClear = (data, excludeKeys = [], includeKeys = [], maxLen = 500, removeValues = [null, undefined]) => {
+export const fnDataClear = (data = {}, excludeKeys = [], includeKeys = [], maxLen = 500, removeValues = [null, undefined]) => {
     const data2 = {};
     for (let key in data) {
         if (

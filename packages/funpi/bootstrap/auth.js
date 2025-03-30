@@ -4,7 +4,6 @@ import { join } from 'pathe';
 // 外部模块
 import fp from 'fastify-plugin';
 import picomatch from 'picomatch';
-import { uniq as es_uniq, isPlainObject as es_isPlainObject } from 'es-toolkit';
 import { find as es_find } from 'es-toolkit/compat';
 // 配置文件
 import { appDir } from '../config/path.js';
@@ -66,20 +65,13 @@ async function plugin(fastify) {
             }
 
             /* ---------------------------------- 日志记录 ---------------------------------- */
-            /**
-             * 如果请求的接口不是文档地址
-             * 才进行日志记录
-             * 减少无意义的日志
-             */
 
-            if (es_isPlainObject(req?.body)) {
-                fastify.log.warn({
-                    apiPath: req?.url,
-                    body: fnDataClear(req.body),
-                    session: req?.session,
-                    reqId: req?.id
-                });
-            }
+            fastify.log.warn({
+                apiPath: req?.url,
+                body: fnDataClear(req.body),
+                session: req?.session,
+                reqId: req?.id
+            });
 
             /* --------------------------------- 接口存在性判断 -------------------------------- */
             const allApiNames = await fastify.redisGet('cacheData_apiNames');
