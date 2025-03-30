@@ -57,10 +57,10 @@ async function plugin(fastify) {
             } catch (err) {
                 req.session = {
                     id: 0,
-                    username: 'guest',
+                    username: 'visitor',
                     nickname: '游客',
                     role_type: 'user',
-                    role: 'guest'
+                    role: 'visitor'
                 };
                 isAuthFail = true;
             }
