@@ -89,15 +89,6 @@ async function plugin(fastify) {
                 return;
             }
 
-            /* --------------------------------- 接口登录检测 --------------------------------- */
-            if (isAuthFail === true) {
-                res.send({
-                    ...httpConfig.NOT_LOGIN,
-                    detail: 'Token 验证失败'
-                });
-                return;
-            }
-
             /* --------------------------------- 上传参数检测 --------------------------------- */
             if (process.env.PARAMS_CHECK === '1') {
                 const result = await fnApiCheck(req);
@@ -115,11 +106,12 @@ async function plugin(fastify) {
             const userApis = await fastify.getUserApis(req.session);
 
             const hasApi = es_find(userApis, ['value', req.routeOptions.url]);
+            /* --------------------------------- 接口登录检测 --------------------------------- */
 
             if (!hasApi) {
                 res.send({
                     ...httpConfig.FAIL,
-                    msg: `您没有 [ ${req?.routeOptions?.schema?.summary || req.routeOptions.url} ] 接口的操作权限`
+                    msg: `您没有 [ ${req?.routeOptions?.schema?.summary || req.routeOptions.url} ] 接口的操作权限 ${isAuthFail === true ? '，请正确登录。' : ''}`
                 });
                 return;
             }
