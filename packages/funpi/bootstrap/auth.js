@@ -103,7 +103,8 @@ async function plugin(fastify) {
             if (!hasApi) {
                 res.send({
                     ...httpConfig.FAIL,
-                    msg: `您没有 [ ${req?.routeOptions?.schema?.summary || req.routeOptions.url} ] 接口的操作权限 ${isAuthFail === true ? '，请正确登录。' : ''}`
+                    msg: `您没有 [ ${req?.routeOptions?.schema?.summary || req.routeOptions.url} ] 接口的操作权限`,
+                    login: isAuthFail === false ? 'yes' : 'no'
                 });
                 return;
             }
