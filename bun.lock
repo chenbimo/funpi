@@ -39,7 +39,7 @@
       "name": "funpi",
       "version": "7.0.0",
       "dependencies": {
-        "@fastify/autoload": "^6.2.0",
+        "@fastify/autoload": "^6.3.0",
         "@fastify/cors": "^11.0.1",
         "@fastify/jwt": "^9.1.0",
         "@fastify/multipart": "^9.0.3",
@@ -47,9 +47,9 @@
         "@fastify/swagger": "^9.4.2",
         "@fastify/swagger-ui": "^5.2.2",
         "ajv": "^8.17.1",
-        "bullmq": "^5.45.0",
+        "bullmq": "^5.47.0",
         "es-toolkit": "^1.34.1",
-        "fast-xml-parser": "^5.0.9",
+        "fast-xml-parser": "^5.2.0",
         "fastify": "^5.2.2",
         "fastify-plugin": "^5.0.1",
         "ioredis": "^5.6.0",
@@ -203,7 +203,7 @@
 
     "@fastify/ajv-compiler": ["@fastify/ajv-compiler@4.0.2", "https://registry.npmmirror.com/@fastify/ajv-compiler/-/ajv-compiler-4.0.2.tgz", { "dependencies": { "ajv": "^8.12.0", "ajv-formats": "^3.0.1", "fast-uri": "^3.0.0" } }, "sha512-Rkiu/8wIjpsf46Rr+Fitd3HRP+VsxUFDDeag0hs9L0ksfnwx2g7SPQQTFL0E8Qv+rfXzQOxBJnjUB9ITUDjfWQ=="],
 
-    "@fastify/autoload": ["@fastify/autoload@6.2.0", "https://registry.npmmirror.com/@fastify/autoload/-/autoload-6.2.0.tgz", {}, "sha512-NcvIcAqa6z/rpENcLHEMtLMjrXgWge8MyzTaPbI+svzEzTd9vaDdC47N6WugZBrqaOTSKX4PmEAsYNOn8jPzkg=="],
+    "@fastify/autoload": ["@fastify/autoload@6.3.0", "https://registry.npmmirror.com/@fastify/autoload/-/autoload-6.3.0.tgz", {}, "sha512-VBYApgvqX5e+M2BAWKCxrYk9yTo8z127xsSzsSePQZlxt97tbQay74n//NDFK4ovFMgyhKSjoWtHTbdGw/RDvQ=="],
 
     "@fastify/busboy": ["@fastify/busboy@3.1.1", "https://registry.npmmirror.com/@fastify/busboy/-/busboy-3.1.1.tgz", {}, "sha512-5DGmA8FTdB2XbDeEwc/5ZXBl6UbBAyBOOLlPuBnZ/N1SwdH9Ii+cOX3tBROlDgcTXxjOYnLMVoKk9+FXAw0CJw=="],
 
@@ -243,7 +243,7 @@
 
     "@hutson/parse-repository-url": ["@hutson/parse-repository-url@3.0.2", "https://registry.npmmirror.com/@hutson/parse-repository-url/-/parse-repository-url-3.0.2.tgz", {}, "sha512-H9XAx3hc0BQHY6l+IFSWHDySypcXsvsuLhgYLUGywmJ5pswRVQJUHpOsobnLYp2ZUaUlKiKDrgWWhosOwAEM8Q=="],
 
-    "@iconify/json": ["@iconify/json@2.2.321", "https://registry.npmmirror.com/@iconify/json/-/json-2.2.321.tgz", { "dependencies": { "@iconify/types": "*", "pathe": "^1.1.2" } }, "sha512-0D1OjRK77jD7dhrb4IhGiBTqLufi6I6HaYso6qkSkvm0WqbWgzGnoNEpw+g/jzSJAiLfuBwOGz6b7Q/ZJqsYrw=="],
+    "@iconify/json": ["@iconify/json@2.2.323", "https://registry.npmmirror.com/@iconify/json/-/json-2.2.323.tgz", { "dependencies": { "@iconify/types": "*", "pathe": "^1.1.2" } }, "sha512-PtRN4hK9OkT2nlEa76A5QT54E6/SOukceKQkOZv9mk44UOlaS/9fhJFNUEA+FBAXEPcnnCQb2nVui+IAn7xTSw=="],
 
     "@iconify/types": ["@iconify/types@2.0.0", "https://registry.npmmirror.com/@iconify/types/-/types-2.0.0.tgz", {}, "sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg=="],
 
@@ -663,7 +663,7 @@
 
     "buffer-from": ["buffer-from@1.1.2", "https://registry.npmmirror.com/buffer-from/-/buffer-from-1.1.2.tgz", {}, "sha512-E+XQCRwSbaaiChtv6k6Dwgc+bx+Bs6vuKJHHl5kox/BaKbhiXzqQOwK4cO22yElGp2OCmjwVhT3HmxgyPGnJfQ=="],
 
-    "bullmq": ["bullmq@5.45.2", "https://registry.npmmirror.com/bullmq/-/bullmq-5.45.2.tgz", { "dependencies": { "cron-parser": "^4.9.0", "ioredis": "^5.4.1", "msgpackr": "^1.11.2", "node-abort-controller": "^3.1.1", "semver": "^7.5.4", "tslib": "^2.0.0", "uuid": "^9.0.0" } }, "sha512-wHZfcD4z4aLolxREmwNNDSbfh7USeq2e3yu5W2VGkzHMUcrH0fzZuRuCMsjD0XKS9ViK1U854oM9yWR6ftPeDA=="],
+    "bullmq": ["bullmq@5.47.0", "https://registry.npmmirror.com/bullmq/-/bullmq-5.47.0.tgz", { "dependencies": { "cron-parser": "^4.9.0", "ioredis": "^5.4.1", "msgpackr": "^1.11.2", "node-abort-controller": "^3.1.1", "semver": "^7.5.4", "tslib": "^2.0.0", "uuid": "^9.0.0" } }, "sha512-dgC0cAWVzFnyGzAToa8ui8iUSs9rCkEocsQ+QE0M4q7UTB68EKz2j6ukA39rD2RlWSnKFfQb6yy/syznmm6W2A=="],
 
     "bundle-name": ["bundle-name@4.1.0", "https://registry.npmmirror.com/bundle-name/-/bundle-name-4.1.0.tgz", { "dependencies": { "run-applescript": "^7.0.0" } }, "sha512-tjwM5exMg6BGRI+kNmTntNsvdZS1X8BFYS6tnJ2hdH0kVxM6/eVZ2xy+FqStSWvYmtfFMDLIxurorHwDKfDz5Q=="],
 
@@ -919,7 +919,7 @@
 
     "fast-uri": ["fast-uri@3.0.6", "https://registry.npmmirror.com/fast-uri/-/fast-uri-3.0.6.tgz", {}, "sha512-Atfo14OibSv5wAp4VWNsFYE1AchQRTv9cBGWET4pZWHzYshFSS9NQI6I57rdKn9croWVMbYFbLhJ+yJvmZIIHw=="],
 
-    "fast-xml-parser": ["fast-xml-parser@5.0.9", "https://registry.npmmirror.com/fast-xml-parser/-/fast-xml-parser-5.0.9.tgz", { "dependencies": { "strnum": "^2.0.5" }, "bin": { "fxparser": "src/cli/cli.js" } }, "sha512-2mBwCiuW3ycKQQ6SOesSB8WeF+fIGb6I/GG5vU5/XEptwFFhp9PE8b9O7fbs2dpq9fXn4ULR3UsfydNUCntf5A=="],
+    "fast-xml-parser": ["fast-xml-parser@5.2.0", "https://registry.npmmirror.com/fast-xml-parser/-/fast-xml-parser-5.2.0.tgz", { "dependencies": { "strnum": "^2.0.5" }, "bin": { "fxparser": "src/cli/cli.js" } }, "sha512-Uw9+Mjt4SBRud1IcaYuW/O0lW8SKKdMl5g7g24HiIuyH5fQSD+AVLybSlJtqLYEbytVFjWQa5DMGcNgeksdRBg=="],
 
     "fastfall": ["fastfall@1.5.1", "https://registry.npmmirror.com/fastfall/-/fastfall-1.5.1.tgz", { "dependencies": { "reusify": "^1.0.0" } }, "sha512-KH6p+Z8AKPXnmA7+Iz2Lh8ARCMr+8WNPVludm1LGkZoD2MjY6LVnRMtTKhkdzI+jr0RzQWXKzKyBJm1zoHEL4Q=="],
 

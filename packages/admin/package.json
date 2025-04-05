@@ -45,7 +45,7 @@
     "dependencies": {
         "@arco-design/web-vue": "^2.57.0",
         "@arco-plugins/vite-vue": "^1.4.5",
-        "@iconify/json": "^2.2.321",
+        "@iconify/json": "^2.2.323",
         "axios": "^1.8.4",
         "date-fns": "^4.1.0",
         "es-toolkit": "^1.34.1",
