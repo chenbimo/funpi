@@ -458,7 +458,7 @@ export const fnApiFiles = async () => {
 
 export const fnSchema = (field) => {
     if (!field) {
-        throw new Error('字段格式错误');
+        throw new Error(`字段 ${field} 不存在`);
     }
     if (field === 'id') {
         field = {
