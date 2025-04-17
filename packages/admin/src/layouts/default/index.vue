@@ -49,7 +49,6 @@
 
 <script setup>
 // 外部集
-import { yd_tree_array2Tree } from 'yidash';
 import { keyBy as _keyBy, cloneDeep as _cloneDeep, sortBy as _sortBy } from 'es-toolkit';
 
 // 内部集
@@ -118,7 +117,7 @@ const $Method = {
             console.log('🔥[ res ]-120', res);
 
             $Data.menuObject = _keyBy(_cloneDeep(res.data.rows), (item) => item.id);
-            $Data.menuTree = yd_tree_array2Tree(_sortBy(res.data.rows, ['sort']));
+            $Data.menuTree = utilArrayToTree(_sortBy(res.data.rows, ['sort']));
             $Data.menuTree.forEach((menu, index) => {
                 menu.children?.forEach((item, index2) => {
                     if (item.value === $Route.path) {

@@ -59,7 +59,6 @@
 </template>
 <script setup>
 // 外部集
-import { yd_tree_array2Tree, yd_tree_traverse } from 'yidash';
 import { cloneDeep as _cloneDeep, keyBy as _keyBy } from 'es-toolkit';
 import { concat as _concat } from 'es-toolkit/compat';
 
@@ -134,7 +133,7 @@ const $Method = {
                 }
                 return item;
             });
-            $Data.allMenuTreeData = yd_tree_array2Tree(data);
+            $Data.allMenuTreeData = utilArrayToTree(data);
         } catch (err) {
             Message.error(err.msg || err);
         }
@@ -154,7 +153,7 @@ const $Method = {
                 }
                 return item;
             });
-            $Data.allApiTreeData = yd_tree_array2Tree(data);
+            $Data.allApiTreeData = utilArrayToTree(data);
         } catch (err) {
             Message.error(err.msg || err);
         }
@@ -170,7 +169,7 @@ const $Method = {
             const menuIds = [];
             const apiIds = [];
             $Data.allMenuTreeData.forEach((item) => {
-                yd_tree_traverse(item, (item2, index, parent) => {
+                utilTreeTraverse(item, (item2, index, parent) => {
                     if (item2.checked) {
                         menuIds.push(item2.id);
                         if (item2.pid && !menuIds.includes(item2.pid)) {
@@ -180,7 +179,7 @@ const $Method = {
                 });
             });
             $Data.allApiTreeData.forEach((item) => {
-                yd_tree_traverse(item, (item2, index, parent) => {
+                utilTreeTraverse(item, (item2, index, parent) => {
                     if (item2.checked) {
                         apiIds.push(item2.id);
                     }

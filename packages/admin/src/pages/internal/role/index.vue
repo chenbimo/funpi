@@ -54,7 +54,6 @@
 
 <script setup>
 // 外部集
-import { yd_datetime_relativeTime } from 'yidash';
 // 内部集
 import editDataDrawer from './components/editDataDrawer.vue';
 
@@ -131,7 +130,7 @@ const $Method = {
                     limit: $GlobalData.pageLimit
                 }
             });
-            $Data.tableData = yd_datetime_relativeTime(res.data.rows);
+            $Data.tableData = utilLeftTime(res.data.rows);
             $Data.pagination.total = res.data.total;
         } catch (err) {
             Message.error({

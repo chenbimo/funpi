@@ -31,7 +31,6 @@
 
 <script setup>
 // 外部集
-import { yd_tree_array2Tree, yd_datetime_relativeTime } from 'yidash';
 import { sortBy as _sortBy } from 'es-toolkit';
 
 // 全局集
@@ -81,7 +80,7 @@ const $Method = {
             });
             $Data.apiTotal = res.data.rows?.length || '';
             $Data.apiIds = res.data.rows?.map((item) => item.id) || [];
-            $Data.tableData = yd_tree_array2Tree(_sortBy(yd_datetime_relativeTime(res.data.rows), 'sort'));
+            $Data.tableData = utilArrayToTree(_sortBy(utilLeftTime(res.data.rows), 'sort'));
         } catch (err) {
             Message.error({
                 content: err.msg || err
