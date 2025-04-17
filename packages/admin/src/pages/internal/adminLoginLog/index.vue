@@ -86,7 +86,7 @@ const $Method = {
                     limit: $GlobalData.pageLimit
                 }
             });
-            $Data.tableData = utilLeftTime(res.data.rows);
+            $Data.tableData = utilRelativeTime(res.data.rows);
             $Data.pagination.total = res.data.total;
         } catch (err) {
             console.log('🚀 ~ file: index.vue:86 ~ apiSelectData ~ err:', err);

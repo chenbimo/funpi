@@ -80,7 +80,7 @@ const $Method = {
             });
             $Data.apiTotal = res.data.rows?.length || '';
             $Data.apiIds = res.data.rows?.map((item) => item.id) || [];
-            $Data.tableData = utilArrayToTree(_sortBy(utilLeftTime(res.data.rows), 'sort'));
+            $Data.tableData = utilArrayToTree(_sortBy(utilRelativeTime(res.data.rows), 'sort'));
         } catch (err) {
             Message.error({
                 content: err.msg || err

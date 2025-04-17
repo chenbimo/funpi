@@ -130,7 +130,7 @@ const $Method = {
                     limit: $GlobalData.pageLimit
                 }
             });
-            $Data.tableData = utilLeftTime(res.data.rows);
+            $Data.tableData = utilRelativeTime(res.data.rows);
             $Data.pagination.total = res.data.total;
         } catch (err) {
             Message.error({

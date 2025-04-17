@@ -1,3 +1,6 @@
+import { format, formatDistanceToNow } from 'date-fns';
+import { zhCN } from 'date-fns/locale';
+
 // 获取资源
 export function utilInternalAssets(name) {
     return new URL(`../assets/${name}`, import.meta.url).href;
@@ -59,52 +62,51 @@ export const utilArrayToTree = (arrs, id = 'id', pid = 'pid', children = 'childr
 };
 
 /**
- * 计算剩余时间
- * @param {number} seconds 剩余时间秒数
- * @returns {object} 返回剩余时间的不同单位值
+ * 转换相对时间
+ * @alias yd_datetime_relativeTime
+ * @category datetime
+ * @param {Array | object} data 数组或对象
+ * @returns {object} 返回转换后的相对时间
+ * @author 陈随易 <https://chensuiyi.me>
+ * @example yd_datetime_relativeTime([])
  */
-export const utilLeftTime = (seconds) => {
-    const absTime = Math.abs(seconds);
+export const utilRelativeTime = (data) => {
+    // 转换相对时间
+    const _convertTime = (obj) => {
+        try {
+            const item = {};
+            for (let key in obj) {
+                if (Object.prototype.hasOwnProperty.call(obj, key)) {
+                    const value = obj[key];
+                    if (key.endsWith('_at')) {
+                        let key1 = key.replace('_at', '_at1');
+                        let key2 = key.replace('_at', '_at2');
+                        let dt = new Date(value);
+                        if (value !== 0) {
+                            item[key] = value;
+                            item[key1] = format(dt, 'yyyy-MM-dd HH:mm:ss');
+                            item[key2] = formatDistanceToNow(dt, { locale: zhCN, addSuffix: true });
+                        } else {
+                            item[key] = '';
+                        }
+                    } else {
+                        item[key] = value;
+                    }
+                }
+            }
 
-    // 定义时间单位常量提高可读性
-    const SECONDS_PER_MINUTE = 60;
-    const SECONDS_PER_HOUR = 60 * 60;
-    const SECONDS_PER_DAY = 24 * 60 * 60;
-    const SECONDS_PER_WEEK = 7 * SECONDS_PER_DAY;
-    const SECONDS_PER_MONTH = 30 * SECONDS_PER_DAY;
-    const SECONDS_PER_YEAR = 365 * SECONDS_PER_DAY;
-
-    const parsed = {
-        // 使用常量计算各时间单位
-        years: Math.floor(absTime / SECONDS_PER_YEAR),
-        months: Math.floor(absTime / SECONDS_PER_MONTH),
-        weeks: Math.floor(absTime / SECONDS_PER_WEEK),
-        days: Math.floor(absTime / SECONDS_PER_DAY),
-        hours: Math.floor(absTime / SECONDS_PER_HOUR),
-        minutes: Math.floor(absTime / SECONDS_PER_MINUTE),
-        seconds: absTime,
-        text: '',
-        type: seconds > 0 ? '还剩' : '已过'
+            return item;
+        } catch (err) {
+            console.log('🚀 ~ err:', err);
+        }
     };
-
-    // 设置友好文本
-    if (parsed.years > 0) {
-        parsed.text = `${parsed.years} 年`;
-    } else if (parsed.months > 0) {
-        parsed.text = `${parsed.months} 月`;
-    } else if (parsed.weeks > 0) {
-        parsed.text = `${parsed.weeks} 周`;
-    } else if (parsed.days > 0) {
-        parsed.text = `${parsed.days} 天`;
-    } else if (parsed.hours > 0) {
-        parsed.text = `${parsed.hours} 小时`;
-    } else if (parsed.minutes > 0) {
-        parsed.text = `${parsed.minutes} 分钟`;
-    } else if (parsed.seconds > 0) {
-        parsed.text = `${parsed.seconds} 秒`;
-    } else {
-        parsed.text = '0 秒';
+    // 如果是数组
+    if (Array.isArray(data)) {
+        return data.map((item) => {
+            return _convertTime(item);
+        });
     }
 
-    return parsed;
+    // 如果是对象
+    return _convertTime(data);
 };

@@ -88,7 +88,7 @@ const $Method = {
             });
             $Data.menuTotal = res.data.rows?.length || '';
             $Data.menuIds = res.data.rows?.map((item) => item.id) || [];
-            $Data.tableData = utilArrayToTree(_sortBy(utilLeftTime(res.data.rows), 'sort'));
+            $Data.tableData = utilArrayToTree(_sortBy(utilRelativeTime(res.data.rows), 'sort'));
         } catch (err) {
             Message.error(err.msg || err);
         }
