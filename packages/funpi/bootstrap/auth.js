@@ -48,6 +48,7 @@ async function plugin(fastify) {
             }
 
             if (req.routeOptions.url === '/api/funpi/admin/adminLogin') return;
+            if (req.routeOptions.url === '/api/funpi/tool/tokenCheck') return;
 
             /* --------------------------------- 解析用户登录参数 --------------------------------- */
             let isAuthFail = false;
