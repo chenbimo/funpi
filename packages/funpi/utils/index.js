@@ -194,13 +194,17 @@ export const fnApiInfo = (metaUrl) => {
 };
 
 // 获取数据库字段
-export const fnField = (tableData, exclude = []) => {
+export const fnField = (tableData, exclude = [], tablePrefix = '') => {
     const defaultFields = ['id', 'created_at', 'updated_at', 'deleted_at'];
     const selectFields = Object.keys(tableData).filter((field) => {
         const isPass = !exclude.includes(field);
         return isPass;
     });
-    return [...defaultFields, ...selectFields];
+    if (tablePrefix) {
+        return [...defaultFields, ...selectFields].map((field) => `${tablePrefix}.${field}`);
+    } else {
+        return [...defaultFields, ...selectFields];
+    }
 };
 
 // 导入数据
