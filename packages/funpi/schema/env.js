@@ -47,6 +47,12 @@ export const envSchema = {
             default: '0',
             enum: ['0', '1']
         },
+        LOG_LEVEL: {
+            title: '日志等级',
+            type: 'string',
+            default: 'info',
+            enum: ['debug', 'trace', 'info', 'warn', 'error', 'fatal']
+        },
         SWAGGER: {
             title: '是否开启接口文档',
             type: 'string',
