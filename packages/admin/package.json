@@ -51,7 +51,7 @@
         "es-toolkit": "^1.35.0",
         "js-md5": "^0.8.3",
         "store2": "^2.14.4",
-        "yite-cli": "^4.6.3"
+        "yite-cli": "^4.6.4"
     },
     "gitHead": "1c28c0de7c0af8aa4582c45ab2d98e66c597c7a1"
 }

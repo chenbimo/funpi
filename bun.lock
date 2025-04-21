@@ -13,13 +13,13 @@
       "dependencies": {
         "@arco-design/web-vue": "^2.57.0",
         "@arco-plugins/vite-vue": "^1.4.5",
-        "@iconify/json": "^2.2.326",
+        "@iconify/json": "^2.2.329",
         "axios": "^1.8.4",
         "date-fns": "^4.1.0",
-        "es-toolkit": "^1.34.1",
+        "es-toolkit": "^1.35.0",
         "js-md5": "^0.8.3",
         "store2": "^2.14.4",
-        "yite-cli": "^4.6.2",
+        "yite-cli": "^4.6.3",
       },
     },
     "packages/api": {
@@ -1774,7 +1774,7 @@
 
     "vite-hot-client": ["vite-hot-client@2.0.4", "https://registry.npmmirror.com/vite-hot-client/-/vite-hot-client-2.0.4.tgz", { "peerDependencies": { "vite": "^2.6.0 || ^3.0.0 || ^4.0.0 || ^5.0.0-0 || ^6.0.0-0" } }, "sha512-W9LOGAyGMrbGArYJN4LBCdOC5+Zwh7dHvOHC0KmGKkJhsOzaKbpo/jEjpPKVHIW0/jBWj8RZG0NUxfgA8BxgAg=="],
 
-    "vite-plugin-inspect": ["vite-plugin-inspect@11.0.0", "https://registry.npmmirror.com/vite-plugin-inspect/-/vite-plugin-inspect-11.0.0.tgz", { "dependencies": { "ansis": "^3.16.0", "debug": "^4.4.0", "error-stack-parser-es": "^1.0.5", "ohash": "^2.0.4", "open": "^10.1.0", "perfect-debounce": "^1.0.0", "sirv": "^3.0.1", "unplugin-utils": "^0.2.0", "vite-dev-rpc": "^1.0.7" }, "peerDependencies": { "vite": "^6.0.0" } }, "sha512-Q0RDNcMs1mbI2yGRwOzSapnnA6NFO0j88+Vb8pJX0iYMw34WczwKJi3JgheItDhbWRq/CLUR0cs+ajZpcUaIFQ=="],
+    "vite-plugin-inspect": ["vite-plugin-inspect@11.0.1", "https://registry.npmmirror.com/vite-plugin-inspect/-/vite-plugin-inspect-11.0.1.tgz", { "dependencies": { "ansis": "^3.17.0", "debug": "^4.4.0", "error-stack-parser-es": "^1.0.5", "ohash": "^2.0.11", "open": "^10.1.0", "perfect-debounce": "^1.0.0", "sirv": "^3.0.1", "unplugin-utils": "^0.2.4", "vite-dev-rpc": "^1.0.7" }, "peerDependencies": { "vite": "^6.0.0" } }, "sha512-aABw7eGTr9Cmbn9RAs76e0BztVUFDl6a2R+/IJXpoUZxjx5YHB0P+Em3ZTWzpIPZzuRj28tAMblvcUyhgJc4aQ=="],
 
     "vite-plugin-vue-devtools": ["vite-plugin-vue-devtools@7.7.5", "https://registry.npmmirror.com/vite-plugin-vue-devtools/-/vite-plugin-vue-devtools-7.7.5.tgz", { "dependencies": { "@vue/devtools-core": "^7.7.5", "@vue/devtools-kit": "^7.7.5", "@vue/devtools-shared": "^7.7.5", "execa": "^9.5.2", "sirv": "^3.0.1", "vite-plugin-inspect": "0.8.9", "vite-plugin-vue-inspector": "^5.3.1" }, "peerDependencies": { "vite": "^3.1.0 || ^4.0.0-0 || ^5.0.0-0 || ^6.0.0-0" } }, "sha512-cSlQYI1E+8d0qubBg70suTBbXMFbTHLn7vLPYUPK9GjNNJ0nw+Yks0ZLOAp7/+PjmqSpN5fK1taor6HeAjKb1g=="],
 
@@ -1834,7 +1834,7 @@
 
     "yargs-parser": ["yargs-parser@21.1.1", "https://registry.npmmirror.com/yargs-parser/-/yargs-parser-21.1.1.tgz", {}, "sha512-tVpsJW7DdjecAiFpbIB1e3qxIQsE6NoPc5/eTdrbbIC4h0LVsWhnoa3g+m2HclBIujHzsxZ4VJVA+GUuc2/LBw=="],
 
-    "yite-cli": ["yite-cli@4.6.3", "https://registry.npmmirror.com/yite-cli/-/yite-cli-4.6.3.tgz", { "dependencies": { "@unocss/transformer-compile-class": "^66.0.0", "@unocss/transformer-directives": "^66.0.0", "@unocss/transformer-variant-group": "^66.0.0", "@vitejs/plugin-vue": "^5.2.3", "@vue-macros/reactivity-transform": "^1.1.6", "merge-anything": "^6.0.6", "pacote": "^21.0.0", "pinia": "^3.0.2", "portfinder": "^1.0.36", "rollup-plugin-visualizer": "^5.14.0", "sass": "^1.86.3", "unocss": "^66.0.0", "unplugin-auto-import": "^19.1.2", "unplugin-icons": "^22.1.0", "unplugin-vue-components": "^28.5.0", "vite": "^6.3.1", "vite-plugin-inspect": "^11.0.0", "vite-plugin-vue-devtools": "^7.7.5", "vue": "^3.5.13", "vue-i18n": "^11.1.3", "vue-router": "^4.5.0" }, "bin": { "yite": "yite-cli.js" } }, "sha512-obneS8kezNVxccPSHMCABbl8U+FUO6SQcyOG6uH6wjS45pomBVbb9V+s08Dt8xaeNv5IXh6nTwthjKpzGSUzGg=="],
+    "yite-cli": ["yite-cli@4.6.4", "https://registry.npmmirror.com/yite-cli/-/yite-cli-4.6.4.tgz", { "dependencies": { "@unocss/transformer-compile-class": "^66.0.0", "@unocss/transformer-directives": "^66.0.0", "@unocss/transformer-variant-group": "^66.0.0", "@vitejs/plugin-vue": "^5.2.3", "@vue-macros/reactivity-transform": "^1.1.6", "merge-anything": "^6.0.6", "pacote": "^21.0.0", "pinia": "^3.0.2", "portfinder": "^1.0.36", "rollup-plugin-visualizer": "^5.14.0", "sass": "^1.86.3", "unocss": "^66.0.0", "unplugin-auto-import": "^19.1.2", "unplugin-icons": "^22.1.0", "unplugin-vue-components": "^28.5.0", "vite": "^6.3.2", "vite-plugin-inspect": "^11.0.1", "vite-plugin-vue-devtools": "^7.7.5", "vue": "^3.5.13", "vue-i18n": "^11.1.3", "vue-router": "^4.5.0" }, "bin": { "yite": "yite-cli.js" } }, "sha512-JggpW2RFWXcM1D2YQ53y3DI9GPMs5PfyX4fcyH7Bo4X7zOj1WEGbd6aNCn17x3+0DyEYl7AKKuJqIYNltORInw=="],
 
     "yoctocolors": ["yoctocolors@2.1.1", "https://registry.npmmirror.com/yoctocolors/-/yoctocolors-2.1.1.tgz", {}, "sha512-GQHQqAopRhwU8Kt1DDM8NjibDXHC8eoh1erhGAJPEyveY9qqVeXvVikNKrDz69sHowPMorbPUrH/mx8c50eiBQ=="],
 
