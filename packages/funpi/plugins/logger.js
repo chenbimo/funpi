@@ -25,7 +25,7 @@ const configParams = {
         trace: 4,
         debug: 5
     },
-    level: process.env.LOG_LEVEL || 'info',
+    level: process.env.LOG_LEVEL || 'warn',
     format: winston.format.combine(
         winston.format.timestamp({
             format: () => {
