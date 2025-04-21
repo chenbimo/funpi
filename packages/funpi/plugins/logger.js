@@ -25,7 +25,7 @@ const configParams = {
         trace: 4,
         debug: 5
     },
-    level: 'warn',
+    level: process.env.LOG_LEVEL || 'info',
     format: winston.format.combine(
         winston.format.timestamp({
             format: () => {
@@ -52,7 +52,7 @@ const configParams = {
 if (process.env.NODE_ENV === 'production') {
     configParams.transports = [fileTransport];
 } else {
-    configParams.transports = [new winston.transports.Console()];
+    configParams.transports = [new winston.transports.Console(), fileTransport];
 }
 
 const logger = winston.createLogger(configParams);
