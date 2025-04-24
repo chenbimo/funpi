@@ -1,6 +1,6 @@
 {
     "name": "@funpi/vscode",
-    "version": "7.20.19",
+    "version": "7.20.20",
     "description": "FunPi(放屁) - VSCode插件占位",
     "type": "module",
     "private": false,

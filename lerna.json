@@ -1,5 +1,5 @@
 {
-  "version": "7.20.19",
+  "version": "7.20.20",
   "packages": [
     "packages/*"
   ],
@@ -16,7 +16,7 @@
       "forcePublish": true,
       "syncWorkspaceLock": true,
       "exact": true,
-      "push": true
+      "push": false
     },
     "publish": {
       "ignoreScripts": false,
