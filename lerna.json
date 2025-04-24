@@ -1,5 +1,5 @@
 {
-  "version": "7.20.17",
+  "version": "7.20.19",
   "packages": [
     "packages/*"
   ],
@@ -11,9 +11,12 @@
         "master"
       ],
       "changelog": false,
-      "gitTagVersion": false,
+      "gitTagVersion": true,
       "yes": true,
-      "forcePublish": true
+      "forcePublish": true,
+      "syncWorkspaceLock": true,
+      "exact": true,
+      "push": true
     },
     "publish": {
       "ignoreScripts": false,
