@@ -56,7 +56,6 @@ async function syncApi(fastify) {
                 if (process.env.TABLE_PRIMARY_KEY === 'time') {
                     apiParams.id = fnIncrTimeID();
                 }
-                apiParams.name = item.dirName;
                 insertDirData.push(apiParams);
             }
         }

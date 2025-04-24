@@ -45,10 +45,10 @@
     "dependencies": {
         "@arco-design/web-vue": "^2.57.0",
         "@arco-plugins/vite-vue": "^1.4.5",
-        "@iconify/json": "^2.2.329",
+        "@iconify/json": "^2.2.331",
         "axios": "^1.8.4",
         "date-fns": "^4.1.0",
-        "es-toolkit": "^1.35.0",
+        "es-toolkit": "^1.36.0",
         "js-md5": "^0.8.3",
         "store2": "^2.14.4",
         "yite-cli": "^4.6.4"
