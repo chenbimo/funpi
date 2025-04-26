@@ -46,7 +46,7 @@
         "@arco-design/web-vue": "^2.57.0",
         "@arco-plugins/vite-vue": "^1.4.5",
         "@iconify/json": "^2.2.331",
-        "axios": "^1.8.4",
+        "axios": "^1.9.0",
         "date-fns": "^4.1.0",
         "es-toolkit": "^1.36.0",
         "js-md5": "^0.8.3",
