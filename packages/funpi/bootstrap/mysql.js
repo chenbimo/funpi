@@ -107,8 +107,8 @@ async function plugin(fastify) {
             asyncStackTraces: true,
             debug: false,
             pool: {
-                min: 30,
-                max: 1000
+                min: 10,
+                max: 100
                 // afterCreate: function (db, done) {
                 // in this example we use pg driver's connection API
                 // db.query('SET NAMES utf8mb4;', function (err) {
