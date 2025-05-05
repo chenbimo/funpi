@@ -20,7 +20,7 @@ import authPlugin from './bootstrap/auth.js';
 import mailPlugin from './bootstrap/mail.js';
 import syncApiPlugin from './bootstrap/syncApi.js';
 import syncMenuPlugin from './bootstrap/syncMenu.js';
-import syncDevPlugin from './bootstrap/syncDev.js';
+import syncRolePlugin from './bootstrap/syncRole.js';
 
 // 工具函数
 import { fnRoute, fnSchema, fnField, fnIncrTimeID } from './utils/index.js';
@@ -123,7 +123,7 @@ const initServer = async () => {
     fastify.register(mailPlugin, {});
     fastify.register(syncMenuPlugin, {});
     fastify.register(syncApiPlugin, {});
-    fastify.register(syncDevPlugin, {});
+    fastify.register(syncRolePlugin, {});
 
     // 加载用户插件
     fastify.register(autoLoad, {
