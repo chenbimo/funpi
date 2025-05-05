@@ -10,7 +10,7 @@
                     <a-row class="grid-demo" :gutter="24">
                         <a-col :xs="12" :sm="12" :md="6" :lg="6" :xl="6" :xxl="6">
                             <a-form-item field="code" label="编码">
-                                <a-input v-model="$Data.formData.code" placeholder="请输入角色编码" />
+                                <a-input v-model="$Data.formData.code" placeholder="角色编码为小写字母+数字+下划线" />
                             </a-form-item>
                         </a-col>
                         <a-col :xs="12" :sm="12" :md="6" :lg="6" :xl="6" :xxl="6">
@@ -20,7 +20,7 @@
                         </a-col>
                         <a-col :xs="12" :sm="12" :md="6" :lg="6" :xl="6" :xxl="6">
                             <a-form-item field="sort" label="排序">
-                                <a-input v-model="$Data.formData.sort" placeholder="请输入角色排序" />
+                                <a-input v-model="$Data.formData.sort" placeholder="排序数字大于或等于100" />
                             </a-form-item>
                         </a-col>
                         <a-col :xs="12" :sm="12" :md="6" :lg="6" :xl="6" :xxl="6">
