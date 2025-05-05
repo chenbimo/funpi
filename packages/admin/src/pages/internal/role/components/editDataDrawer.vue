@@ -8,18 +8,23 @@
             <div class="top">
                 <a-form :model="$Data.formData" layout="horizontal" label-align="left" auto-label-width>
                     <a-row class="grid-demo" :gutter="24">
-                        <a-col :xs="12" :sm="12" :md="8" :lg="8" :xl="8" :xxl="8">
-                            <a-form-item field="code" label="角色编码">
+                        <a-col :xs="12" :sm="12" :md="6" :lg="6" :xl="6" :xxl="6">
+                            <a-form-item field="code" label="编码">
                                 <a-input v-model="$Data.formData.code" placeholder="请输入角色编码" />
                             </a-form-item>
                         </a-col>
-                        <a-col :xs="12" :sm="12" :md="8" :lg="8" :xl="8" :xxl="8">
-                            <a-form-item field="name" label="角色名称">
+                        <a-col :xs="12" :sm="12" :md="6" :lg="6" :xl="6" :xxl="6">
+                            <a-form-item field="name" label="名称">
                                 <a-input v-model="$Data.formData.name" placeholder="请输入角色名称" />
                             </a-form-item>
                         </a-col>
-                        <a-col :xs="12" :sm="12" :md="8" :lg="8" :xl="8" :xxl="8">
-                            <a-form-item field="name" label="角色描述">
+                        <a-col :xs="12" :sm="12" :md="6" :lg="6" :xl="6" :xxl="6">
+                            <a-form-item field="sort" label="排序">
+                                <a-input v-model="$Data.formData.sort" placeholder="请输入角色排序" />
+                            </a-form-item>
+                        </a-col>
+                        <a-col :xs="12" :sm="12" :md="6" :lg="6" :xl="6" :xxl="6">
+                            <a-form-item field="describe" label="描述">
                                 <a-input v-model="$Data.formData.describe" placeholder="请输入角色描述" />
                             </a-form-item>
                         </a-col>
@@ -92,6 +97,7 @@ const $Data = $ref({
     formData: {
         name: '',
         code: '',
+        sort: 1,
         describe: '',
         api_ids: [],
         menu_ids: []

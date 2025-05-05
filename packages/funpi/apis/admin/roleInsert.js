@@ -10,6 +10,7 @@ export default async (fastify) => {
             properties: {
                 code: fnSchema(tableData.code),
                 name: fnSchema(tableData.name),
+                sort: fnSchema(tableData.sort),
                 describe: fnSchema(tableData.describe),
                 menu_ids: fnSchema(tableData.menu_ids),
                 api_ids: fnSchema(tableData.api_ids)
@@ -38,6 +39,7 @@ export default async (fastify) => {
                 const result = await roleModel.clone().insertData({
                     code: req.body.code,
                     name: req.body.name,
+                    sort: req.body.sort,
                     describe: req.body.describe,
                     menu_ids: req.body.menu_ids,
                     api_ids: req.body.api_ids
