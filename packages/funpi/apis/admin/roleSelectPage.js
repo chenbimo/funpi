@@ -29,7 +29,10 @@ export default async (fastify) => {
                 const rows = await roleModel
                     //
                     .clone()
-                    .orderBy('created_at', 'desc')
+                    .orderBy([
+                        { column: 'sort', order: 'asc' },
+                        { column: 'created_at', order: 'desc' }
+                    ])
                     .selectData(req.body.page, req.body.limit);
 
                 return {
