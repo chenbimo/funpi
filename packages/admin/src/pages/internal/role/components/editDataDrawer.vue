@@ -143,7 +143,6 @@ const $Method = {
                 }
             });
             $Data.formData.api_ids = res.data.api_ids.split(',').map((id) => Number(id));
-            $Data.formData.menu_ids = res.data.menu_ids.split(',').map((id) => Number(id));
         } catch (err) {
             Message.error(err.msg || err);
         }
