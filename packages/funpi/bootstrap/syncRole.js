@@ -50,7 +50,8 @@ async function plugin(fastify) {
                     describe: item.describe,
                     api_ids: '',
                     menu_ids: '',
-                    is_system: is_system
+                    is_system: is_system,
+                    sort: item.sort || 1
                 };
                 // 角色不存在，则添加
                 if (process.env.TABLE_PRIMARY_KEY === 'time') {
@@ -63,7 +64,8 @@ async function plugin(fastify) {
                     code: keyRole,
                     name: item.name,
                     describe: item.describe,
-                    is_system: is_system
+                    is_system: is_system,
+                    sort: item.sort || 1
                 });
             }
         }
@@ -97,7 +99,8 @@ async function plugin(fastify) {
                 describe: '技术性相关的管理和维护',
                 menu_ids: menuIds.join(','),
                 api_ids: apiIds.join(','),
-                is_system: 1
+                is_system: 1,
+                sort: 0
             };
             if (process.env.TABLE_PRIMARY_KEY === 'time') {
                 insertData.id = fnIncrTimeID();
@@ -112,7 +115,8 @@ async function plugin(fastify) {
                 describe: '技术性相关的管理和维护',
                 menu_ids: menuIds.join(','),
                 api_ids: apiIds.join(','),
-                is_system: 1
+                is_system: 1,
+                sort: 0
             };
             // 只有主进程才操作一次
             if (!process.env.NODE_APP_INSTANCE || process.env.NODE_APP_INSTANCE === '0') {
