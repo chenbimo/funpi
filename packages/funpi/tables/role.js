@@ -5,7 +5,7 @@ export const tableData = {
         type: 'string',
         default: '',
         max: 50,
-        pattern: '^[a-z][a-z0-9_-]*$'
+        pattern: '^[a-z][a-z0-9_]*$'
     },
     name: {
         name: '角色名称',
