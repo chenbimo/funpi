@@ -20,7 +20,7 @@
                         </a-col>
                         <a-col :xs="12" :sm="12" :md="6" :lg="6" :xl="6" :xxl="6">
                             <a-form-item field="sort" label="排序">
-                                <a-input v-model="$Data.formData.sort" placeholder="排序数字大于或等于100" />
+                                <a-input-number v-model="$Data.formData.sort" placeholder="排序数字大于或等于100" :min="1"></a-input-number>
                             </a-form-item>
                         </a-col>
                         <a-col :xs="12" :sm="12" :md="6" :lg="6" :xl="6" :xxl="6">
