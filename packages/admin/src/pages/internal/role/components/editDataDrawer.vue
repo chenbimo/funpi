@@ -64,8 +64,7 @@
 </template>
 <script setup>
 // 外部集
-import { cloneDeep as _cloneDeep, keyBy as _keyBy } from 'es-toolkit';
-import { concat as _concat } from 'es-toolkit/compat';
+import { uniq } from 'es-toolkit';
 
 // 内部集
 
@@ -95,6 +94,7 @@ const $Data = $ref({
     visible: false,
     // 表单数据
     formData: {
+        id: 0,
         name: '',
         code: '',
         sort: 1,
@@ -110,12 +110,21 @@ const $Data = $ref({
 const $Method = {
     async initData() {
         $Data.visible = $Prop.modelValue;
-        $Data.formData = Object.assign($Data.formData, $Prop.rowData, {
-            api_ids: $Prop.rowData?.api_ids?.split(',')?.map((id) => Number(id)) || [],
-            menu_ids: $Prop.rowData?.menu_ids?.split(',')?.map((id) => Number(id)) || []
-        });
-        await $Method.apiSelectAllMenuData();
-        await $Method.apiSelectAllApiData();
+        await $Method.apiGetRoleDetail();
+        if ($Prop.actionType === 'updateData') {
+            $Data.formData.id = $Prop.rowData.id;
+            $Data.formData.name = $Prop.rowData.name;
+            $Data.formData.code = $Prop.rowData.code;
+            $Data.formData.sort = $Prop.rowData.sort;
+            $Data.formData.describe = $Prop.rowData.describe;
+            $Data.formData.api_ids = uniq([...$Data.formData.api_ids, ...$Prop.rowData?.api_ids?.split(',')?.map((id) => Number(id))]);
+            $Data.formData.menu_ids = uniq([...$Data.formData.menu_ids, ...$Prop.rowData?.menu_ids?.split(',')?.map((id) => Number(id))]);
+        }
+        await Promise.allSettled([
+            //
+            $Method.apiSelectAllMenuData(),
+            $Method.apiSelectAllApiData()
+        ]);
     },
     // 关闭抽屉事件
     onClose() {
@@ -123,6 +132,21 @@ const $Method = {
         setTimeout(() => {
             $Emit('update:modelValue', false);
         }, 300);
+    },
+    // 查询游客角色详情
+    async apiGetRoleDetail() {
+        try {
+            const res = await $Http({
+                url: '/funpi/admin/roleDetail',
+                data: {
+                    code: 'visitor'
+                }
+            });
+            $Data.formData.api_ids = res.data.api_ids.split(',').map((id) => Number(id));
+            $Data.formData.menu_ids = res.data.menu_ids.split(',').map((id) => Number(id));
+        } catch (err) {
+            Message.error(err.msg || err);
+        }
     },
     // 查询所有菜单数据
     async apiSelectAllMenuData() {

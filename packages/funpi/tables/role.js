@@ -5,6 +5,7 @@ export const tableData = {
         type: 'string',
         default: '',
         max: 50,
+        isIndex: true,
         pattern: '^[a-z][a-z0-9_]*$'
     },
     name: {
@@ -32,8 +33,8 @@ export const tableData = {
     sort: {
         name: '角色排序',
         type: 'bigInt',
-        default: 100,
-        min: 100
+        default: 1,
+        min: 1
     },
     is_system: {
         name: '是否系统角色（不可删除）',
