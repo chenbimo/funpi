@@ -21,6 +21,7 @@
                             <a-tag v-else color="blue">普通角色</a-tag>
                         </template>
                     </a-table-column>
+                    <a-table-column title="排序" data-index="sort" :width="100" ellipsis tooltip></a-table-column>
                     <a-table-column title="菜单" data-index="menu_ids" :width="150" ellipsis tooltip></a-table-column>
                     <a-table-column title="接口" data-index="api_ids" :width="150" ellipsis tooltip></a-table-column>
                     <a-table-column title="描述" data-index="describe" :min-width="350" ellipsis tooltip></a-table-column>
