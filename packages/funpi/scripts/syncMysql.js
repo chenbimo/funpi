@@ -107,7 +107,7 @@ export const syncMysql = async () => {
                 table.comment(tableItem.tableName);
                 // 默认每个表的 ID 为自增流水号
                 if (process.env.TABLE_PRIMARY_KEY === 'default') {
-                    table.increments('id');
+                    table.bigIncrements('id');
                 }
                 if (process.env.TABLE_PRIMARY_KEY === 'time') {
                     table.bigint('id').primary().notNullable().unsigned().comment('主键 ID');
