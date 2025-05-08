@@ -7,9 +7,9 @@ async function plugin(fastify) {
     const redisSet = async (key, value, second = 0) => {
         try {
             if (second > 0) {
-                await fastify.redis.set(key, JSON.stringify(value), 'EX', second);
+                await fastify.redis.set(`${process.env.REDIS_KEY_PREFIX}:${key}`, JSON.stringify(value), 'EX', second);
             } else {
-                await fastify.redis.set(key, JSON.stringify(value));
+                await fastify.redis.set(`${process.env.REDIS_KEY_PREFIX}:${key}`, JSON.stringify(value));
             }
         } catch (err) {
             fastify.log.warn(err);
@@ -19,7 +19,7 @@ async function plugin(fastify) {
     // 获取 redis
     const redisGet = async (key) => {
         try {
-            const result = await fastify.redis.get(key);
+            const result = await fastify.redis.get(`${process.env.REDIS_KEY_PREFIX}:${key}`);
             return JSON.parse(result);
         } catch (err) {
             fastify.log.warn(err);
@@ -86,8 +86,8 @@ async function plugin(fastify) {
         const dataMenu = await fastify.mysql.table('sys_menu').selectAll();
 
         // 菜单树数据
-        await redisSet('cacheData_menu', []);
-        await redisSet('cacheData_menu', dataMenu);
+        await redisSet('cacheData:menu', []);
+        await redisSet('cacheData:menu', dataMenu);
     };
 
     const cacheApiData = async () => {
@@ -100,13 +100,13 @@ async function plugin(fastify) {
         // const apiBlackLists = dataApi.filter((item) => item.state === 2).map((item) => `${item.value}`);
 
         // 接口树数据
-        await redisSet('cacheData_api', []);
-        await redisSet('cacheData_api', dataApi);
+        await redisSet('cacheData:api', []);
+        await redisSet('cacheData:api', dataApi);
 
         // 接口名称缓存
-        await redisSet('cacheData_apiNames', []);
+        await redisSet('cacheData:apiNames', []);
         await redisSet(
-            'cacheData_apiNames',
+            'cacheData:apiNames',
             dataApi.filter((item) => item.pid !== 0).map((item) => `${item.value}`)
         );
     };
@@ -115,8 +115,8 @@ async function plugin(fastify) {
         // 角色类别
         const dataRole = await fastify.mysql.table('sys_role').selectAll();
 
-        await redisSet('cacheData_role', []);
-        await redisSet('cacheData_role', dataRole);
+        await redisSet('cacheData:role', []);
+        await redisSet('cacheData:role', dataRole);
     };
 
     // 设置和获取缓存数据

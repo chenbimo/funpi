@@ -135,7 +135,7 @@ async function plugin(fastify) {
         try {
             await mysql.raw('SELECT 1');
         } catch (err) {
-            fastify.log.error({ msg: '数据库连接失败', error: err.message });
+            fastify.log.error({ msg: 'Mysql连接失败', error: err.message });
             process.exit();
         }
 
