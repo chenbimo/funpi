@@ -75,7 +75,7 @@ async function plugin(fastify) {
             });
 
             /* --------------------------------- 接口存在性判断 -------------------------------- */
-            const allApiNames = await fastify.redisGet('cacheData_apiNames');
+            const allApiNames = await fastify.redisGet('cacheData:apiNames');
 
             if (allApiNames.includes(req.routeOptions.url) === false) {
                 res.send(httpConfig.NO_API);

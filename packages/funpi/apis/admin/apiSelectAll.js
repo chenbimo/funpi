@@ -11,7 +11,7 @@ export default async (fastify) => {
         // 执行函数
         apiHandler: async () => {
             try {
-                const result = await fastify.redisGet('cacheData_api');
+                const result = await fastify.redisGet('cacheData:api');
 
                 return {
                     ...httpConfig.SELECT_SUCCESS,

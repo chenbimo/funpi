@@ -32,7 +32,7 @@ async function plugin(fastify) {
 
         // 提取所有角色拥有的接口
         let apiIds = [];
-        const dataRoleCodes = await redisGet('cacheData_role');
+        const dataRoleCodes = await redisGet('cacheData:role');
         dataRoleCodes.forEach((item) => {
             if (session.role === item.code) {
                 apiIds = item.api_ids
@@ -44,7 +44,7 @@ async function plugin(fastify) {
 
         // 将接口进行唯一性处理
         const userApiIds = [...new Set(apiIds)];
-        const dataApi = await redisGet('cacheData_api');
+        const dataApi = await redisGet('cacheData:api');
         // 最终的用户接口列表
         const result = dataApi.filter((item) => {
             return userApiIds.includes(item.id);
@@ -59,7 +59,7 @@ async function plugin(fastify) {
             // 所有菜单 ID
             let menuIds = [];
 
-            const dataRoleCodes = await redisGet('cacheData_role');
+            const dataRoleCodes = await redisGet('cacheData:role');
             dataRoleCodes.forEach((item) => {
                 if (session.role === item.code) {
                     menuIds = item.menu_ids
@@ -70,7 +70,7 @@ async function plugin(fastify) {
             });
 
             const userMenuIds = [...new Set(menuIds)];
-            const dataMenu = await redisGet('cacheData_menu');
+            const dataMenu = await redisGet('cacheData:menu');
 
             const result = dataMenu.filter((item) => {
                 return userMenuIds.includes(item.id);
