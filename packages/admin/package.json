@@ -1,6 +1,6 @@
 {
     "name": "@funpi/admin",
-    "version": "7.20.25",
+    "version": "7.20.26",
     "description": "FunPi(放屁) - 后台管理",
     "sideEffects": true,
     "type": "module",
