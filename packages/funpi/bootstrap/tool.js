@@ -25,6 +25,14 @@ async function plugin(fastify) {
             fastify.log.warn(err);
         }
     };
+    // 删除 redis
+    const redisDel = async (key) => {
+        try {
+            await fastify.redis.del(`${process.env.REDIS_KEY_PREFIX}:${key}`);
+        } catch (err) {
+            fastify.log.warn(err);
+        }
+    };
 
     const getUserApis = async (session) => {
         if (!session) return [];
@@ -122,6 +130,7 @@ async function plugin(fastify) {
     // 设置和获取缓存数据
     fastify.decorate('redisSet', redisSet);
     fastify.decorate('redisGet', redisGet);
+    fastify.decorate('redisDel', redisDel);
     // 获取当前登录用户可操作的接口列表
     fastify.decorate('getUserApis', getUserApis);
     // 获取用户的菜单
