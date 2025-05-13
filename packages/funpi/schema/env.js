@@ -53,12 +53,6 @@ export const envSchema = {
             default: 'info',
             enum: ['debug', 'trace', 'info', 'warn', 'error', 'fatal']
         },
-        SWAGGER: {
-            title: '是否开启接口文档',
-            type: 'string',
-            default: '0',
-            enum: ['0', '1']
-        },
         // 数据库表主键方案
         TABLE_PRIMARY_KEY: {
             title: '数据库表主键方案',
@@ -194,7 +188,6 @@ export const envSchema = {
         'BODY_LIMIT',
         // 是否进行参数验证
         'PARAMS_CHECK',
-        'SWAGGER',
         // 数据库表主键方案
         'TABLE_PRIMARY_KEY',
         // 时区

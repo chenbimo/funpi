@@ -109,9 +109,6 @@ const initServer = async () => {
     // 初始化检查
     await initCheck(fastify);
     // 加载启动插件
-    if (process.env.SWAGGER === '1') {
-        fastify.register(swaggerPlugin, {});
-    }
     fastify.register(jwtPlugin, {});
     fastify.register(xmlParsePlugin, {});
     fastify.register(uploadPlugin, {});
